@@ -8,6 +8,7 @@ import { useActivePatient } from '@/hooks/useActivePatient';
 import { getCurrentLevel } from '@/engine/gameSessionService';
 import { MAX_LEVEL, MIN_LEVEL } from '@/engine/adaptiveEngine';
 import { getGameMeta } from '@/games/gameList';
+import { GAME_COMPONENTS } from '@/games/registry';
 import type { GameId } from '@/db/types';
 
 const LEVELS = Array.from({ length: MAX_LEVEL - MIN_LEVEL + 1 }, (_, i) => MIN_LEVEL + i);
@@ -23,13 +24,23 @@ export default function LevelSelect() {
   const { gameId } = useParams<{ gameId: string }>();
   const patient = useActivePatient();
   const [recommended, setRecommended] = useState<number | null>(null);
+  const isValidGameId = Boolean(gameId && gameId in GAME_COMPONENTS);
 
   useEffect(() => {
-    if (!patient?.id || !gameId) return;
-    void getCurrentLevel(patient.id, gameId as GameId).then(setRecommended);
-  }, [patient?.id, gameId]);
+    if (!patient?.id || !gameId || !isValidGameId) return;
+    let cancelled = false;
+    void getCurrentLevel(patient.id, gameId as GameId).then((lvl) => {
+      if (!cancelled) setRecommended(lvl);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [patient?.id, gameId, isValidGameId]);
 
-  if (!gameId || !patient) return null;
+  if (!gameId || !isValidGameId) {
+    return <Navigate to="/patient" replace />;
+  }
+  if (!patient) return null;
 
   const meta = getGameMeta(gameId as GameId);
   if (!meta.usesAdaptiveEngine) {

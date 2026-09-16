@@ -50,8 +50,8 @@ export default function SmritiKathaGame() {
   const sessionStartRef = useRef(0);
   const qStartRef = useRef(0);
 
-  async function startSession(patientId: string) {
-    const currentLevel = levelParam ?? (await getCurrentLevel(patientId, 'smriti-katha'));
+  async function startSession(patientId: string, forcedLevel?: number) {
+    const currentLevel = forcedLevel ?? (await getCurrentLevel(patientId, 'smriti-katha'));
     const { sentences: sCount, questions: qCount } = paramsForLevel(currentLevel);
     const story = STORIES[Math.floor(Math.random() * STORIES.length)];
     const usedSentences = story.sentences.slice(0, sCount);
@@ -73,7 +73,7 @@ export default function SmritiKathaGame() {
   }
 
   useEffect(() => {
-    if (patient?.id) void startSession(patient.id);
+    if (patient?.id) void startSession(patient.id, levelParam ?? undefined);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [patient?.id]);
 

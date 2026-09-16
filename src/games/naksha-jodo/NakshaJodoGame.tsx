@@ -43,8 +43,8 @@ export default function NakshaJodoGame() {
 
   const sessionStartRef = useRef(0);
 
-  async function startRound(patientId: string) {
-    const currentLevel = levelParam ?? (await getCurrentLevel(patientId, 'naksha-jodo'));
+  async function startRound(patientId: string, forcedLevel?: number) {
+    const currentLevel = forcedLevel ?? (await getCurrentLevel(patientId, 'naksha-jodo'));
     const { rows: r, cols: c } = gridForLevel(currentLevel);
     const colors = buildMosaic(r, c);
     const pieces: Piece[] = colors.map((color, i) => ({ key: `p-${i}-${Math.random()}`, color }));
@@ -61,7 +61,7 @@ export default function NakshaJodoGame() {
   }
 
   useEffect(() => {
-    if (patient?.id) void startRound(patient.id);
+    if (patient?.id) void startRound(patient.id, levelParam ?? undefined);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [patient?.id]);
 

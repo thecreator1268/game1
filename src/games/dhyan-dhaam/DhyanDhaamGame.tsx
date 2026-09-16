@@ -63,8 +63,8 @@ export default function DhyanDhaamGame() {
   const targetTotal = useMemo(() => tiles.filter((tl) => tl.isTarget).length, [tiles]);
   const columns = gridColumnsForSize(tiles.length || paramsForLevel(level).gridSize);
 
-  async function startRound(patientId: string) {
-    const currentLevel = levelParam ?? (await getCurrentLevel(patientId, 'dhyan-dhaam'));
+  async function startRound(patientId: string, forcedLevel?: number) {
+    const currentLevel = forcedLevel ?? (await getCurrentLevel(patientId, 'dhyan-dhaam'));
     const round = buildRound(currentLevel);
     setLevel(currentLevel);
     setTiles(round.tiles);
@@ -79,7 +79,7 @@ export default function DhyanDhaamGame() {
   }
 
   useEffect(() => {
-    if (patient?.id) void startRound(patient.id);
+    if (patient?.id) void startRound(patient.id, levelParam ?? undefined);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [patient?.id]);
 

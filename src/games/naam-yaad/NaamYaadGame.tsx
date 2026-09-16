@@ -65,13 +65,13 @@ export default function NaamYaadGame() {
   const sessionStartRef = useRef(0);
   const trialStartRef = useRef(0);
 
-  async function startSession(patientId: string, memberList: FamilyMember[]) {
+  async function startSession(patientId: string, memberList: FamilyMember[], forcedLevel?: number) {
     if (memberList.length === 0) {
       setPhase('playing');
       setTrials([]);
       return;
     }
-    const currentLevel = levelParam ?? (await getCurrentLevel(patientId, 'naam-yaad'));
+    const currentLevel = forcedLevel ?? (await getCurrentLevel(patientId, 'naam-yaad'));
     setLevel(currentLevel);
     const round = buildTrials(memberList, currentLevel);
     setTrials(round);
@@ -87,7 +87,7 @@ export default function NaamYaadGame() {
   }
 
   useEffect(() => {
-    if (patient?.id && members) void startSession(patient.id, members);
+    if (patient?.id && members) void startSession(patient.id, members, levelParam ?? undefined);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [patient?.id, members?.length]);
 

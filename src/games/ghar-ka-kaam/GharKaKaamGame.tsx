@@ -61,8 +61,8 @@ export default function GharKaKaamGame() {
   const attemptStartRef = useRef(0);
   const totalPairsRef = useRef(0);
 
-  async function startRound(patientId: string) {
-    const currentLevel = levelParam ?? (await getCurrentLevel(patientId, 'ghar-ka-kaam'));
+  async function startRound(patientId: string, forcedLevel?: number) {
+    const currentLevel = forcedLevel ?? (await getCurrentLevel(patientId, 'ghar-ka-kaam'));
     const round = buildRound(currentLevel);
     setLevel(currentLevel);
     setTools(round.tools);
@@ -79,7 +79,7 @@ export default function GharKaKaamGame() {
   }
 
   useEffect(() => {
-    if (patient?.id) void startRound(patient.id);
+    if (patient?.id) void startRound(patient.id, levelParam ?? undefined);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [patient?.id]);
 

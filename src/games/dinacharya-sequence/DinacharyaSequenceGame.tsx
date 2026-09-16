@@ -48,8 +48,8 @@ export default function DinacharyaSequenceGame() {
 
   const sessionStartRef = useRef(0);
 
-  async function startRound(patientId: string) {
-    const currentLevel = levelParam ?? (await getCurrentLevel(patientId, 'dinacharya-sequence'));
+  async function startRound(patientId: string, forcedLevel?: number) {
+    const currentLevel = forcedLevel ?? (await getCurrentLevel(patientId, 'dinacharya-sequence'));
     const round = buildRound(currentLevel);
     setLevel(currentLevel);
     setCorrectOrder(round.correctOrder);
@@ -62,7 +62,7 @@ export default function DinacharyaSequenceGame() {
   }
 
   useEffect(() => {
-    if (patient?.id) void startRound(patient.id);
+    if (patient?.id) void startRound(patient.id, levelParam ?? undefined);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [patient?.id]);
 

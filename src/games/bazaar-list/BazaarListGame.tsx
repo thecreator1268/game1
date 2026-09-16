@@ -44,8 +44,8 @@ export default function BazaarListGame() {
   const sessionStartRef = useRef(0);
   const gridShownRef = useRef(0);
 
-  async function startRound(patientId: string) {
-    const currentLevel = levelParam ?? (await getCurrentLevel(patientId, 'bazaar-list'));
+  async function startRound(patientId: string, forcedLevel?: number) {
+    const currentLevel = forcedLevel ?? (await getCurrentLevel(patientId, 'bazaar-list'));
     const round = buildRound(currentLevel);
     setLevel(currentLevel);
     setList(round.list);
@@ -57,7 +57,7 @@ export default function BazaarListGame() {
   }
 
   useEffect(() => {
-    if (patient?.id) void startRound(patient.id);
+    if (patient?.id) void startRound(patient.id, levelParam ?? undefined);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [patient?.id]);
 

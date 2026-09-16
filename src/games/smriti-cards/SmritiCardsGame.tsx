@@ -78,8 +78,8 @@ export default function SmritiCardsGame() {
   const pairCount = useMemo(() => pairsForLevel(level), [level]);
   const columns = gridColumnsForPairCount(pairCount);
 
-  async function startRound(patientId: string) {
-    const currentLevel = levelParam ?? (await getCurrentLevel(patientId, 'smriti-cards'));
+  async function startRound(patientId: string, forcedLevel?: number) {
+    const currentLevel = forcedLevel ?? (await getCurrentLevel(patientId, 'smriti-cards'));
     setLevel(currentLevel);
     setDeck(buildDeck(pairsForLevel(currentLevel)));
     setFlipped([]);
@@ -94,7 +94,7 @@ export default function SmritiCardsGame() {
   }
 
   useEffect(() => {
-    if (patient?.id) void startRound(patient.id);
+    if (patient?.id) void startRound(patient.id, levelParam ?? undefined);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [patient?.id]);
 

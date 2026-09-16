@@ -63,8 +63,8 @@ export default function AwaazPehchanGame() {
   const sessionStartRef = useRef(0);
   const timeoutRef = useRef<number | null>(null);
 
-  async function prepareRound(patientId: string) {
-    const currentLevel = levelParam ?? (await getCurrentLevel(patientId, 'awaaz-pehchan'));
+  async function prepareRound(patientId: string, forcedLevel?: number) {
+    const currentLevel = forcedLevel ?? (await getCurrentLevel(patientId, 'awaaz-pehchan'));
     const { sequence, target: t2 } = buildSequence(currentLevel);
     setLevel(currentLevel);
     sequenceRef.current = sequence;
@@ -77,7 +77,7 @@ export default function AwaazPehchanGame() {
   }
 
   useEffect(() => {
-    if (patient?.id) void prepareRound(patient.id);
+    if (patient?.id) void prepareRound(patient.id, levelParam ?? undefined);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [patient?.id]);
 

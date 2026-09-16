@@ -51,8 +51,8 @@ export default function ChayaKhojGame() {
   const sessionStartRef = useRef(0);
   const trialStartRef = useRef(0);
 
-  async function startSession(patientId: string) {
-    const currentLevel = levelParam ?? (await getCurrentLevel(patientId, 'chaya-khoj'));
+  async function startSession(patientId: string, forcedLevel?: number) {
+    const currentLevel = forcedLevel ?? (await getCurrentLevel(patientId, 'chaya-khoj'));
     setLevel(currentLevel);
     setTrialIndex(0);
     setCorrectCount(0);
@@ -67,7 +67,7 @@ export default function ChayaKhojGame() {
   }
 
   useEffect(() => {
-    if (patient?.id) void startSession(patient.id);
+    if (patient?.id) void startSession(patient.id, levelParam ?? undefined);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [patient?.id]);
 
