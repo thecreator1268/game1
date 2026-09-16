@@ -18,4 +18,6 @@ export const TOOL_TASK_PAIRS: ToolTaskPair[] = [
   { id: 'bottle', toolEmoji: '🧴', toolLabel: 'Bottle', task: 'Watering plants' },
   { id: 'flashlight', toolEmoji: '🔦', toolLabel: 'Flashlight', task: 'Finding things in the dark' },
   { id: 'dustbin', toolEmoji: '🗑️', toolLabel: 'Dustbin', task: 'Throwing rubbish' },
+  { id: 'key', toolEmoji: '🔑', toolLabel: 'Key', task: 'Locking the door' },
+  { id: 'towel', toolEmoji: '🧻', toolLabel: 'Towel', task: 'Wiping the table' },
 ];

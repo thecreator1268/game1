@@ -10,7 +10,6 @@ import { getCurrentLevel, recordGameSession } from '@/engine/gameSessionService'
 import { isPersonalBest, type LevelDecision } from '@/engine/adaptiveEngine';
 import { useFatigueStore } from '@/store/fatigueStore';
 import { shuffle } from '@/lib/shuffle';
-import { speak } from '@/lib/speech';
 import type { ErrorType } from '@/db/types';
 import { GROCERY_ITEMS, type GroceryItem } from './items';
 import { gridColumnsForSize, paramsForLevel } from './params';
@@ -53,7 +52,6 @@ export default function BazaarListGame() {
     setLevelDecision(null);
     sessionStartRef.current = Date.now();
     setPhase('list');
-    void speak({ text: round.list.map((i) => i.label).join(', '), lang: 'en' });
   }
 
   useEffect(() => {

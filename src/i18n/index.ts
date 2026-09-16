@@ -8,18 +8,21 @@ import kha from './kha.json';
 import lus from './lus.json';
 import nsm from './nsm.json';
 
-// en / hi / as are complete UI translations. mni / kha / lus / nsm are
-// intentionally partial stubs (see each file's "_meta" note) — any key
-// missing from them falls back to English via fallbackLng below, rather
-// than showing a blank or a raw key to the patient.
+// All 7 languages now cover the full UI key structure (see each file's
+// "_meta" note) — any key that's still missing anywhere falls back to
+// English via fallbackLng below, rather than showing a blank or a raw key
+// to the patient. en/hi/as are widely-spoken, high-resource languages;
+// mni/kha/lus/nsm are AI-assisted best-effort drafts for languages of
+// India's North Eastern Region, not yet reviewed by a native speaker —
+// see each file's "_meta.status" before treating them as production-ready.
 export const SUPPORTED_LANGUAGES = [
   { code: 'en', label: 'English', complete: true },
   { code: 'hi', label: 'हिन्दी', complete: true },
   { code: 'as', label: 'অসমীয়া', complete: true },
-  { code: 'mni', label: 'মৈতৈলোন্ (Manipuri)', complete: false },
-  { code: 'kha', label: 'Khasi', complete: false },
-  { code: 'lus', label: 'Mizo ṭawng', complete: false },
-  { code: 'nsm', label: 'Nagamese', complete: false },
+  { code: 'mni', label: 'মৈতৈলোন্ (Manipuri)', complete: true },
+  { code: 'kha', label: 'Khasi', complete: true },
+  { code: 'lus', label: 'Mizo ṭawng', complete: true },
+  { code: 'nsm', label: 'Nagamese', complete: true },
 ] as const;
 
 void i18n

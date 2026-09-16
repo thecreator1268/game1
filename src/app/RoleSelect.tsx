@@ -40,6 +40,12 @@ export default function RoleSelect() {
           {t('roles.caregiver')}
         </Button>
       </div>
+      <button
+        onClick={() => navigate('/admin/login')}
+        className="text-sm text-text-muted underline hover:text-text"
+      >
+        {t('adminAuth.entryLink')}
+      </button>
     </div>
   );
 }

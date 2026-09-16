@@ -22,6 +22,8 @@ export function GameShell({ gameId, level, score, children }: GameShellProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [showAbout, setShowAbout] = useState(false);
+  const name = t(`games.${gameId}.name`);
+  const meaning = t(`games.${gameId}.meaning`);
 
   return (
     <div className="min-h-screen bg-bg">
@@ -30,7 +32,12 @@ export function GameShell({ gameId, level, score, children }: GameShellProps) {
           <HomeIcon />
         </IconButton>
         <div className="flex items-center gap-4">
-          <span className="text-action font-bold">{t(`games.${gameId}.name`)}</span>
+          <span className="text-action font-bold">
+            {name}
+            {meaning && meaning !== name && (
+              <span className="ml-1 text-sm font-normal text-text-muted">({meaning})</span>
+            )}
+          </span>
           <span className="rounded-full bg-surface-alt px-4 py-1 text-body font-semibold">
             {t('common.level')} {level}
           </span>

@@ -60,8 +60,37 @@
     "title": "Caregiver Login",
     "enterPin": "Enter your PIN",
     "wrongPin": "That PIN doesn't match. Try again.",
+    "tooManyAttempts": "Too many attempts. Try again in {{seconds}}s.",
     "scanQr": "Or scan your caregiver QR code",
     "logout": "Log Out"
+  },
+  "adminAuth": {
+    "title": "Admin Login",
+    "enterPin": "Enter your admin PIN",
+    "wrongPin": "That PIN doesn't match. Try again.",
+    "panelTitle": "Admin Panel",
+    "entryLink": "Admin Panel"
+  },
+  "adminPanel": {
+    "totalPatients": "Total Patients",
+    "totalCaregivers": "Total Caregivers",
+    "totalSessions": "Total Sessions",
+    "patients": "Patients",
+    "addPatient": "Add Patient",
+    "activePatient": "Active Patient",
+    "setActive": "Set Active",
+    "caregivers": "Caregivers",
+    "role": "Role",
+    "resetPin": "Reset PIN",
+    "newPin": "New PIN",
+    "languages": "Languages",
+    "complete": "Complete",
+    "beta": "Beta",
+    "dataTools": "Data Tools",
+    "exportAllData": "Export All Data",
+    "dangerZone": "Danger Zone",
+    "resetAllDataBody": "This permanently erases all data on this device. Type \"{{word}}\" to continue.",
+    "resetAllData": "Erase All Data"
   },
   "patientHome": {
     "greeting": "Hello, {{name}}",
@@ -162,78 +191,91 @@
   "games": {
     "smriti-cards": {
       "name": "Smriti Cards",
+      "meaning": "Memory Cards",
       "tagline": "Match the pairs",
       "instructions": "Tap two cards to find matching pairs. Try to remember where each picture is.",
       "clinicalMapping": "Maps to delayed recall (MoCA) and word recognition (ADAS-Cog) through visual pair matching."
     },
     "smriti-katha": {
       "name": "Smriti Katha",
+      "meaning": "Memory Story",
       "tagline": "Listen to a story",
       "instructions": "Listen to a short story, then answer simple questions about it by picking a picture.",
       "clinicalMapping": "Maps to episodic and verbal recall (MoCA delayed recall; ADAS-Cog word recall) using an everyday spoken story instead of a word list."
     },
     "naam-yaad": {
       "name": "Naam Yaad",
+      "meaning": "Remember Names",
       "tagline": "Remember the family",
       "instructions": "A photo of someone you know will appear. Tap their correct name.",
       "clinicalMapping": "Maps to personally-meaningful recognition memory (MoCA/ADAS-Cog recall & recognition), using the patient's real family photos."
     },
     "dhyan-dhaam": {
       "name": "Dhyan Dhaam",
+      "meaning": "Focus Zone",
       "tagline": "Find the matching pattern",
       "instructions": "Tap every tile that matches the target pattern shown at the top.",
       "clinicalMapping": "Maps to sustained visual attention and cancellation tasks (MoCA attention; ADAS-Cog number cancellation)."
     },
     "ginti-dhyan": {
       "name": "Ginti Dhyan",
+      "meaning": "Counting Focus",
       "tagline": "Count in order",
       "instructions": "Tap the numbers in counting order, smallest first.",
       "clinicalMapping": "Maps to attention and working memory (MoCA digit span and serial subtraction), at an elderly-accessible pace."
     },
     "awaaz-pehchan": {
       "name": "Awaaz Pehchan",
+      "meaning": "Sound Recognition",
       "tagline": "Listen for the sound",
       "instructions": "Listen carefully. Tap the button only when you hear the target word or sound.",
       "clinicalMapping": "Maps to sustained auditory attention (MoCA attention/vigilance), fully audio-driven for patients with limited reading ability."
     },
     "dinacharya-sequence": {
       "name": "Dinacharya Sequence",
+      "meaning": "Daily Routine",
       "tagline": "Put the day in order",
       "instructions": "Drag the picture cards into the order you do them each day.",
       "clinicalMapping": "Maps to instrumental activities of daily living (IADL) planning and sequencing."
     },
     "bazaar-list": {
       "name": "Bazaar List",
+      "meaning": "Market List",
       "tagline": "Remember the list",
       "instructions": "Listen to the shopping list, then find only those items in the grid.",
       "clinicalMapping": "Maps to prospective memory and IADL planning, similar to everyday errand-list recall."
     },
     "ghar-ka-kaam": {
       "name": "Ghar ka Kaam",
+      "meaning": "Housework",
       "tagline": "Match tool to task",
       "instructions": "Tap a household tool, then tap the task it is used for.",
       "clinicalMapping": "Maps to routine-object association, a common early sign area in IADL assessment."
     },
     "aakar-milan": {
       "name": "Aakar Milan",
+      "meaning": "Shape Match",
       "tagline": "Complete the pattern",
       "instructions": "Find the piece that completes the pattern correctly.",
       "clinicalMapping": "Maps to visuospatial and executive function (MoCA visuospatial/executive; ADAS-Cog constructional praxis)."
     },
     "chaya-khoj": {
       "name": "Chaya Khoj",
+      "meaning": "Shadow Search",
       "tagline": "Find the shadow",
       "instructions": "Look at the object, then tap its matching shadow.",
       "clinicalMapping": "Maps to visuospatial matching (MoCA visuospatial), with no reading required."
     },
     "naksha-jodo": {
       "name": "Naksha Jodo",
+      "meaning": "Picture Puzzle",
       "tagline": "Build the shape",
       "instructions": "Drag the large pieces together to build the picture. Take your time.",
       "clinicalMapping": "Maps to constructional praxis (ADAS-Cog), a gentler analogue of the clock-drawing/figure-copy task."
     },
     "aaj-ka-din": {
       "name": "Aaj Ka Din",
+      "meaning": "Today's Check-in",
       "tagline": "Today's check-in",
       "instructions": "Answer a few simple questions about today.",
       "clinicalMapping": "Maps to temporal and spatial orientation (MoCA orientation subtest). A daily check-in, not a difficulty drill."

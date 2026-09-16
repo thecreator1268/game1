@@ -1,24 +1,110 @@
 {
   "_meta": {
-    "status": "STUB — partial translation only, not reviewed by a native speaker. Do not present as production-ready.",
-    "scriptChoice": "Bengali script chosen for this stub (Meitei Mayek is the other valid option and is increasingly used officially in Manipur — this choice should be revisited with native speakers/community stakeholders before production, not treated as settled).",
+    "status": "Best-effort AI-assisted translation for the SIH26003 prototype — not yet reviewed by a native speaker or community linguist. Confidence is lower here than for the Latin-script languages in this app; treat as a rough starting draft only, and have it corrected by a Meitei speaker before any real deployment in Manipur.",
+    "scriptChoice": "Bengali script chosen for this draft (Meitei Mayek is the other valid option and is increasingly used officially in Manipur — this choice should be revisited with native speakers/community stakeholders before production, not treated as settled).",
     "fallback": "Any key missing here falls back to English automatically (see i18n/index.ts)."
   },
   "common": {
     "appName": "স্মৃতিসেতু",
     "home": "য়ুম",
+    "back": "হন্না",
     "play": "শানবিয়ু",
+    "next": "মথংদা",
+    "done": "লোইখ্রে",
+    "cancel": "লেপ্পু",
+    "save": "থামবিয়ু",
+    "edit": "হন্না শেম্বিয়ু",
+    "delete": "লেয়থোকপিয়ু",
+    "add": "হাপচিনবিয়ু",
+    "yes": "হোয়",
+    "no": "নত্তে",
+    "loading": "লোড তৌরি...",
+    "offline": "অফলাইন",
+    "online": "অনলাইন",
+    "synced": "সিংক তৌখ্রে",
+    "syncing": "সিংক তৌরি...",
+    "pendingSync": "{{count}} সিংক তৌগদবা লৈরি",
+    "level": "লেবেল",
+    "score": "স্কোর",
+    "today": "ঙসি",
+    "aboutThisGame": "শানবগী মতাংদা",
+    "close": "থিংবিয়ু",
     "listen": "তাবিয়ু",
     "correct": "চুম্মি!",
     "tryAgain": "আমুক হন্না হৌবিয়ু",
-    "wellDone": "ফজরবা তৌখ্রে!"
+    "wellDone": "ফজরবা তৌখ্রে!",
+    "personalBest": "নহাক্না মশক্না ফজবা ওইরকই!",
+    "takeBreakTitle": "খরা পোৎথোকপা তাবগা?",
+    "takeBreakBody": "নহাক্না কুইনা শানখ্রে। খরা পোৎথোকপা কনবিরগনি।",
+    "takeBreakContinue": "শানবা মথৌ তানবিয়ু",
+    "takeBreakStop": "হৌজিক পোৎথোকপিয়ু",
+    "minutesShort": "মিনিট",
+    "clinicalNote": "স্মৃতিসেতুনা নিংশিং য়ৌশিনবা অমসুং মতম চুপ্পা হৌদোকপা য়েংশিন্নবা মতেং পাং। মসি লায়শিংগী ফাওবা নত্তে। দক্তর কুম্লবা য়েংবিয়ু।",
+    "install": "এপ ইনস্তল তৌবিয়ু",
+    "cardFaceDown": "মমাং লৈত্রবা কার্দ",
+    "tapWhenHeard": "ঐ তাখ্রে!"
   },
   "roles": {
+    "choosePrompt": "হৌজিক স্মৃতিসেতু কনা শীজিন্নরি?",
     "patient": "ঐ শানগনি",
     "caregiver": "ঐহাক্তা য়েংশিন্নবা মচু ওইরি"
   },
   "onboarding": {
-    "welcome": "স্মৃতিসেতুদা তরাম্না ওকচরি"
+    "welcome": "স্মৃতিসেতুদা তরাম্না ওকচরি",
+    "chooseLanguage": "নহাক্কী লোন খল্লু",
+    "chooseLanguageBody": "নহাক্না ফাওজবা লোন অদু নমবিয়ু।",
+    "setupPatientName": "লাইরবা মিং করিনো?",
+    "setupPatientNamePlaceholder": "মিং ইবিয়ু",
+    "setupCaregiverPin": "য়েংশিন্নবা মচুগী 4 নম্বর PIN শেম্বিয়ু",
+    "setupCaregiverPinConfirm": "PIN অদু আমুক পীবিয়ু",
+    "setupComplete": "পুম্নমক থৌগৎলে!",
+    "setupCompleteBody": "স্মৃতিসেতু হৌজিক শীজিন্নবা থৌগৎলে, ইন্তরনেত লৈতবসু।",
+    "getStarted": "হৌবিয়ু"
+  },
+  "caregiverAuth": {
+    "title": "য়েংশিন্নবা মচুগী লগিন",
+    "enterPin": "নহাক্কী PIN চংশিনবিয়ু",
+    "wrongPin": "PIN অসি চুম্লে। আমুক হন্না হৌবিয়ু।",
+    "tooManyAttempts": "অশোকপা হেন্না মায়োক্তে। {{seconds}} সেকেন্দগী মতুংদা আমুক হৌবিয়ু।",
+    "scanQr": "নত্রগা নহাক্কী QR কোদ স্কেন তৌবিয়ু",
+    "logout": "লগ আউত"
+  },
+  "adminAuth": {
+    "title": "এদমিন লগিন",
+    "enterPin": "নহাক্কী এদমিন PIN চংশিনবিয়ু",
+    "wrongPin": "PIN অসি চুম্লে। আমুক হন্না হৌবিয়ু।",
+    "panelTitle": "এদমিন পেনেল",
+    "entryLink": "এদমিন পেনেল"
+  },
+  "adminPanel": {
+    "totalPatients": "লাইরবা পুম্নমক",
+    "totalCaregivers": "য়েংশিন্নবা মচু পুম্নমক",
+    "totalSessions": "সেশন পুম্নমক",
+    "patients": "লাইরবাশিং",
+    "addPatient": "লাইরবা হাপচিনবিয়ু",
+    "activePatient": "হৌজিক শীজিন্নরিবা লাইরবা",
+    "setActive": "শীজিন্নবা ওইহনবিয়ু",
+    "caregivers": "য়েংশিন্নবা মচুশিং",
+    "role": "থৌদাং",
+    "resetPin": "PIN হন্না শেম্বিয়ু",
+    "newPin": "অনৌবা PIN",
+    "languages": "লোনশিং",
+    "complete": "মপুং ফাবা",
+    "beta": "বেতা",
+    "dataTools": "দেতাগী মশীং",
+    "exportAllData": "দেতা পুম্নমক এক্সপোর্ট তৌবিয়ু",
+    "dangerZone": "কীৎনবা মফম",
+    "resetAllDataBody": "মসিনা দিভাইস অসিগী দেতা পুম্নমক ফরফানা মহুৎশিন্লোই। মথৌ তানবা \"{{word}}\" ইবিয়ু।",
+    "resetAllData": "দেতা পুম্নমক মহুৎশিনবিয়ু"
+  },
+  "patientHome": {
+    "greeting": "খুরুমজরি, {{name}}",
+    "todaysSet": "ঙসিগী শানবা",
+    "todaysSetBody": "ঙসিগীদমক খল্লবা শানবা অহুম",
+    "moreGames": "শানবা পুম্নমক",
+    "playAgain": "আমুক শানবিয়ু",
+    "streakLabel": "নুমিৎ {{count}} চানবা",
+    "newBadge": "অনৌবা"
   },
   "domains": {
     "memory": "নিংশিং",
@@ -27,18 +113,177 @@
     "pattern": "মখল খংবা",
     "orientation": "মফম অমসুং মতম খংবা"
   },
+  "reminders": {
+    "title": "ঙসি",
+    "medicine": "লায়",
+    "hydration": "ইশিং",
+    "activity": "থবক",
+    "appointment": "দক্তরগা উন্নবা",
+    "markTaken": "লৌখ্রে হায়না খুদম উৎপিয়ু",
+    "taken": "লৌখ্রে",
+    "takenAt": "{{time}} দা লৌখ্রে",
+    "noneToday": "হৌজিক করিসু লৈতে। ফজরবা তৌখ্রে!",
+    "manageTitle": "রিমাইন্দর মপু ওইবিয়ু",
+    "addReminder": "রিমাইন্দর হাপচিনবিয়ু",
+    "label": "মসি করিগীদমনো?",
+    "schedule": "মতম",
+    "category": "মখল",
+    "withWhom": "কনাগা লোয়ননা",
+    "notes": "ইখিবা"
+  },
+  "familyManager": {
+    "title": "ইমুং মনুংগী মি অমসুং মমাই",
+    "body": "নাম যাদ শানবগীদমক ফোটো, মিং অমসুং খোংথাং হাপচিনবিয়ু।",
+    "addMember": "ইমুং মনুংগী মি হাপচিনবিয়ু",
+    "name": "মিং",
+    "relation": "মরি",
+    "photo": "ফোটো",
+    "voiceNote": "খোংথাংগী ইখিবা (থাদোকপা ঙম্মি)",
+    "recordVoiceNote": "খোংথাং রেকোর্দ তৌবিয়ু",
+    "reRecord": "আমুক রেকোর্দ তৌবিয়ু",
+    "noMembers": "হৌজিক ফাওবা মি হাপচিনদ্রি।"
+  },
+  "dashboard": {
+    "title": "য়েংশিন্নবা মচুগী দেশবোর্দ",
+    "trends": "মতম চুপ্পা ফজরবা",
+    "last30": "মমাংগী নুমিৎ 30",
+    "last90": "মমাংগী নুমিৎ 90",
+    "domainBalance": "মখলশিংগী চান্নবা",
+    "domainBalanceBody": "{{name}} না মখল 5 পুম্নমকতা করম্না চান্না শানরি",
+    "adaptiveLog": "লেবেল হোংবগী লোগ",
+    "adaptiveLogBody": "লেবেল হোংবা খুদিংগী মরম ফোংদোকপা",
+    "adherence": "রিমাইন্দর ইল্লবা",
+    "streak": "হৌজিক চানবা",
+    "weeklySummary": "চহি চদা অসিগী খুল্লক ফোংদোকপা",
+    "exportPdf": "PDF এক্সপোর্ট তৌবিয়ু",
+    "exportCsv": "CSV এক্সপোর্ট তৌবিয়ু",
+    "disclaimer": "দেশবোর্দ অসিনা দক্তরগা খন্নবগীদমক ফজরবা উৎলি। মসি লায়শিংগী ফাওবা নত্তে।",
+    "noData": "হৌজিক দেতা য়াম্না লৈতে — হানা শানবা কয়া শানবিয়ু।",
+    "demoPanel": "অফলাইন / সিংক দেমো",
+    "airplaneMode": "অফলাইন মোদ চাংনবিয়ু (এয়রপ্লেন মোদ)",
+    "forceSyncNow": "হৌজিক সিংক তৌবিয়ু",
+    "settings": "সেটিং",
+    "extraLargeText": "মপি অচৌবা লাইরিক",
+    "highContrastPalette": "মচু খন্নবা",
+    "language": "লোন"
+  },
+  "orientationCheckin": {
+    "whatDay": "ঙসি নুমিৎ করিনো?",
+    "whatTime": "হৌজিক মতম করিনো?",
+    "whatSeason": "হৌজিক চহি করিনো?",
+    "days": {
+      "sunday": "নোংমাইজিং",
+      "monday": "নিংথৌকাবা",
+      "tuesday": "লৈবাকপোকপা",
+      "wednesday": "য়ুমশকৈশা",
+      "thursday": "শগোলশেন",
+      "friday": "ইরায়",
+      "saturday": "থাংজ"
+    },
+    "times": {
+      "morning": "আয়েংবা",
+      "afternoon": "নুমিৎ চানবা",
+      "evening": "নুমিৎ শাংবা",
+      "night": "অহিংগী"
+    },
+    "seasons": {
+      "winter": "ঙাশা",
+      "summer": "কুমহৈ",
+      "monsoon": "নোংজু",
+      "autumn": "মংকাং"
+    }
+  },
   "games": {
     "smriti-cards": {
       "name": "স্মৃতি কার্ড",
-      "instructions": "কার্ড অনি অমুক অমদা চপচবা ফংনবা সেল্লু।"
+      "meaning": "নিংশিংগী কার্দ",
+      "tagline": "চপচবা ফংনবিয়ু",
+      "instructions": "কার্ড অনি অমুক অমদা চপচবা ফংনবা সেল্লু। মফম করমদি লৈরিবগে হায়বা নিংশিংনবা হোৎনবিয়ু।",
+      "clinicalMapping": "মমাই চপচবা ফংনবগী মতুংদা নিংশিং হন্না ফংবা (MoCA) অমসুং ৱাহৈ খংবা (ADAS-Cog) দা মরি লৈ।"
+    },
+    "smriti-katha": {
+      "name": "স্মৃতি কথা",
+      "meaning": "নিংশিংগী ৱারি",
+      "tagline": "ৱারি তাবিয়ু",
+      "instructions": "অচেংবা ৱারি অমা তাবিয়ু, মতুংদা ফোটো খনবা মতুংদা ৱাহং অপীকপা খরাগী পাউখুম পীবিয়ু।",
+      "clinicalMapping": "নুমিৎ খুদিংগী ৱারি হায়দোকপগী মতুংদা থোকখিবা পোৎ নিংশিংবা অমসুং ৱাহৈ নিংশিংবা (MoCA, ADAS-Cog) দা মরি লৈ।"
     },
     "naam-yaad": {
       "name": "নাম যাদ",
-      "instructions": "মিং চুম্মিবা খল্লু।"
+      "meaning": "মমাই অমসুং মিং",
+      "tagline": "ইমুং খল্লু",
+      "instructions": "নহাক্না খংবা মিওইশিংগী ফোটো লাক্কনি। মখোয়গী মিং চুম্মবা সেল্লু।",
+      "clinicalMapping": "লাইরবগী অশেংবা ইমুংগী ফোটো শীজিন্নদুনা মিওইবা খংবা অমসুং নিংশিংবা (MoCA/ADAS-Cog) দা মরি লৈ।"
+    },
+    "dhyan-dhaam": {
+      "name": "ধ্যান ধাম",
+      "meaning": "পুকচিং শিংবা হেনগৎপা",
+      "tagline": "চপচবা মখল থিবিয়ু",
+      "instructions": "মথক্তা উৎলিবা মখলগা চপচবা তাইল খুদিংমক সেল্লু।",
+      "clinicalMapping": "লুপা পুকচিং শিংবা অমসুং থবক (MoCA, ADAS-Cog) দা মরি লৈ।"
+    },
+    "ginti-dhyan": {
+      "name": "গিন্তি ধ্যান",
+      "meaning": "মশিং শিংবগী শান",
+      "tagline": "মলৌনা শিংবিয়ু",
+      "instructions": "মশিং অপীকপগী হৌরগা মলৌনা সেল্লু।",
+      "clinicalMapping": "পুকচিং শিংবা অমসুং থবক পাংথোকপগী নিংশিং (MoCA digit span) দা মরি লৈ, অহল অতেংগী মথৌ তাবা মতেক্তা।"
+    },
+    "awaaz-pehchan": {
+      "name": "আৱাজ পেহচান",
+      "meaning": "খোংথাংগী শান",
+      "tagline": "খোংথাং তাবিয়ু",
+      "instructions": "পুকচিং শিংনা তাবিয়ু। মশক তাবা ৱাহৈ নত্রগা খোংথাং তারবদি খুৎ সেল্লু।",
+      "clinicalMapping": "লুপা তানবা পুকচিং শিংবা (MoCA) দা মরি লৈ, খোংথাং মখাদা তম্বা, লাইরিক পাবা য়াম্না খংদবা লাইরবগীদমক।"
+    },
+    "dinacharya-sequence": {
+      "name": "দিনচর্যা শিকুএন্স",
+      "meaning": "নুমিৎগী মলৌ",
+      "tagline": "নুমিৎ মলৌনা শেম্বিয়ু",
+      "instructions": "ফোটো কার্দশিং নহাক্না নুমিৎ খুদিংগী তৌবা মলৌগী মতুং ইন্না লেংথোকপিয়ু।",
+      "clinicalMapping": "নুমিৎ খুদিংগী থবক শেমগৎপা অমসুং মলৌ (IADL) দা মরি লৈ।"
+    },
+    "bazaar-list": {
+      "name": "বাজার লিস্ত",
+      "meaning": "কের-কয়া লিস্ত",
+      "tagline": "লিস্ত নিংশিংবিয়ু",
+      "instructions": "কের-কয়াগী লিস্ত তাবিয়ু, মতুংদা মখোয় খক্তবু গ্রিদ্তা থিবিয়ু।",
+      "clinicalMapping": "নুমিৎ খুদিংগী থবক লিস্ত নিংশিংবা অমসুং শেমগৎপা (IADL) দা মরি লৈ।"
+    },
+    "ghar-ka-kaam": {
+      "name": "ঘর কা কাম",
+      "meaning": "য়ুমগী থবক",
+      "tagline": "লাই অমসুং থবক চপচবিয়ু",
+      "instructions": "য়ুমগী লাই অমা সেল্লু, মতুংদা মসি শীজিন্নবা থবক অদু সেল্লু।",
+      "clinicalMapping": "নুমিৎ খুদিংগী পোৎলম-থবক মরি (IADL) দা মরি লৈ।"
+    },
+    "aakar-milan": {
+      "name": "আকার মিলন",
+      "meaning": "মখল চপচবা",
+      "tagline": "মখল মপুং ফহল্লু",
+      "instructions": "মখল অদু চুম্না মপুং ফাহল্লিবা অহেনবা থিবিয়ু।",
+      "clinicalMapping": "উবা-মফম খংবা অমসুং থবক পাংথোকপা (MoCA, ADAS-Cog) দা মরি লৈ।"
+    },
+    "chaya-khoj": {
+      "name": "ছায়া খোজ",
+      "meaning": "মখা থিবা",
+      "tagline": "মখা থিবিয়ু",
+      "instructions": "পোৎ অদু য়েংবিয়ু, মতুংদা মদুগা চপচবা মখা অদু সেল্লু।",
+      "clinicalMapping": "উবা-মফম চপচবা (MoCA) দা মরি লৈ, লাইরিক পাবা মথৌ তাদবা।"
+    },
+    "naksha-jodo": {
+      "name": "নক্শা জোড়ো",
+      "meaning": "ফোটো চপচবা",
+      "tagline": "মখল শেম্বিয়ু",
+      "instructions": "অচৌবা কেঁথৈশিং চপচহন্না ফোটো শেম্বিয়ু। মতম লৌবিয়ু।",
+      "clinicalMapping": "শেমগৎপা অমসুং শেমবা থবক (ADAS-Cog) দা মরি লৈ।"
     },
     "aaj-ka-din": {
-      "name": "ঙসিগী নুমিৎ",
-      "instructions": "ঙসিগী মথংদা ৱাহং খরাগী পাউখুম পীয়ু।"
+      "name": "আজ কা দিন",
+      "meaning": "ঙসিগী পাউ",
+      "tagline": "ঙসিগী পাউখুম",
+      "instructions": "ঙসিগী মতাংদা ৱাহং খরাগী পাউখুম পীবিয়ু।",
+      "clinicalMapping": "মতম অমসুং মফম খংবা (MoCA orientation) দা মরি লৈ। মসি নুমিৎ খুদিংগী চেক নি, য়াম্না ৱাংবা শান নত্তে।"
     }
   }
 }

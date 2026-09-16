@@ -56,6 +56,11 @@ export default function Onboarding() {
       relation: 'Family',
       pinHash,
       patientIds: [patientId],
+      // The caregiver who completes first-time setup on a device owns the
+      // Admin Panel for that install (see AdminLogin.tsx) — there is no
+      // separate admin-signup step, since it would just be one more thing
+      // to configure before the app is usable.
+      role: 'admin',
       createdAt: Date.now(),
     });
     setActivePatient(patientId);

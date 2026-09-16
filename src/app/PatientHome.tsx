@@ -15,6 +15,8 @@ import type { GameId, Domain } from '@/db/types';
 function GameTile({ gameId, big = false }: { gameId: GameId; big?: boolean }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const name = t(`games.${gameId}.name`);
+  const meaning = t(`games.${gameId}.meaning`);
   return (
     <button
       onClick={() => navigate(`/patient/game/${gameId}`)}
@@ -25,7 +27,8 @@ function GameTile({ gameId, big = false }: { gameId: GameId; big?: boolean }) {
       <span className={big ? 'text-5xl' : 'text-4xl'} aria-hidden>
         {GAME_EMOJI[gameId]}
       </span>
-      <span className="text-body font-semibold">{t(`games.${gameId}.name`)}</span>
+      <span className="text-body font-semibold">{name}</span>
+      {meaning && meaning !== name && <span className="text-xs text-text-muted">({meaning})</span>}
       <span className="text-sm text-text-muted">{t(`games.${gameId}.tagline`)}</span>
     </button>
   );

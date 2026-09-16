@@ -18,6 +18,11 @@ const RemindersManager = lazy(() => import('@/dashboard/RemindersManager'));
 const FamilyManager = lazy(() => import('@/dashboard/FamilyManager'));
 const SettingsPanel = lazy(() => import('@/dashboard/SettingsPanel'));
 
+// Admin panel is staff-only and rarely opened — also lazy-loaded.
+const AdminLogin = lazy(() => import('@/app/AdminLogin'));
+const AdminLayout = lazy(() => import('@/app/AdminLayout'));
+const AdminOverview = lazy(() => import('@/admin/AdminOverview'));
+
 function DashboardFallback() {
   const { t } = useTranslation();
   return <div className="py-20 text-center text-body">{t('common.loading')}</div>;
@@ -70,6 +75,32 @@ function AppShell() {
           element={
             <Suspense fallback={<DashboardFallback />}>
               <SettingsPanel />
+            </Suspense>
+          }
+        />
+      </Route>
+
+      <Route
+        path="/admin/login"
+        element={
+          <Suspense fallback={<DashboardFallback />}>
+            <AdminLogin />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/admin"
+        element={
+          <Suspense fallback={<DashboardFallback />}>
+            <AdminLayout />
+          </Suspense>
+        }
+      >
+        <Route
+          index
+          element={
+            <Suspense fallback={<DashboardFallback />}>
+              <AdminOverview />
             </Suspense>
           }
         />

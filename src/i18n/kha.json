@@ -1,24 +1,110 @@
 {
   "_meta": {
-    "status": "STUB — partial translation only, not reviewed by a native speaker. Do not present as production-ready.",
+    "status": "Best-effort AI-assisted translation for the SIH26003 prototype — not yet reviewed by a native speaker or community linguist. Treat as a solid starting draft, not a certified translation; please correct before any real deployment in Meghalaya.",
     "script": "Khasi is written in the Latin alphabet, as used here.",
     "fallback": "Any key missing here falls back to English automatically (see i18n/index.ts)."
   },
   "common": {
     "appName": "SmritiSetu",
     "home": "Ïing",
+    "back": "Chot shithuh",
     "play": "Leit dulïióh",
+    "next": "Ha ka bad",
+    "done": "Long jrong",
+    "cancel": "Sanngaid",
+    "save": "Rakhap",
+    "edit": "Threw pyndep",
+    "delete": "Rwed",
+    "add": "Thap",
+    "yes": "Ïoh",
+    "no": "Cha",
+    "loading": "Loading...",
+    "offline": "Offline",
+    "online": "Online",
+    "synced": "Long ka sync",
+    "syncing": "Ka sync...",
+    "pendingSync": "{{count}} ki don ban sync",
+    "level": "Level",
+    "score": "Score",
+    "today": "Mynta",
+    "aboutThisGame": "Kaba la ïa kane ka dulïióh",
+    "close": "Bun",
     "listen": "Sngap",
     "correct": "Long ka don!",
     "tryAgain": "Buit shuwa, khlem sein",
-    "wellDone": "Long ka bha!"
+    "wellDone": "Long ka bha!",
+    "personalBest": "Phi la ïalade sha kaba bha bad bha!",
+    "takeBreakTitle": "Ban sngew jubor ïong ka nadan?",
+    "takeBreakBody": "Phi la leit dulïióh na kawei ka por bha. Ïong ka nadan ka lah ban rong.",
+    "takeBreakContinue": "Leit dulïióh jan",
+    "takeBreakStop": "Ïong nadan",
+    "minutesShort": "min",
+    "clinicalNote": "Ka SmritiSetu ka rong ïa ka jingïatylli bad ka jingiaid sha ka jingpynithuh ïa kaba thrang na ka por. Kane um dei ka jingïaid duna. Khang ïa u nong-lakriah.",
+    "install": "Install app",
+    "cardFaceDown": "Card ba shong tluid",
+    "tapWhenHeard": "Nga la sngap!"
   },
   "roles": {
+    "choosePrompt": "Mynta u/ka ei kin pyndonkam ïa ka SmritiSetu?",
     "patient": "Nga kwah dulïióh",
     "caregiver": "Nga u/ka nongïalam"
   },
   "onboarding": {
-    "welcome": "Khublei sha SmritiSetu"
+    "welcome": "Khublei sha SmritiSetu",
+    "chooseLanguage": "Pdiang ïa ka ktien phi",
+    "chooseLanguageBody": "Toh ïa ka ktien kaba phi lah ban bteng ïa ka bha.",
+    "setupPatientName": "Kaba u/ka nongïatiit u kyrteng eiei?",
+    "setupPatientNamePlaceholder": "Sar kyrteng",
+    "setupCaregiverPin": "Thoh kawei ka PIN ba 4 ïa u nongïalam",
+    "setupCaregiverPinConfirm": "Sar ïa ka PIN haduh",
+    "setupComplete": "Ban long jrong sa!",
+    "setupCompleteBody": "Ka SmritiSetu ka la pyndep sa ban leit dulïióh, na ka internet ne cha.",
+    "getStarted": "Ïai"
+  },
+  "caregiverAuth": {
+    "title": "Login jong u Nongïalam",
+    "enterPin": "Sar ïa ka PIN jong phi",
+    "wrongPin": "Kane ka PIN um khlaiñ. Buit shuwa.",
+    "tooManyAttempts": "Bun shibun ka jingbuit ba khlaiñ. Buit shuwa ha {{seconds}} second.",
+    "scanQr": "Ne scan ïa ka QR code jong phi",
+    "logout": "Log Out"
+  },
+  "adminAuth": {
+    "title": "Login jong Admin",
+    "enterPin": "Sar ïa ka PIN admin",
+    "wrongPin": "Kane ka PIN um khlaiñ. Buit shuwa.",
+    "panelTitle": "Admin Panel",
+    "entryLink": "Admin Panel"
+  },
+  "adminPanel": {
+    "totalPatients": "Jingïap ki Nongïatiit",
+    "totalCaregivers": "Jingïap ki Nongïalam",
+    "totalSessions": "Jingïap ki Session",
+    "patients": "Ki Nongïatiit",
+    "addPatient": "Thap Nongïatiit",
+    "activePatient": "Nongïatiit Kaba Long",
+    "setActive": "Pynlong",
+    "caregivers": "Ki Nongïalam",
+    "role": "Jinglong",
+    "resetPin": "Pynthrew ka PIN",
+    "newPin": "PIN Bathymmai",
+    "languages": "Ktien",
+    "complete": "Bym Shai",
+    "beta": "Beta",
+    "dataTools": "Kit Jingpyndep",
+    "exportAllData": "Export ïa baroh ki data",
+    "dangerZone": "Ka Jaka Basoh",
+    "resetAllDataBody": "Kane ka pynïap ïa baroh ki data ha kane ka device. Thoh \"{{word}}\" ban jia jan.",
+    "resetAllData": "Pynïap baroh ki data"
+  },
+  "patientHome": {
+    "greeting": "Khublei, {{name}}",
+    "todaysSet": "Ki dulïióh mynta",
+    "todaysSetBody": "Lai ki dulïióh ba la pdiang ïa mynta",
+    "moreGames": "Baroh ki Dulïióh",
+    "playAgain": "Leit dulïióh haduh",
+    "streakLabel": "{{count}} sngi na jajan",
+    "newBadge": "Bathymmai"
   },
   "domains": {
     "memory": "Jingmut",
@@ -27,18 +113,177 @@
     "pattern": "Ka jinglaitluid",
     "orientation": "Ka jinghikai mo bad kata sngi"
   },
+  "reminders": {
+    "title": "Mynta",
+    "medicine": "Sla",
+    "hydration": "Um",
+    "activity": "Jingïaid",
+    "appointment": "Jingïalam bad nongïalam",
+    "markTaken": "Pynkylla ba la ïoh",
+    "taken": "La ïoh",
+    "takenAt": "La ïoh ha {{time}}",
+    "noneToday": "Ym don shuwa ban pyndep mynta. Long ka bha!",
+    "manageTitle": "Rong ïa ki reminder",
+    "addReminder": "Thap reminder",
+    "label": "Kane ka dei ïa ei?",
+    "schedule": "Por",
+    "category": "Bynta",
+    "withWhom": "Bad u/ka mano",
+    "notes": "Jingthoh"
+  },
+  "familyManager": {
+    "title": "Ïing bad ki Khmat",
+    "body": "Thap ki gambar, kyrteng bad jingong ïa ka Naam Yaad.",
+    "addMember": "Thap ïa u/ka nong ïing",
+    "name": "Kyrteng",
+    "relation": "Jingïarap",
+    "photo": "Gambar",
+    "voiceNote": "Jingong (ym pyndonkam)",
+    "recordVoiceNote": "Record ïa ka jingong",
+    "reRecord": "Record haduh",
+    "noMembers": "Ym don shuwa u nong ïing kaba la thap."
+  },
+  "dashboard": {
+    "title": "Dashboard jong Nongïalam",
+    "trends": "Ka jingïatylli na ka por",
+    "last30": "Ki sngi 30 ba la ïeh",
+    "last90": "Ki sngi 90 ba la ïeh",
+    "domainBalance": "Ka jingïatylli jong ki bynta",
+    "domainBalanceBody": "Kumno u/ka {{name}} u/ka leit dulïióh ïa baroh ki bynta 5",
+    "adaptiveLog": "Log jong jingthrew level",
+    "adaptiveLogBody": "Baroh ka jingthrew level bad ka jingïalam",
+    "adherence": "Jingdonkam reminder",
+    "streak": "Jajan mynta",
+    "weeklySummary": "Jingthrai jong kane ka bnai",
+    "exportPdf": "Export PDF",
+    "exportCsv": "Export CSV",
+    "disclaimer": "Kane ka dashboard ka pynithuh ïa ka jingïatylli ban khang bad u nong-lakriah. Kane um dei ka jingïaid duna.",
+    "noData": "Ym don shuwa bunom data — leit dulïióh kai kai lyngba.",
+    "demoPanel": "Demo Offline / Sync",
+    "airplaneMode": "Pyndonkam ïa ka Offline (Airplane Mode)",
+    "forceSyncNow": "Sync mynta",
+    "settings": "Settings",
+    "extraLargeText": "Jingthoh kaba lyoh dkhot",
+    "highContrastPalette": "Jinglaitluid Rong",
+    "language": "Ktien"
+  },
+  "orientationCheckin": {
+    "whatDay": "Mynta ka sngi eiei?",
+    "whatTime": "Mynta kaba por eiei?",
+    "whatSeason": "Mynta ka bnai eiei?",
+    "days": {
+      "sunday": "Ka Miet Sunday",
+      "monday": "Ka Miet Monday",
+      "tuesday": "Ka Miet Tuesday",
+      "wednesday": "Ka Miet Wednesday",
+      "thursday": "Ka Miet Thursday",
+      "friday": "Ka Miet Friday",
+      "saturday": "Ka Miet Saturday"
+    },
+    "times": {
+      "morning": "Mynshynrang",
+      "afternoon": "Miatngor",
+      "evening": "Sngap-miet",
+      "night": "Miet"
+    },
+    "seasons": {
+      "winter": "Ka bnai riñiaw",
+      "summer": "Ka bnai khyndew",
+      "monsoon": "Ka bnai slap",
+      "autumn": "Ka bnai lyoh"
+    }
+  },
   "games": {
     "smriti-cards": {
       "name": "Smriti Cards",
-      "instructions": "Toh ar cards ban thied ïa kiba don ka jingïatylli."
+      "meaning": "Card jingmut",
+      "tagline": "Ïatylli ki jong",
+      "instructions": "Toh ar cards ban thied ïa kiba don ka jingïatylli. Buit shuwa ban mut hate ka gambar ha hangne.",
+      "clinicalMapping": "Ïalam bad ka jingtylli gambar ka pyndonkam ïa ka jingmut kaba treikam (MoCA) bad ka jinghikai ktien (ADAS-Cog)."
+    },
+    "smriti-katha": {
+      "name": "Smriti Katha",
+      "meaning": "Jingmut khanatang",
+      "tagline": "Sngap khanatang",
+      "instructions": "Sngap kawei ka khanatang bajrong, namar toh gambar ban dang ki jingkylli baba khie.",
+      "clinicalMapping": "Ka pyndonkam ïa ka jingmut jong ka por bad ka jingmut ktien (MoCA, ADAS-Cog) lyngba ka khanatang sngi baba."
     },
     "naam-yaad": {
       "name": "Naam Yaad",
-      "instructions": "Toh ïa ka kyrteng ba heh."
+      "meaning": "Khmat bad Kyrteng",
+      "tagline": "Ïarap ki ïing",
+      "instructions": "Ka gambar jong u/ka ba phi tip ka la ïoh lang. Toh ïa u kyrteng khlaiñ.",
+      "clinicalMapping": "Ka pyndonkam ïa ka jinghikai kaba don donkam lyngba ki gambar ïing ba tarik (MoCA/ADAS-Cog)."
+    },
+    "dhyan-dhaam": {
+      "name": "Dhyan Dhaam",
+      "meaning": "Jingpyrshit mynsiem",
+      "tagline": "Wad ïa ka pattern ba khlaiñ",
+      "instructions": "Toh ïa baroh tile kiba khlaiñ bad ka pattern kaba pynithuh ha khwan.",
+      "clinicalMapping": "Ka pyndonkam ïa ka jingjop mynsiem bad ka hukum (MoCA, ADAS-Cog)."
+    },
+    "ginti-dhyan": {
+      "name": "Ginti Dhyan",
+      "meaning": "Dulïióh grep",
+      "tagline": "Grep ha ka jingdur",
+      "instructions": "Toh ïa ki number na kaba jrong haduh, ha ka jingdur jong ka grep.",
+      "clinicalMapping": "Ka pyndonkam ïa ka jingjop mynsiem bad ka jingmut ba don kam (MoCA digit span)."
+    },
+    "awaaz-pehchan": {
+      "name": "Awaaz Pehchan",
+      "meaning": "Jinghikai jingong",
+      "tagline": "Sngap ïa ka jingong",
+      "instructions": "Sngap bha. Toh ïa ka button namar lada phi la sngap ïa ka ktien ne jingong ba dei.",
+      "clinicalMapping": "Ka pyndonkam ïa ka jingjop mynsiem lyngba jingsngap (MoCA), khlem jingpule."
+    },
+    "dinacharya-sequence": {
+      "name": "Dinacharya Sequence",
+      "meaning": "Jingdur sngi",
+      "tagline": "Pynshong ïa ka sngi",
+      "instructions": "Sun ïa ki card gambar sha ka jingdur baba pyndep bynta sngi.",
+      "clinicalMapping": "Ka pyndonkam ïa ka ïarap jong ka jingpyndep (IADL)."
+    },
+    "bazaar-list": {
+      "name": "Bazaar List",
+      "meaning": "List bazaar",
+      "tagline": "Rakhap ïa ka list",
+      "instructions": "Sngap ïa ka list bazaar, namar toh khlem kiba don ha ka grid.",
+      "clinicalMapping": "Ka pyndonkam ïa ka jingmut bad ka jingpyndep (IADL)."
+    },
+    "ghar-ka-kaam": {
+      "name": "Ghar ka Kaam",
+      "meaning": "Kaam ïing",
+      "tagline": "Ïatylli hukum bad kaam",
+      "instructions": "Toh ïa u hukum ïing, namar toh ïa ka kaam kaba pyndonkam.",
+      "clinicalMapping": "Ka pyndonkam ïa ka jingïarap hukum-kaam (IADL)."
+    },
+    "aakar-milan": {
+      "name": "Aakar Milan",
+      "meaning": "Ïatylli chi",
+      "tagline": "Pynjrong ïa ka pattern",
+      "instructions": "Wad ïa kaba tukra baba pynjrong bha ïa ka pattern.",
+      "clinicalMapping": "Ka pyndonkam ïa ka jinglong bad ka jinghikai (MoCA, ADAS-Cog)."
+    },
+    "chaya-khoj": {
+      "name": "Chaya Khoj",
+      "meaning": "Wad khadduh",
+      "tagline": "Wad ïa ka khadduh",
+      "instructions": "Peit ïa kaba jong, namar toh ïa ka khadduh kaba khlaiñ.",
+      "clinicalMapping": "Ka pyndonkam ïa ka jinglong khmat (MoCA), khlem jingpule."
+    },
+    "naksha-jodo": {
+      "name": "Naksha Jodo",
+      "meaning": "Ïatylli gambar",
+      "tagline": "Pynshong ïa ka chi",
+      "instructions": "Ïatylli ïa ki tukra ban pynshong ïa ka gambar. Long por lem.",
+      "clinicalMapping": "Ka pyndonkam ïa ka jingshong (ADAS-Cog)."
     },
     "aaj-ka-din": {
-      "name": "Sngi Mynta",
-      "instructions": "Bteng ïa kine ki jingkylli ba jop na kaba sngi mynta."
+      "name": "Aaj Ka Din",
+      "meaning": "Jingpule mynta",
+      "tagline": "Jingpule mynta",
+      "instructions": "Khie ïa kajingkylli bajrong ba dei ïa mynta.",
+      "clinicalMapping": "Ka pyndonkam ïa ka jinghikai por bad jaka (MoCA orientation). Kane ym dei jingkai jing haiñ, ka jingpule sngi baba."
     }
   }
 }

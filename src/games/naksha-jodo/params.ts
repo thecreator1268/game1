@@ -1,4 +1,4 @@
-// L1=4 · L2=6 · L3=8 · L4=10 · L5=12 · L6=15 · L7=18 · L8=21 (pieces in the assembly)
+// L1=4 · L2=6 · L3=8 · L4=10 · L5=12 · L6=15 · L7=18 · L8=21 · L9=24 · L10=28 (pieces in the assembly)
 const GRID_BY_LEVEL: Record<number, { rows: number; cols: number }> = {
   1: { rows: 2, cols: 2 },
   2: { rows: 2, cols: 3 },
@@ -8,6 +8,8 @@ const GRID_BY_LEVEL: Record<number, { rows: number; cols: number }> = {
   6: { rows: 3, cols: 5 },
   7: { rows: 3, cols: 6 },
   8: { rows: 3, cols: 7 },
+  9: { rows: 4, cols: 6 },
+  10: { rows: 4, cols: 7 },
 };
 
 export function gridForLevel(level: number) {

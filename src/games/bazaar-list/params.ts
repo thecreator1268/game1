@@ -1,4 +1,4 @@
-// L1=2/8 · L2=3/8 · L3=3/12 · L4=4/12 · L5=4/16 · L6=5/16 · L7=5/20 · L8=6/20 (list length / grid size)
+// L1=2/8 · L2=3/8 · L3=3/12 · L4=4/12 · L5=4/16 · L6=5/16 · L7=5/20 · L8=6/20 · L9=7/24 · L10=8/24 (list length / grid size)
 const LEVELS: Record<number, { listLength: number; gridSize: number }> = {
   1: { listLength: 2, gridSize: 8 },
   2: { listLength: 3, gridSize: 8 },
@@ -8,6 +8,8 @@ const LEVELS: Record<number, { listLength: number; gridSize: number }> = {
   6: { listLength: 5, gridSize: 16 },
   7: { listLength: 5, gridSize: 20 },
   8: { listLength: 6, gridSize: 20 },
+  9: { listLength: 7, gridSize: 24 },
+  10: { listLength: 8, gridSize: 24 },
 };
 
 export function paramsForLevel(level: number) {

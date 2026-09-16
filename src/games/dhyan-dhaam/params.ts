@@ -1,4 +1,4 @@
-// L1=10/20 · L2=12/25 · L3=16/30 · L4=20/35 · L5=24/40 · L6=28/45 · L7=32/50 · L8=36/55
+// L1=10/20 · L2=12/25 · L3=16/30 · L4=20/35 · L5=24/40 · L6=28/45 · L7=32/50 · L8=36/55 · L9=40/60 · L10=44/65
 const LEVELS: Record<number, { gridSize: number; distractorPct: number }> = {
   1: { gridSize: 10, distractorPct: 20 },
   2: { gridSize: 12, distractorPct: 25 },
@@ -8,6 +8,8 @@ const LEVELS: Record<number, { gridSize: number; distractorPct: number }> = {
   6: { gridSize: 28, distractorPct: 45 },
   7: { gridSize: 32, distractorPct: 50 },
   8: { gridSize: 36, distractorPct: 55 },
+  9: { gridSize: 40, distractorPct: 60 },
+  10: { gridSize: 44, distractorPct: 65 },
 };
 
 export function paramsForLevel(level: number) {

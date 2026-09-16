@@ -1,44 +1,289 @@
 {
   "_meta": {
-    "status": "STUB — partial translation only, not reviewed by a native speaker. Do not present as production-ready.",
+    "status": "Best-effort AI-assisted translation for the SIH26003 prototype — not yet reviewed by a native speaker or community linguist. Treat as a solid starting draft, not a certified translation; please correct before any real deployment in Mizoram.",
     "script": "Mizo is written in the Latin alphabet, as used here.",
     "fallback": "Any key missing here falls back to English automatically (see i18n/index.ts)."
   },
   "common": {
     "appName": "SmritiSetu",
     "home": "In",
+    "back": "Kir leh",
     "play": "Inven",
+    "next": "Zawmin",
+    "done": "Zo tawh",
+    "cancel": "Kalsan",
+    "save": "Dah",
+    "edit": "Siam that",
+    "delete": "Paih",
+    "add": "Belh",
+    "yes": "Aw",
+    "no": "Ahai",
+    "loading": "Loading...",
+    "offline": "Offline",
+    "online": "Online",
+    "synced": "Sync a la ni",
+    "syncing": "Sync lai...",
+    "pendingSync": "{{count}} sync ngai la a la awm",
+    "level": "Level",
+    "score": "Score",
+    "today": "Vawiin",
+    "aboutThisGame": "He inven chungchang",
+    "close": "Khar",
     "listen": "Ngaithla",
     "correct": "A dik!",
     "tryAgain": "Beisei leh rawh, harsatna a awm lo",
-    "wellDone": "Ka lawm e!"
+    "wellDone": "Ka lawm e!",
+    "personalBest": "I ṭha lehzual mek!",
+    "takeBreakTitle": "Rei tlem chhawl ang em?",
+    "takeBreakBody": "I inven rei tawh e. Rei tlem chhawlna in a ṭanpui thei.",
+    "takeBreakContinue": "Inven zom zel",
+    "takeBreakStop": "Tunah chhawl",
+    "minutesShort": "min",
+    "clinicalNote": "SmritiSetu chuan ngaihtuahna a ṭanpui a, hun kal zela danglamna chu hriat theih tur a siam. Hei hi zawlnei dan a ni lo. Damdawi enkawltu hmuh ula.",
+    "install": "App install",
+    "cardFaceDown": "Card kal lam",
+    "tapWhenHeard": "Ka hria tawh!"
   },
   "roles": {
+    "choosePrompt": "Tunah SmritiSetu tu nge a hman mek?",
     "patient": "Ka inven duh",
     "caregiver": "Enkawltu ka ni"
   },
   "onboarding": {
-    "welcome": "SmritiSetu-ah kan lo lawm che u"
+    "welcome": "SmritiSetu-ah kan lo lawm che u",
+    "chooseLanguage": "I ṭawng thlang rawh",
+    "chooseLanguageBody": "I awlsam ber ṭawng chu tep rawh.",
+    "setupPatientName": "Damlo hming eng nge ni?",
+    "setupPatientNamePlaceholder": "Hming ziak rawh",
+    "setupCaregiverPin": "Enkawltu tan number 4 PIN siam rawh",
+    "setupCaregiverPinConfirm": "PIN chu ziak leh rawh",
+    "setupComplete": "A zo tawh!",
+    "setupCompleteBody": "SmritiSetu hman ngai a la tawh, internet awm lo pawhin.",
+    "getStarted": "Ṭan rawh"
+  },
+  "caregiverAuth": {
+    "title": "Enkawltu Login",
+    "enterPin": "I PIN kai rawh",
+    "wrongPin": "He PIN hi a dik lo. Beisei leh rawh.",
+    "tooManyAttempts": "Beisei tam lutuk. {{seconds}} chhung zawh chuan beisei leh rawh.",
+    "scanQr": "A nih loh chuan i QR code scan rawh",
+    "logout": "Log Out"
+  },
+  "adminAuth": {
+    "title": "Admin Login",
+    "enterPin": "I admin PIN kai rawh",
+    "wrongPin": "He PIN hi a dik lo. Beisei leh rawh.",
+    "panelTitle": "Admin Panel",
+    "entryLink": "Admin Panel"
+  },
+  "adminPanel": {
+    "totalPatients": "Damlo Zapui",
+    "totalCaregivers": "Enkawltu Zapui",
+    "totalSessions": "Session Zapui",
+    "patients": "Damlo te",
+    "addPatient": "Damlo Belh",
+    "activePatient": "Damlo Hman Mek",
+    "setActive": "Hman Turin Ruat",
+    "caregivers": "Enkawltu te",
+    "role": "Hna",
+    "resetPin": "PIN Siam Ṭha Leh",
+    "newPin": "PIN Thar",
+    "languages": "Ṭawng te",
+    "complete": "A zo",
+    "beta": "Beta",
+    "dataTools": "Data Hman Dan",
+    "exportAllData": "Data Zawng Export",
+    "dangerZone": "Hlauhawm Hmun",
+    "resetAllDataBody": "Hei hian he device-a data zawng kumkhua paih a ni ang. Zawh nan \"{{word}}\" ti ziak rawh.",
+    "resetAllData": "Data Zawng Paih"
+  },
+  "patientHome": {
+    "greeting": "Chibai, {{name}}",
+    "todaysSet": "Vawiin Inven Te",
+    "todaysSetBody": "Vawiin tan inven pathum thlan",
+    "moreGames": "Inven Zawng",
+    "playAgain": "Inven Leh",
+    "streakLabel": "Ni {{count}} zel",
+    "newBadge": "Thar"
   },
   "domains": {
     "memory": "Hriatrengna",
-    "attention": "Ngaihven dan",
-    "routine": "Nikhuaa thiltih",
-    "pattern": "Chhinchhiahna hmel",
-    "orientation": "Hun leh hmun hriatna"
+    "attention": "Ngaihven Dan",
+    "routine": "Nikhuaa Thiltih",
+    "pattern": "Chhinchhiahna Hmel",
+    "orientation": "Hun leh Hmun Hriatna"
+  },
+  "reminders": {
+    "title": "Vawiin",
+    "medicine": "Damdawi",
+    "hydration": "Tui",
+    "activity": "Thiltih",
+    "appointment": "Damdawi Enkawltu Hmuhna",
+    "markTaken": "Dawn Tawh Tiin Chhinchhiah",
+    "taken": "Dawn Tawh",
+    "takenAt": "{{time}} khan dawn",
+    "noneToday": "Tunah thil ruahman a awm lo. Ka lawm e!",
+    "manageTitle": "Hriattirna Enkawl",
+    "addReminder": "Hriattirna Belh",
+    "label": "Hei hi eng tan nge ni?",
+    "schedule": "Hun",
+    "category": "Chi",
+    "withWhom": "Tu nen nge",
+    "notes": "Ziahna"
+  },
+  "familyManager": {
+    "title": "Chhungkaw leh Hmel",
+    "body": "Naam Yaad tan mêl, hming leh aw ziak belh rawh.",
+    "addMember": "Chhungkaw Mi Belh",
+    "name": "Hming",
+    "relation": "Inlaichinna",
+    "photo": "Mêl",
+    "voiceNote": "Aw Ziak (a ngai lo)",
+    "recordVoiceNote": "Aw Ziak Record",
+    "reRecord": "Record Leh",
+    "noMembers": "Tuna thleng mi belh a la awm lo."
+  },
+  "dashboard": {
+    "title": "Enkawltu Dashboard",
+    "trends": "Hun Kal Zela Ṭanchhanna",
+    "last30": "Ni 30 Kal Tawh",
+    "last90": "Ni 90 Kal Tawh",
+    "domainBalance": "Bial Inzeitihna",
+    "domainBalanceBody": "{{name}} chuan bial 5 zawng a inven dan inzeitihna",
+    "adaptiveLog": "Level Danglamna Log",
+    "adaptiveLogBody": "Level danglamna tinreng chhan pêk",
+    "adherence": "Hriattirna Zawhna",
+    "streak": "Tunlai Zel",
+    "weeklySummary": "He Chhung Chhinchhiah",
+    "exportPdf": "PDF Export",
+    "exportCsv": "CSV Export",
+    "disclaimer": "He dashboard hian damdawi enkawltu nena sawi tur ṭanchhanna a lantir. Zawlnei dan a ni lo.",
+    "noData": "Data a la rawn lo — inven ṭhenkhat tih hmasa rawh.",
+    "demoPanel": "Offline / Sync Demo",
+    "airplaneMode": "Offline Dan Entîr (Airplane Mode)",
+    "forceSyncNow": "Tunah Sync",
+    "settings": "Settings",
+    "extraLargeText": "Ziak Lian Tak",
+    "highContrastPalette": "Rong Ruahman",
+    "language": "Ṭawng"
+  },
+  "orientationCheckin": {
+    "whatDay": "Vawiin ni eng nge ni?",
+    "whatTime": "Tunlai hun eng nge ni?",
+    "whatSeason": "Tunlai hnathlak eng nge ni?",
+    "days": {
+      "sunday": "Pathianni",
+      "monday": "Nichhawlnia",
+      "tuesday": "Nihnina",
+      "wednesday": "Nithumnia",
+      "thursday": "Nilaina",
+      "friday": "Nipangnga",
+      "saturday": "Inrinni"
+    },
+    "times": {
+      "morning": "Zingkar",
+      "afternoon": "Chhawmzing",
+      "evening": "Tlai",
+      "night": "Zan"
+    },
+    "seasons": {
+      "winter": "Fawlna",
+      "summer": "Nipui",
+      "monsoon": "Ruahtui",
+      "autumn": "Favang"
+    }
   },
   "games": {
     "smriti-cards": {
       "name": "Smriti Cards",
-      "instructions": "Card inang inzawm tur inven rawh."
+      "meaning": "Hriatrengna Card",
+      "tagline": "Inang Inzawm",
+      "instructions": "Card inang inzawm tur inven rawh. Mêl eng nge a awm ni sut chu hre reng tum rawh.",
+      "clinicalMapping": "Card inang zawm chungin hriatrengna hnuhnung (MoCA) leh ṭawngkam hriatna (ADAS-Cog) nena inzawm."
+    },
+    "smriti-katha": {
+      "name": "Smriti Katha",
+      "meaning": "Hriatrengna Thawnthu",
+      "tagline": "Thawnthu Ngaithla",
+      "instructions": "Thawnthu tlem ngaithla la, mêl thlang chungin a chungchang zawhna awlsam chhang rawh.",
+      "clinicalMapping": "Nikhua thawnthu hmang chungin hun tawm hriatrengna leh ṭawngkam hriatna (MoCA, ADAS-Cog) nena inzawm."
     },
     "naam-yaad": {
       "name": "Naam Yaad",
-      "instructions": "Hming dik tak thlan rawh."
+      "meaning": "Hmel leh Hming",
+      "tagline": "Hming Dik Thlan",
+      "instructions": "I hriat mêl a lang ang. A hming dik tak thlan rawh.",
+      "clinicalMapping": "Damlo chhungkaw mêl dik hmang chungin hriatna leh hriatchhiahna (MoCA/ADAS-Cog) nena inzawm."
+    },
+    "dhyan-dhaam": {
+      "name": "Dhyan Dhaam",
+      "meaning": "Ngaihven Zirna",
+      "tagline": "Inang Zawng",
+      "instructions": "Chunglam a lantir zir chi zawng inang tile apiang tep rawh.",
+      "clinicalMapping": "Ngaihven zui reng leh hriatchhiahna hna (MoCA, ADAS-Cog) nena inzawm."
+    },
+    "ginti-dhyan": {
+      "name": "Ginti Dhyan",
+      "meaning": "Sumfai Inven",
+      "tagline": "Dan Zela Sumfai",
+      "instructions": "Number te chu tlem ber ata ṭan la, sumfai dan zelin tep rawh.",
+      "clinicalMapping": "Ngaihven leh hna thawk hriatrengna (MoCA digit span) nena inzawm, upa mi ang taka hmang tur."
+    },
+    "awaaz-pehchan": {
+      "name": "Awaaz Pehchan",
+      "meaning": "Aw Hriatna",
+      "tagline": "Aw Ngaithla",
+      "instructions": "Ngun taka ngaithla rawh. Aw pawimawh chu i hriat chauhin button tep rawh.",
+      "clinicalMapping": "Ngaihven zui reng (MoCA attention) nena inzawm, aw chauh chunga innghat, chhiar theih lo damlo ho tan."
+    },
+    "dinacharya-sequence": {
+      "name": "Dinacharya Sequence",
+      "meaning": "Nikhua Dan",
+      "tagline": "Ni Dan Zel Siam",
+      "instructions": "Mêl card te chu i nikhua tih dan zelin phun rawh.",
+      "clinicalMapping": "Nikhua hna ruahman leh dan zel (IADL) nena inzawm."
+    },
+    "bazaar-list": {
+      "name": "Bazaar List",
+      "meaning": "Bazar Lehkhabu",
+      "tagline": "Lehkhabu Hre Reng",
+      "instructions": "Bazar lehkhabu chu ngaithla la, tichuan a thil te chauh grid-ah zawng rawh.",
+      "clinicalMapping": "Nikhua hna lehkhabu hriatrengna leh IADL ruahman nena inzawm."
+    },
+    "ghar-ka-kaam": {
+      "name": "Ghar ka Kaam",
+      "meaning": "In Hna",
+      "tagline": "Hmanrua leh Hna Inzawm",
+      "instructions": "In hmanrua pakhat tep la, tichuan a hman hna chu tep rawh.",
+      "clinicalMapping": "Nikhua thil-hman inzawmna nena inzawm, IADL enna a lo lang hmasa ber ṭheuh."
+    },
+    "aakar-milan": {
+      "name": "Aakar Milan",
+      "meaning": "Chi Inzawm",
+      "tagline": "Zir Chi Tidip",
+      "instructions": "Zir chi dik taka tidip thei chhawn chu zawng rawh.",
+      "clinicalMapping": "Chhun-lam thiam leh hna thawk theihna (MoCA, ADAS-Cog) nena inzawm."
+    },
+    "chaya-khoj": {
+      "name": "Chaya Khoj",
+      "meaning": "Duihlim Zawng",
+      "tagline": "Duihlim Zawng",
+      "instructions": "Thil chu en la, a inang duihlim chu tep rawh.",
+      "clinicalMapping": "Chhun-lam inzawmna (MoCA visuospatial) nena inzawm, chhiar a ngai lo."
+    },
+    "naksha-jodo": {
+      "name": "Naksha Jodo",
+      "meaning": "Mêl Zawm",
+      "tagline": "Zir Siam",
+      "instructions": "Chhawn lian te chu inzawm chungin mêl chu siam rawh. Hun la in ti hlek rawh.",
+      "clinicalMapping": "Siamna leh gathon theihna (ADAS-Cog) nena inzawm."
     },
     "aaj-ka-din": {
-      "name": "Tunni",
-      "instructions": "Tunni chungchang zawhna malsawi tak thleng rawh."
+      "name": "Aaj Ka Din",
+      "meaning": "Vawiin Chhinchhiahna",
+      "tagline": "Vawiin Zawhna",
+      "instructions": "Vawiin chungchang zawhna awlsam tam thleng chhang rawh.",
+      "clinicalMapping": "Hun leh hmun hriatna (MoCA orientation) nena inzawm. Hei hi nikhua enna a ni, harsatna zirna a ni lo."
     }
   }
 }

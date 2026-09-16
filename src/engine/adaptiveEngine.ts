@@ -15,7 +15,7 @@
 // (session logging, dashboard, UI) needs to change.
 
 export const MIN_LEVEL = 1;
-export const MAX_LEVEL = 8;
+export const MAX_LEVEL = 10;
 export const WINDOW_SIZE = 5;
 export const LEVEL_UP_ACCURACY_THRESHOLD = 0.8;
 export const LEVEL_DOWN_ACCURACY_THRESHOLD = 0.4;

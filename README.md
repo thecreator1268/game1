@@ -119,7 +119,7 @@ for that game.
 
 ## Adaptive difficulty engine (`src/engine/adaptiveEngine.ts`)
 
-An explainable staircase algorithm, **8 discrete levels** per game:
+An explainable staircase algorithm, **10 discrete levels** per game:
 
 - Tracks a rolling window of the last **5 attempts** at the patient's current level.
 - **Level up** when accuracy ≥ 80% over the window *and* response time is trending
@@ -173,18 +173,22 @@ since it's a check-in, not part of the rotation.
 
 ## Multilingual & voice support
 
-- **Complete UI translations:** English, Hindi, Assamese (`src/i18n/{en,hi,as}.json`).
-- **Partial/stub translations** (a handful of key strings + a few game
-  instructions, each file flagged with a `_meta.status` note): Manipuri (Bengali
-  script — see that file's `_meta.scriptChoice` for why, and why it isn't settled),
-  Khasi, Mizo, Nagamese. None of these are machine-translated wholesale and presented
-  as complete; any missing key falls back to English automatically
-  (`i18n/index.ts`).
-- Every instruction has a speaker-icon button that reads it aloud via
-  `SpeechSynthesisUtterance` in the patient's language; if no matching voice is
-  installed (very likely for as/mni/kha/lus/nsm on most devices today), it falls back
-  to a pre-recorded clip path and then to English TTS — audio never blocks the tap
-  targets underneath it (`src/lib/speech.ts`).
+- **High-resource, native-quality UI translations:** English, Hindi, Assamese
+  (`src/i18n/{en,hi,as}.json`).
+- **Full-structure translations for four North Eastern Region languages** —
+  Manipuri (Bengali script — see that file's `_meta.scriptChoice` for why, and why
+  it isn't settled), Khasi, Mizo, Nagamese (`src/i18n/{mni,kha,lus,nsm}.json`). Every
+  key in the UI (including all 13 game names/taglines/instructions) has a
+  translation, but each file is flagged with a `_meta.status` note: these are
+  AI-assisted best-effort drafts, not yet reviewed by a native speaker or community
+  linguist. Any key that's still missing anywhere falls back to English
+  automatically (`i18n/index.ts`).
+- **TTS is opt-in everywhere, never automatic.** A speaker-icon button next to the
+  relevant text reads it aloud on tap via `SpeechSynthesisUtterance`, in the
+  patient's language; it never plays on its own when a screen loads. If no matching
+  voice is installed (very likely for as/mni/kha/lus/nsm on most devices today), it
+  falls back to a pre-recorded clip path and then to English TTS — audio never
+  blocks the tap targets underneath it (`src/lib/speech.ts`).
 - **Smriti Katha, Awaaz Pehchan, and Aaj Ka Din are voice-first**: fully playable with
   audio alone and tap-only responses, zero required reading.
 - **Known limitation:** bespoke game *content* (the 3 Smriti Katha stories, the word
@@ -209,6 +213,37 @@ since it's a check-in, not part of the rotation.
   (`vite-plugin-pwa`), verified via `docker compose run --rm web npm run build`
   producing per-game chunks (see build output — each game is ~2–6KB gzipped).
 
+## Admin Panel (`/admin`, `src/admin/AdminOverview.tsx`)
+
+A third, PIN-gated role alongside patient and caregiver, for the person who set up
+a device or manages several patients (a family running more than one profile on a
+shared tablet, or a clinic/NGO deployment):
+
+- The caregiver who completes first-time onboarding on a device is automatically
+  the admin for that install (`role: 'admin'` on their `Caregiver` record) — there's
+  no separate signup step. Auth is a separate in-memory session
+  (`store/adminAuthStore.ts`) from the caregiver dashboard's, gated by its own PIN
+  entry (`/admin/login`), reusing the same `PinPad` component (with the same
+  5-attempt lockout) as caregiver login.
+- **Patients:** every patient record on the device, with a session count and a
+  one-tap "Set Active" switch — this is what turns the "single active patient"
+  limitation into a real multi-patient switcher. "Add Patient" creates another
+  profile without re-running onboarding.
+- **Caregivers:** every caregiver record, their role, and a "Reset PIN" action that
+  generates a new random PIN, hashes and stores it, and shows the plaintext PIN once
+  (never persisted or logged in the clear).
+- **Languages:** a read-only status view of `SUPPORTED_LANGUAGES`, useful for a
+  deployment to quickly see which languages are fully wired up.
+- **Data tools:** a one-click JSON export of every table (caregiver PIN hashes are
+  deliberately excluded from the export — a backup file is not the place for auth
+  material), and a "Danger Zone" full data reset gated behind typing a literal
+  confirmation word, not just a click, before it does anything irreversible.
+
+The entry point is a small, deliberately unobtrusive text link on the role-select
+screen (`RoleSelect.tsx`) — not a third big button next to "I want to play" /
+"I am a caregiver", so it doesn't add a confusing extra choice to the one screen a
+patient with cognitive impairment sees on every app launch.
+
 ## Data model (Dexie, `src/db/schema.ts` / `src/db/types.ts`)
 
 Matches the brief closely, with two small additions: a `reminderLogs` table (so
@@ -225,29 +260,34 @@ settings need somewhere to live).
   All are functionally real cognitive tasks, but the visuals are a hackathon
   stand-in for hand-drawn or photographed regional motifs (gamosa/jaapi/Naga shawl
   patterns, real silhouette photography, a real tangram of a bamboo hut).
-- **Single patient per household**, matching the real use case in the problem
-  statement, but the data model supports more — a patient switcher is the natural
-  next step, not a schema change.
+- **Single active patient per device at a time**, matching the primary use case in
+  the problem statement, but the data model always supported more than one patient
+  record — the Admin Panel (below) now exposes that as a real patient switcher for
+  households or institutions running SmritiSetu across several patients on one
+  tablet.
 - **PIN auth is a lightweight gate**, not a security boundary — it keeps a patient
-  from wandering into the dashboard, not a defense against a determined adult.
+  from wandering into the dashboard or admin panel, not a defense against a
+  determined adult. A short lockout after 5 wrong PIN attempts discourages idle
+  keypad-mashing, but this is still not meant to resist a determined attacker.
 - **The `/sync` backend is mocked** (`src/sync/mockServer.ts`) — it simulates
   latency and keeps a local received-count, so the offline→online flow is fully
   demoable, but there's no real server persisting data across devices yet.
 - **TTS voice coverage depends entirely on the device.** Hindi and English are
   reliable on most Android/Chrome devices; Assamese support is inconsistent; the four
-  stub languages fall back to English audio (flagged, not hidden).
+  North Eastern Region languages fall back to English audio (flagged, not hidden).
 - **The adaptive engine is a rule-based staircase**, deliberately — it needs zero
   training data and runs fully on-device, which matters for an offline-first app. The
   extension point for a learned model is real (see above), not aspirational filler.
 
 ## Roadmap
 
-1. Native-speaker review and completion of the four stub-language translation files,
+1. Native-speaker/community review of the four North Eastern Region language
+   translation files (they're structurally complete but AI-assisted and unreviewed),
    and a decision (with community input, not just engineering convenience) on Meitei
    Mayek vs. Bengali script for Manipuri.
 2. Replace placeholder visuals with commissioned regional artwork per game.
-3. Real backend for `/sync` with per-clinic or per-family account boundaries, and a
-   multi-patient/multi-caregiver switcher in the UI.
+3. Real backend for `/sync` with per-clinic or per-family account boundaries, feeding
+   the same multi-patient Admin Panel that already exists client-side.
 4. Native background push notifications where the OS/device reliably supports them,
    as a second channel alongside the in-app "Today" reminders card.
 5. A small aggregated, anonymized cross-patient dataset (with consent) to prototype

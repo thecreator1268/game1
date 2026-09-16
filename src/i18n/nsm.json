@@ -1,24 +1,110 @@
 {
   "_meta": {
-    "status": "STUB — partial translation only, not reviewed by a native speaker. Do not present as production-ready.",
+    "status": "Best-effort AI-assisted translation for the SIH26003 prototype — not yet reviewed by a native speaker or community linguist. Treat as a solid starting draft, not a certified translation; please correct before any real deployment in Nagaland/Assam.",
     "script": "Nagamese is written in the Latin alphabet, as used here.",
     "fallback": "Any key missing here falls back to English automatically (see i18n/index.ts)."
   },
   "common": {
     "appName": "SmritiSetu",
     "home": "Ghor",
+    "back": "Pichoni",
     "play": "Khela koribi",
+    "next": "Aru",
+    "done": "Hoi jaise",
+    "cancel": "Rakhi dibi",
+    "save": "Rakhibi",
+    "edit": "Bodli koribi",
+    "delete": "Mussi dibi",
+    "add": "Jusi dibi",
+    "yes": "Hoi",
+    "no": "Nai",
+    "loading": "Loading hoise...",
+    "offline": "Offline",
+    "online": "Online",
+    "synced": "Sync hoise",
+    "syncing": "Sync hoi thake...",
+    "pendingSync": "{{count}} ta sync baki ase",
+    "level": "Level",
+    "score": "Number",
+    "today": "Aji",
+    "aboutThisGame": "Ei khela laga kotha",
+    "close": "Bondo koribi",
     "listen": "Huni lobi",
     "correct": "Thik ase!",
     "tryAgain": "Aru ekbar cheshta koribi, joldi nai",
-    "wellDone": "Bhal korise!"
+    "wellDone": "Bhal korise!",
+    "personalBest": "Apuni age pora bhal hoi thakise!",
+    "takeBreakTitle": "Olop aram loba?",
+    "takeBreakBody": "Apuni bosi khela korise. Olop aram bhal hobo.",
+    "takeBreakContinue": "Khela cholai jabi",
+    "takeBreakStop": "Etiya aram lobi",
+    "minutesShort": "min",
+    "clinicalNote": "SmritiSetu mon laga kaam bhal koribole aru somoy logote ki bodol hoise etu dekhibole modot kore. Etu kunu rogor porikha nohoi. Daktor logot kotha koribi.",
+    "install": "App install koribi",
+    "cardFaceDown": "Ulta card",
+    "tapWhenHeard": "Moi hunise!"
   },
   "roles": {
+    "choosePrompt": "Etiya SmritiSetu kun use koridi ase?",
     "patient": "Moi khela mangise",
     "caregiver": "Moi dekha-bhal koridi thaka manu"
   },
   "onboarding": {
-    "welcome": "SmritiSetu te apnalok ke swagot"
+    "welcome": "SmritiSetu te apnalok ke swagot",
+    "chooseLanguage": "Apuni laga bhasha basi lobi",
+    "chooseLanguageBody": "Juntu bhasha te apuni aram pai etu chapi dibi.",
+    "setupPatientName": "Rogi laga naam ki?",
+    "setupPatientNamePlaceholder": "Naam likhibi",
+    "setupCaregiverPin": "Dekha-bhal koridi thaka manu laga 4 number PIN bonabi",
+    "setupCaregiverPinConfirm": "PIN aru ekbar dibi",
+    "setupComplete": "Sob taiyar ase!",
+    "setupCompleteBody": "SmritiSetu etiya use koribole taiyar ase, internet nathakile bhi.",
+    "getStarted": "Shuru koribi"
+  },
+  "caregiverAuth": {
+    "title": "Dekha-bhal koridi thaka manu laga login",
+    "enterPin": "Apuni laga PIN dibi",
+    "wrongPin": "Ei PIN thik nohoi. Aru ekbar cheshta koribi.",
+    "tooManyAttempts": "Bisi bar golti hoise. {{seconds}} second pichot aru cheshta koribi.",
+    "scanQr": "Nohoile apuni laga QR code scan koribi",
+    "logout": "Logout koribi"
+  },
+  "adminAuth": {
+    "title": "Admin login",
+    "enterPin": "Apuni laga admin PIN dibi",
+    "wrongPin": "Ei PIN thik nohoi. Aru ekbar cheshta koribi.",
+    "panelTitle": "Admin Panel",
+    "entryLink": "Admin Panel"
+  },
+  "adminPanel": {
+    "totalPatients": "Sob rogi",
+    "totalCaregivers": "Sob dekha-bhal koridi thaka manu",
+    "totalSessions": "Sob session",
+    "patients": "Rogi khan",
+    "addPatient": "Rogi jusi dibi",
+    "activePatient": "Active rogi",
+    "setActive": "Active koribi",
+    "caregivers": "Dekha-bhal koridi thaka manu khan",
+    "role": "Kaam",
+    "resetPin": "PIN notun koribi",
+    "newPin": "Notun PIN",
+    "languages": "Bhasha khan",
+    "complete": "Pura",
+    "beta": "Beta",
+    "dataTools": "Data laga tool",
+    "exportAllData": "Sob data export koribi",
+    "dangerZone": "Bhoi laga jaga",
+    "resetAllDataBody": "Ei kaam pora ei device laga sob data hodai laga bhabe mussi jabo. Cholai jabole \"{{word}}\" likhibi.",
+    "resetAllData": "Sob data mussi dibi"
+  },
+  "patientHome": {
+    "greeting": "Nomoskar, {{name}}",
+    "todaysSet": "Aji laga khela khan",
+    "todaysSetBody": "Aji laga bacha tin ta khela",
+    "moreGames": "Sob khela",
+    "playAgain": "Aru khela koribi",
+    "streakLabel": "{{count}} din lagatar",
+    "newBadge": "Notun"
   },
   "domains": {
     "memory": "Mon te thaka kotha",
@@ -27,18 +113,177 @@
     "pattern": "Rong-dhong chini lobi",
     "orientation": "Din aru jagah chini lobi"
   },
+  "reminders": {
+    "title": "Aji",
+    "medicine": "Dawai",
+    "hydration": "Pani",
+    "activity": "Kaam-kaj",
+    "appointment": "Daktor logot dekha",
+    "markTaken": "Loi loise koi chihno dibi",
+    "taken": "Loi loise",
+    "takenAt": "{{time}} te loise",
+    "noneToday": "Etiya kiba thik nai. Bhal korise!",
+    "manageTitle": "Reminder manage koribi",
+    "addReminder": "Reminder jusi dibi",
+    "label": "Etu ki laga?",
+    "schedule": "Somoy",
+    "category": "Kisim",
+    "withWhom": "Kun logot",
+    "notes": "Kotha"
+  },
+  "familyManager": {
+    "title": "Poriwar aru mukh khan",
+    "body": "Naam Yaad khela laga bahar photo, naam aru awaz jusi dibi.",
+    "addMember": "Poriwar laga manu jusi dibi",
+    "name": "Naam",
+    "relation": "Rishta",
+    "photo": "Photo",
+    "voiceNote": "Awaz laga kotha (jodi lage)",
+    "recordVoiceNote": "Awaz record koribi",
+    "reRecord": "Aru ekbar record koribi",
+    "noMembers": "Etiya tak kunu manu jusa nai."
+  },
+  "dashboard": {
+    "title": "Dekha-bhal koridi thaka manu laga dashboard",
+    "trends": "Somoy logote unnoti",
+    "last30": "Pichila 30 din",
+    "last90": "Pichila 90 din",
+    "domainBalance": "Sob field laga balance",
+    "domainBalanceBody": "{{name}} sob 5 ta field te kineka somoke khela ase",
+    "adaptiveLog": "Level bodol laga log",
+    "adaptiveLogBody": "Sob level-bodol laga karon logote",
+    "adherence": "Reminder mana",
+    "streak": "Etiya laga lagatar",
+    "weeklySummary": "Ei hapta laga chutu kotha",
+    "exportPdf": "PDF export koribi",
+    "exportCsv": "CSV export koribi",
+    "disclaimer": "Ei dashboard te daktor logot kotha koribole trend dekhai. Etu kunu rogor porikha nohoi.",
+    "noData": "Etiya tak data nai — poila kisu khela koribi.",
+    "demoPanel": "Offline / Sync demo",
+    "airplaneMode": "Offline mood cheshta koribi (Airplane mood)",
+    "forceSyncNow": "Etiya sync koribi",
+    "settings": "Settings",
+    "extraLargeText": "Dangor akhor",
+    "highContrastPalette": "Rong laga scheme",
+    "language": "Bhasha"
+  },
+  "orientationCheckin": {
+    "whatDay": "Aji kun din ase?",
+    "whatTime": "Etiya din laga kun somoy ase?",
+    "whatSeason": "Etiya kun mausom ase?",
+    "days": {
+      "sunday": "Robibar",
+      "monday": "Sombar",
+      "tuesday": "Mongolbar",
+      "wednesday": "Budhbar",
+      "thursday": "Brihospotibar",
+      "friday": "Shukurbar",
+      "saturday": "Sonibar"
+    },
+    "times": {
+      "morning": "Bihane",
+      "afternoon": "Dupure",
+      "evening": "Gomali",
+      "night": "Rati"
+    },
+    "seasons": {
+      "winter": "Sit kal",
+      "summer": "Gorom kal",
+      "monsoon": "Boroxun kal",
+      "autumn": "Xorot kal"
+    }
+  },
   "games": {
     "smriti-cards": {
       "name": "Smriti Cards",
-      "instructions": "Milikena thaka card duita bisari bi."
+      "meaning": "Mon te thaka card",
+      "tagline": "Jora milai lobi",
+      "instructions": "Milikena thaka card duita bisari bi. Kun photo kot ase etu mon te rakhibole cheshta koribi.",
+      "clinicalMapping": "Photo jora milai kena purana kotha mon te loi kena rakha (MoCA) aru chini pora (ADAS-Cog) logote milise."
+    },
+    "smriti-katha": {
+      "name": "Smriti Katha",
+      "meaning": "Mon te thaka kahani",
+      "tagline": "Kahani hunibi",
+      "instructions": "Ekta chutu kahani hunibi, tar pichot photo basi kena tar bare te sawal laga jowab dibi.",
+      "clinicalMapping": "Hodai koi thaka kahani pora mon te loi kena rakha aru sobdo mon te thaka (MoCA, ADAS-Cog) logote milise."
     },
     "naam-yaad": {
       "name": "Naam Yaad",
-      "instructions": "Thik naam ta bisari chapi bi."
+      "meaning": "Mukh aru naam",
+      "tagline": "Poriwar ke chini lobi",
+      "instructions": "Apuni chini thaka manu laga photo ahibo. Tai laga thik naam ta chapi dibi.",
+      "clinicalMapping": "Rogi laga asol poriwar laga photo loi kena manu chini pora (MoCA/ADAS-Cog) logote milise."
+    },
+    "dhyan-dhaam": {
+      "name": "Dhyan Dhaam",
+      "meaning": "Mon dibole abhyas",
+      "tagline": "Milikena thaka rong-dhong bisaribi",
+      "instructions": "Upor te dikhai thaka rong-dhong logot milikena thaka sob tile te chapi dibi.",
+      "clinicalMapping": "Lagatar mon dibole aru bisi kotha te pora hisab (MoCA, ADAS-Cog) logote milise."
+    },
+    "ginti-dhyan": {
+      "name": "Ginti Dhyan",
+      "meaning": "Ginti laga khela",
+      "tagline": "Kromot ginti koribi",
+      "instructions": "Number khan sob pora sano pora shuru kori kena, ginti laga kromot chapi dibi.",
+      "clinicalMapping": "Mon dibole aru kaam koridi thaka mon te thaka kotha (MoCA digit span) logote milise, bura manu khan laga gati te."
+    },
+    "awaaz-pehchan": {
+      "name": "Awaaz Pehchan",
+      "meaning": "Awaz laga khela",
+      "tagline": "Awaz hunibole",
+      "instructions": "Mon dikena hunibi. Lokkho sobdo nohoile awaz hunile he button chapi dibi.",
+      "clinicalMapping": "Lagatar awaz te mon dibole (MoCA attention) logote milise, purah pora awaz pora he, kom pori thaka rogi khan laga babe."
+    },
+    "dinacharya-sequence": {
+      "name": "Dinacharya Sequence",
+      "meaning": "Din laga krom",
+      "tagline": "Din ta krom te lagabi",
+      "instructions": "Photo laga card khan apuni hodai din te kora kromot lagai dibi.",
+      "clinicalMapping": "Hodai laga kaam laga plan aru krom (IADL) logote milise."
+    },
+    "bazaar-list": {
+      "name": "Bazaar List",
+      "meaning": "Bazar laga list",
+      "tagline": "List mon te rakhibi",
+      "instructions": "Bazar laga list hunibi, tar pichot khali oi khan he grid te bisaribi.",
+      "clinicalMapping": "Hodai laga kaam laga list mon te rakha aru IADL plan logote milise."
+    },
+    "ghar-ka-kaam": {
+      "name": "Ghar ka Kaam",
+      "meaning": "Ghor laga kaam",
+      "tagline": "Tool aru kaam milai dibi",
+      "instructions": "Ekta ghor laga tool chapi dibi, tar pichot oi kaam ta chapi dibi juntu te tool ta use hoi.",
+      "clinicalMapping": "Hodai laga jinis logot kaam laga sombondho (IADL assessment te poila dikha jaga) logote milise."
+    },
+    "aakar-milan": {
+      "name": "Aakar Milan",
+      "meaning": "Rong-dhong milai",
+      "tagline": "Rong-dhong pura koribi",
+      "instructions": "Juntu tukra pora rong-dhong ta thik pora pura hoi etu bisaribi.",
+      "clinicalMapping": "Chokh pora dikhi kena jaga chini pora aru kaam kora hisab (MoCA visuospatial, ADAS-Cog) logote milise."
+    },
+    "chaya-khoj": {
+      "name": "Chaya Khoj",
+      "meaning": "Sai bisara",
+      "tagline": "Sai bisaribi",
+      "instructions": "Jinis ta sabi, tar pichot tai laga milikena thaka sai ta chapi dibi.",
+      "clinicalMapping": "Chokh pora dikhi kena jaga milai pora (MoCA visuospatial) logote milise, porha laga dorkar nai."
+    },
+    "naksha-jodo": {
+      "name": "Naksha Jodo",
+      "meaning": "Photo jora",
+      "tagline": "Rong-dhong bonabi",
+      "instructions": "Dangor tukra khan mili kena photo ta bonabi. Somoy loi kena koribi.",
+      "clinicalMapping": "Bonabole aru gathon kora hisab (ADAS-Cog), ghori aki thaka kaam laga ekta aram laga rup."
     },
     "aaj-ka-din": {
-      "name": "Aji Laga Din",
-      "instructions": "Aji laga kisu shaanti sawal laga jowab dibi."
+      "name": "Aaj Ka Din",
+      "meaning": "Aji laga khobor",
+      "tagline": "Aji laga sawal-jowab",
+      "instructions": "Aji laga bare te kisu shaanti sawal laga jowab dibi.",
+      "clinicalMapping": "Somoy aru jaga bujha (MoCA orientation) logote milise. Etu hodai laga cheking, hisab laga abhyas nohoi."
     }
   }
 }

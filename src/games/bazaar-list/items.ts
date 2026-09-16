@@ -25,4 +25,10 @@ export const GROCERY_ITEMS: GroceryItem[] = [
   { id: 'spinach', emoji: '🥬', label: 'Spinach' },
   { id: 'mango', emoji: '🥭', label: 'Mango' },
   { id: 'coconut', emoji: '🥥', label: 'Coconut' },
+  { id: 'apple', emoji: '🍎', label: 'Apple' },
+  { id: 'orange', emoji: '🍊', label: 'Orange' },
+  { id: 'cucumber', emoji: '🥒', label: 'Cucumber' },
+  { id: 'sugar', emoji: '🧂', label: 'Sugar' },
+  { id: 'butter', emoji: '🧈', label: 'Butter' },
+  { id: 'honey', emoji: '🍯', label: 'Honey' },
 ];

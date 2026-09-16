@@ -1,4 +1,4 @@
-// L1=3 · L2=4 · L3=5 · L4=6 · L5=8 · L6=9 · L7=10 · L8=12
+// L1=3 · L2=4 · L3=5 · L4=6 · L5=8 · L6=9 · L7=10 · L8=12 · L9=14 · L10=16
 const PAIRS_BY_LEVEL: Record<number, number> = {
   1: 3,
   2: 4,
@@ -8,6 +8,8 @@ const PAIRS_BY_LEVEL: Record<number, number> = {
   6: 9,
   7: 10,
   8: 12,
+  9: 14,
+  10: 16,
 };
 
 export function pairsForLevel(level: number): number {

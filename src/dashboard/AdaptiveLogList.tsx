@@ -18,6 +18,8 @@ export function AdaptiveLogList({ changes }: { changes: LevelChange[] }) {
     <ul className="flex flex-col gap-2">
       {changes.map((change) => {
         const dir = directionOf(change);
+        const name = t(`games.${change.gameId}.name`);
+        const meaning = t(`games.${change.gameId}.meaning`);
         return (
           <li
             key={change.id}
@@ -28,7 +30,11 @@ export function AdaptiveLogList({ changes }: { changes: LevelChange[] }) {
             </span>
             <div>
               <p className="text-body font-semibold">
-                {t(`games.${change.gameId}.name`)}: {change.fromLevel} → {change.toLevel}
+                {name}
+                {meaning && meaning !== name && (
+                  <span className="font-normal text-text-muted"> ({meaning})</span>
+                )}
+                : {change.fromLevel} → {change.toLevel}
               </p>
               <p className="text-sm text-text-muted">{change.reason}</p>
               <p className="text-xs text-text-muted">{new Date(change.timestamp).toLocaleString()}</p>

@@ -90,11 +90,14 @@ export interface ReminderLog {
   synced: boolean;
 }
 
+export type CaregiverRole = 'caregiver' | 'admin';
+
 export interface Caregiver {
   id: string;
   name: string;
   relation: string;
   pinHash: string;
   patientIds: string[];
+  role: CaregiverRole;
   createdAt: number;
 }

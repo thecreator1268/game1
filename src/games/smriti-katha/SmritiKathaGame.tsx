@@ -10,7 +10,6 @@ import { getCurrentLevel, recordGameSession } from '@/engine/gameSessionService'
 import { isPersonalBest, type LevelDecision } from '@/engine/adaptiveEngine';
 import { useFatigueStore } from '@/store/fatigueStore';
 import { shuffle } from '@/lib/shuffle';
-import { speak } from '@/lib/speech';
 import type { ErrorType } from '@/db/types';
 import { STORIES } from './stories';
 import { paramsForLevel } from './params';
@@ -23,11 +22,12 @@ interface RoundQuestion {
 
 type Phase = 'loading' | 'story' | 'question' | 'summary';
 
-// Voice-first by design: the story and every question are auto-narrated, and
-// answers are large tap-only buttons — this must work end-to-end for a
-// patient who cannot or does not want to read (see README accessibility
-// notes). Story content is English-only in this build (see games/registry
-// note in README); UI chrome around it is fully localized.
+// Voice-first by design: the story and every question can be read aloud on
+// demand via the speaker icon (TTS is opt-in everywhere, never automatic —
+// see lib/speech.ts), and answers are large tap-only buttons — this must
+// work end-to-end for a patient who cannot or does not want to read (see
+// README accessibility notes). Story content is English-only in this build
+// (see games/registry note in README); UI chrome around it is fully localized.
 export default function SmritiKathaGame() {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -68,7 +68,6 @@ export default function SmritiKathaGame() {
     setLevelDecision(null);
     sessionStartRef.current = Date.now();
     setPhase('story');
-    void speak({ text: usedSentences.join(' '), lang: 'en' });
   }
 
   useEffect(() => {
@@ -81,8 +80,6 @@ export default function SmritiKathaGame() {
     const q = questions[qIndex];
     if (!q) return;
     qStartRef.current = Date.now();
-    const optionsText = q.options.map((o, i) => `Option ${i + 1}: ${o}.`).join(' ');
-    void speak({ text: `${q.prompt} ${optionsText}`, lang: 'en' });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase, qIndex]);
 
@@ -190,7 +187,10 @@ export default function SmritiKathaGame() {
           {qIndex + 1} / {questions.length}
         </p>
         <div className="mb-6 flex items-center justify-center gap-3">
-          <VoicePrompt text={q.prompt} label={t('common.listen')} />
+          <VoicePrompt
+            text={`${q.prompt} ${q.options.map((o, i) => `Option ${i + 1}: ${o}.`).join(' ')}`}
+            label={t('common.listen')}
+          />
           <h2 className="text-heading font-bold">{q.prompt}</h2>
         </div>
 
