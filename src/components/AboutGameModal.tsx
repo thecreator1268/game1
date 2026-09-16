@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { GameId } from '@/db/types';
+import { stopSpeaking } from '@/lib/speech';
 import { Modal } from './Modal';
 import { VoicePrompt } from './VoicePrompt';
 
@@ -12,6 +14,12 @@ interface AboutGameModalProps {
 // which MoCA/ADAS-Cog domain it maps to, sourced from games.<id>.clinicalMapping.
 export function AboutGameModal({ gameId, onClose }: AboutGameModalProps) {
   const { t } = useTranslation();
+
+  // Closing the modal mid-sentence shouldn't leave speech synthesis running.
+  useEffect(() => {
+    return () => stopSpeaking();
+  }, []);
+
   const name = t(`games.${gameId}.name`);
   const meaning = t(`games.${gameId}.meaning`);
   const clinicalMapping = t(`games.${gameId}.clinicalMapping`);

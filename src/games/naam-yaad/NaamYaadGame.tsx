@@ -9,6 +9,7 @@ import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { db } from '@/db/schema';
 import { useActivePatient } from '@/hooks/useActivePatient';
+import { useLevelParam } from '@/hooks/useLevelParam';
 import { getCurrentLevel, recordGameSession } from '@/engine/gameSessionService';
 import { isPersonalBest, type LevelDecision } from '@/engine/adaptiveEngine';
 import { useFatigueStore } from '@/store/fatigueStore';
@@ -43,6 +44,7 @@ export default function NaamYaadGame() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const patient = useActivePatient();
+  const levelParam = useLevelParam();
   const recordGamePlayed = useFatigueStore((s) => s.recordGamePlayed);
   const members = useLiveQuery(
     () => (patient ? db.familyMembers.where('patientId').equals(patient.id).toArray() : []),
@@ -69,7 +71,7 @@ export default function NaamYaadGame() {
       setTrials([]);
       return;
     }
-    const currentLevel = await getCurrentLevel(patientId, 'naam-yaad');
+    const currentLevel = levelParam ?? (await getCurrentLevel(patientId, 'naam-yaad'));
     setLevel(currentLevel);
     const round = buildTrials(memberList, currentLevel);
     setTrials(round);
@@ -173,6 +175,7 @@ export default function NaamYaadGame() {
           showPersonalBest={isPersonalBest(displayedLevel)}
           onPlayAgain={() => void startSession(patient.id, members)}
           onGoHome={() => navigate('/patient')}
+          onChooseLevel={() => navigate('/patient/game/naam-yaad/levels')}
         />
       </GameShell>
     );

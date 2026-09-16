@@ -92,6 +92,12 @@
     "resetAllDataBody": "This permanently erases all data on this device. Type \"{{word}}\" to continue.",
     "resetAllData": "Erase All Data"
   },
+  "levelSelect": {
+    "title": "Choose a Level",
+    "body": "Nothing is locked — pick any level to play. SmritiSetu still picks one automatically for everyday play.",
+    "recommended": "Suggested",
+    "chooseLevel": "Choose Level"
+  },
   "patientHome": {
     "greeting": "Hello, {{name}}",
     "todaysSet": "Today's Set",

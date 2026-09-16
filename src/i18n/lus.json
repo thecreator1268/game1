@@ -97,6 +97,12 @@
     "resetAllDataBody": "Hei hian he device-a data zawng kumkhua paih a ni ang. Zawh nan \"{{word}}\" ti ziak rawh.",
     "resetAllData": "Data Zawng Paih"
   },
+  "levelSelect": {
+    "title": "Level Thlang",
+    "body": "Engmah khaih a awm lo — level engpawh thlan la inven rawh. Nikhuaa inven tan SmritiSetu chuan level pakhat a lo ruat reng ang.",
+    "recommended": "Ruatna",
+    "chooseLevel": "Level Thlang"
+  },
   "patientHome": {
     "greeting": "Chibai, {{name}}",
     "todaysSet": "Vawiin Inven Te",

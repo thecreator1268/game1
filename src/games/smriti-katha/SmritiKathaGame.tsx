@@ -6,6 +6,7 @@ import { SessionSummary } from '@/components/SessionSummary';
 import { VoicePrompt } from '@/components/VoicePrompt';
 import { Button } from '@/components/Button';
 import { useActivePatient } from '@/hooks/useActivePatient';
+import { useLevelParam } from '@/hooks/useLevelParam';
 import { getCurrentLevel, recordGameSession } from '@/engine/gameSessionService';
 import { isPersonalBest, type LevelDecision } from '@/engine/adaptiveEngine';
 import { useFatigueStore } from '@/store/fatigueStore';
@@ -32,6 +33,7 @@ export default function SmritiKathaGame() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const patient = useActivePatient();
+  const levelParam = useLevelParam();
   const recordGamePlayed = useFatigueStore((s) => s.recordGamePlayed);
 
   const [phase, setPhase] = useState<Phase>('loading');
@@ -49,7 +51,7 @@ export default function SmritiKathaGame() {
   const qStartRef = useRef(0);
 
   async function startSession(patientId: string) {
-    const currentLevel = await getCurrentLevel(patientId, 'smriti-katha');
+    const currentLevel = levelParam ?? (await getCurrentLevel(patientId, 'smriti-katha'));
     const { sentences: sCount, questions: qCount } = paramsForLevel(currentLevel);
     const story = STORIES[Math.floor(Math.random() * STORIES.length)];
     const usedSentences = story.sentences.slice(0, sCount);
@@ -150,6 +152,7 @@ export default function SmritiKathaGame() {
           showPersonalBest={isPersonalBest(displayedLevel)}
           onPlayAgain={() => void startSession(patient.id)}
           onGoHome={() => navigate('/patient')}
+          onChooseLevel={() => navigate('/patient/game/smriti-katha/levels')}
         />
       </GameShell>
     );

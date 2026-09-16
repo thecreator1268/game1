@@ -5,6 +5,7 @@ import { GameShell } from '@/components/GameShell';
 import { SessionSummary } from '@/components/SessionSummary';
 import { VoicePrompt } from '@/components/VoicePrompt';
 import { useActivePatient } from '@/hooks/useActivePatient';
+import { useLevelParam } from '@/hooks/useLevelParam';
 import { getCurrentLevel, recordGameSession } from '@/engine/gameSessionService';
 import { isPersonalBest, type LevelDecision } from '@/engine/adaptiveEngine';
 import { useFatigueStore } from '@/store/fatigueStore';
@@ -42,6 +43,7 @@ export default function GharKaKaamGame() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const patient = useActivePatient();
+  const levelParam = useLevelParam();
   const recordGamePlayed = useFatigueStore((s) => s.recordGamePlayed);
 
   const [phase, setPhase] = useState<Phase>('loading');
@@ -60,7 +62,7 @@ export default function GharKaKaamGame() {
   const totalPairsRef = useRef(0);
 
   async function startRound(patientId: string) {
-    const currentLevel = await getCurrentLevel(patientId, 'ghar-ka-kaam');
+    const currentLevel = levelParam ?? (await getCurrentLevel(patientId, 'ghar-ka-kaam'));
     const round = buildRound(currentLevel);
     setLevel(currentLevel);
     setTools(round.tools);
@@ -153,6 +155,7 @@ export default function GharKaKaamGame() {
           showPersonalBest={isPersonalBest(displayedLevel)}
           onPlayAgain={() => void startRound(patient.id)}
           onGoHome={() => navigate('/patient')}
+          onChooseLevel={() => navigate('/patient/game/ghar-ka-kaam/levels')}
         />
       </GameShell>
     );

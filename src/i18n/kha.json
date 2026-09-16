@@ -97,6 +97,12 @@
     "resetAllDataBody": "Kane ka pynïap ïa baroh ki data ha kane ka device. Thoh \"{{word}}\" ban jia jan.",
     "resetAllData": "Pynïap baroh ki data"
   },
+  "levelSelect": {
+    "title": "Pdiang ka Level",
+    "body": "Ym don khaih shuwa — pdiang ïa katkumba level ban dulïióh. Sha ka jingdulïióh sngi baba, ka SmritiSetu ka pynithuh jan ïa kawei ka level.",
+    "recommended": "Kaba pynithuh",
+    "chooseLevel": "Pdiang Level"
+  },
   "patientHome": {
     "greeting": "Khublei, {{name}}",
     "todaysSet": "Ki dulïióh mynta",

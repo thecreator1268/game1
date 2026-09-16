@@ -1,7 +1,9 @@
-import { type ReactNode, useState } from 'react';
+import { type ReactNode, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import type { GameId } from '@/db/types';
+import { getGameMeta } from '@/games/gameList';
+import { stopSpeaking } from '@/lib/speech';
 import { AboutGameModal } from './AboutGameModal';
 import { BreakPromptWatcher } from './BreakPromptWatcher';
 import { IconButton } from './IconButton';
@@ -24,6 +26,14 @@ export function GameShell({ gameId, level, score, children }: GameShellProps) {
   const [showAbout, setShowAbout] = useState(false);
   const name = t(`games.${gameId}.name`);
   const meaning = t(`games.${gameId}.meaning`);
+  const hasLevels = getGameMeta(gameId).usesAdaptiveEngine;
+
+  // A VoicePrompt tap starts browser speech synthesis, which is a global
+  // background process independent of React — without this, leaving a game
+  // (Home, or jumping to level-select) mid-sentence let it keep talking.
+  useEffect(() => {
+    return () => stopSpeaking();
+  }, []);
 
   return (
     <div className="min-h-screen bg-bg">
@@ -38,9 +48,18 @@ export function GameShell({ gameId, level, score, children }: GameShellProps) {
               <span className="ml-1 text-sm font-normal text-text-muted">({meaning})</span>
             )}
           </span>
-          <span className="rounded-full bg-surface-alt px-4 py-1 text-body font-semibold">
-            {t('common.level')} {level}
-          </span>
+          {hasLevels ? (
+            <button
+              onClick={() => navigate(`/patient/game/${gameId}/levels`)}
+              className="rounded-full bg-surface-alt px-4 py-1 text-body font-semibold hover:bg-surface active:scale-95"
+            >
+              {t('common.level')} {level}
+            </button>
+          ) : (
+            <span className="rounded-full bg-surface-alt px-4 py-1 text-body font-semibold">
+              {t('common.level')} {level}
+            </span>
+          )}
           {typeof score === 'number' && (
             <span className="rounded-full bg-surface-alt px-4 py-1 text-body font-semibold">
               {t('common.score')} {score}

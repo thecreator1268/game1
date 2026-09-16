@@ -6,6 +6,7 @@ import { SessionSummary } from '@/components/SessionSummary';
 import { VoicePrompt } from '@/components/VoicePrompt';
 import { Button } from '@/components/Button';
 import { useActivePatient } from '@/hooks/useActivePatient';
+import { useLevelParam } from '@/hooks/useLevelParam';
 import { getCurrentLevel, recordGameSession } from '@/engine/gameSessionService';
 import { isPersonalBest, type LevelDecision } from '@/engine/adaptiveEngine';
 import { useFatigueStore } from '@/store/fatigueStore';
@@ -27,6 +28,7 @@ export default function NakshaJodoGame() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const patient = useActivePatient();
+  const levelParam = useLevelParam();
   const recordGamePlayed = useFatigueStore((s) => s.recordGamePlayed);
 
   const [phase, setPhase] = useState<Phase>('loading');
@@ -42,7 +44,7 @@ export default function NakshaJodoGame() {
   const sessionStartRef = useRef(0);
 
   async function startRound(patientId: string) {
-    const currentLevel = await getCurrentLevel(patientId, 'naksha-jodo');
+    const currentLevel = levelParam ?? (await getCurrentLevel(patientId, 'naksha-jodo'));
     const { rows: r, cols: c } = gridForLevel(currentLevel);
     const colors = buildMosaic(r, c);
     const pieces: Piece[] = colors.map((color, i) => ({ key: `p-${i}-${Math.random()}`, color }));
@@ -126,6 +128,7 @@ export default function NakshaJodoGame() {
           showPersonalBest={isPersonalBest(displayedLevel)}
           onPlayAgain={() => void startRound(patient.id)}
           onGoHome={() => navigate('/patient')}
+          onChooseLevel={() => navigate('/patient/game/naksha-jodo/levels')}
         />
       </GameShell>
     );

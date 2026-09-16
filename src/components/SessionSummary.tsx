@@ -10,6 +10,8 @@ interface SessionSummaryProps {
   showPersonalBest: boolean;
   onPlayAgain: () => void;
   onGoHome: () => void;
+  /** Omit for games with no difficulty levels (e.g. Aaj Ka Din). */
+  onChooseLevel?: () => void;
 }
 
 export function SessionSummary({
@@ -18,6 +20,7 @@ export function SessionSummary({
   showPersonalBest,
   onPlayAgain,
   onGoHome,
+  onChooseLevel,
 }: SessionSummaryProps) {
   const { t } = useTranslation();
 
@@ -47,6 +50,11 @@ export function SessionSummary({
         <Button variant="secondary" className="flex-1" onClick={onGoHome}>
           {t('common.home')}
         </Button>
+        {onChooseLevel && (
+          <Button variant="secondary" className="flex-1" onClick={onChooseLevel}>
+            {t('levelSelect.chooseLevel')}
+          </Button>
+        )}
         <Button className="flex-1" onClick={onPlayAgain}>
           {t('patientHome.playAgain')}
         </Button>

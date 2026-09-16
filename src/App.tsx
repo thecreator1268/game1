@@ -4,6 +4,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import CaregiverLayout from '@/app/CaregiverLayout';
 import CaregiverLogin from '@/app/CaregiverLogin';
 import GameRoute from '@/app/GameRoute';
+import LevelSelect from '@/app/LevelSelect';
 import Onboarding from '@/app/Onboarding';
 import PatientHome from '@/app/PatientHome';
 import RoleSelect from '@/app/RoleSelect';
@@ -42,6 +43,7 @@ function AppShell() {
       <Route path="/onboarding" element={<Onboarding />} />
 
       <Route path="/patient" element={<PatientHome />} />
+      <Route path="/patient/game/:gameId/levels" element={<LevelSelect />} />
       <Route path="/patient/game/:gameId" element={<GameRoute />} />
 
       <Route path="/caregiver/login" element={<CaregiverLogin />} />

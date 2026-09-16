@@ -97,6 +97,12 @@
     "resetAllDataBody": "Ei kaam pora ei device laga sob data hodai laga bhabe mussi jabo. Cholai jabole \"{{word}}\" likhibi.",
     "resetAllData": "Sob data mussi dibi"
   },
+  "levelSelect": {
+    "title": "Level Basi Lobi",
+    "body": "Kunu bondo nai — juntu level lage bosi kena khela koribi. Hodai khela laga babe SmritiSetu nijorai pora ekta level koi thakibo.",
+    "recommended": "Bhal hobo",
+    "chooseLevel": "Level Basi Lobi"
+  },
   "patientHome": {
     "greeting": "Nomoskar, {{name}}",
     "todaysSet": "Aji laga khela khan",
