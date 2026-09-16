@@ -1,0 +1,44 @@
+{
+  "_meta": {
+    "status": "STUB — partial translation only, not reviewed by a native speaker. Do not present as production-ready.",
+    "script": "Mizo is written in the Latin alphabet, as used here.",
+    "fallback": "Any key missing here falls back to English automatically (see i18n/index.ts)."
+  },
+  "common": {
+    "appName": "SmritiSetu",
+    "home": "In",
+    "play": "Inven",
+    "listen": "Ngaithla",
+    "correct": "A dik!",
+    "tryAgain": "Beisei leh rawh, harsatna a awm lo",
+    "wellDone": "Ka lawm e!"
+  },
+  "roles": {
+    "patient": "Ka inven duh",
+    "caregiver": "Enkawltu ka ni"
+  },
+  "onboarding": {
+    "welcome": "SmritiSetu-ah kan lo lawm che u"
+  },
+  "domains": {
+    "memory": "Hriatrengna",
+    "attention": "Ngaihven dan",
+    "routine": "Nikhuaa thiltih",
+    "pattern": "Chhinchhiahna hmel",
+    "orientation": "Hun leh hmun hriatna"
+  },
+  "games": {
+    "smriti-cards": {
+      "name": "Smriti Cards",
+      "instructions": "Card inang inzawm tur inven rawh."
+    },
+    "naam-yaad": {
+      "name": "Naam Yaad",
+      "instructions": "Hming dik tak thlan rawh."
+    },
+    "aaj-ka-din": {
+      "name": "Tunni",
+      "instructions": "Tunni chungchang zawhna malsawi tak thleng rawh."
+    }
+  }
+}

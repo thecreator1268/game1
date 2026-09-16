@@ -1,0 +1,32 @@
+import { useTranslation } from 'react-i18next';
+import type { GameId } from '@/db/types';
+import { Modal } from './Modal';
+import { VoicePrompt } from './VoicePrompt';
+
+interface AboutGameModalProps {
+  gameId: GameId;
+  onClose: () => void;
+}
+
+// The direct answer to "is this clinically valid" — every game shows exactly
+// which MoCA/ADAS-Cog domain it maps to, sourced from games.<id>.clinicalMapping.
+export function AboutGameModal({ gameId, onClose }: AboutGameModalProps) {
+  const { t } = useTranslation();
+  const name = t(`games.${gameId}.name`);
+  const clinicalMapping = t(`games.${gameId}.clinicalMapping`);
+
+  return (
+    <Modal title={t('common.aboutThisGame')} onClose={onClose}>
+      <div className="flex flex-col gap-4">
+        <p className="text-body font-semibold">{name}</p>
+        <div className="flex items-start gap-3">
+          <VoicePrompt text={clinicalMapping} label={t('common.listen')} />
+          <p className="text-body text-text-muted">{clinicalMapping}</p>
+        </div>
+        <p className="text-sm text-text-muted border-t border-border pt-4">
+          {t('common.clinicalNote')}
+        </p>
+      </div>
+    </Modal>
+  );
+}

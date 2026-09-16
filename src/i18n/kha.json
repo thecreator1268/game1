@@ -1,0 +1,44 @@
+{
+  "_meta": {
+    "status": "STUB — partial translation only, not reviewed by a native speaker. Do not present as production-ready.",
+    "script": "Khasi is written in the Latin alphabet, as used here.",
+    "fallback": "Any key missing here falls back to English automatically (see i18n/index.ts)."
+  },
+  "common": {
+    "appName": "SmritiSetu",
+    "home": "Ïing",
+    "play": "Leit dulïióh",
+    "listen": "Sngap",
+    "correct": "Long ka don!",
+    "tryAgain": "Buit shuwa, khlem sein",
+    "wellDone": "Long ka bha!"
+  },
+  "roles": {
+    "patient": "Nga kwah dulïióh",
+    "caregiver": "Nga u/ka nongïalam"
+  },
+  "onboarding": {
+    "welcome": "Khublei sha SmritiSetu"
+  },
+  "domains": {
+    "memory": "Jingmut",
+    "attention": "Ka jingjop mynsiem",
+    "routine": "Ka jingpynkut sngi",
+    "pattern": "Ka jinglaitluid",
+    "orientation": "Ka jinghikai mo bad kata sngi"
+  },
+  "games": {
+    "smriti-cards": {
+      "name": "Smriti Cards",
+      "instructions": "Toh ar cards ban thied ïa kiba don ka jingïatylli."
+    },
+    "naam-yaad": {
+      "name": "Naam Yaad",
+      "instructions": "Toh ïa ka kyrteng ba heh."
+    },
+    "aaj-ka-din": {
+      "name": "Sngi Mynta",
+      "instructions": "Bteng ïa kine ki jingkylli ba jop na kaba sngi mynta."
+    }
+  }
+}

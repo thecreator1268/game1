@@ -1,0 +1,242 @@
+{
+  "common": {
+    "appName": "SmritiSetu",
+    "home": "Home",
+    "back": "Back",
+    "play": "Play",
+    "next": "Next",
+    "done": "Done",
+    "cancel": "Cancel",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "add": "Add",
+    "yes": "Yes",
+    "no": "No",
+    "loading": "Loading...",
+    "offline": "Offline",
+    "online": "Online",
+    "synced": "Synced",
+    "syncing": "Syncing...",
+    "pendingSync": "{{count}} waiting to sync",
+    "level": "Level",
+    "score": "Score",
+    "today": "Today",
+    "aboutThisGame": "About this game",
+    "close": "Close",
+    "listen": "Listen",
+    "correct": "Correct!",
+    "tryAgain": "Try again, no rush",
+    "wellDone": "Well done!",
+    "personalBest": "You're getting stronger at this!",
+    "takeBreakTitle": "Time for a short rest?",
+    "takeBreakBody": "You've played for a while. A short break can help.",
+    "takeBreakContinue": "Keep Playing",
+    "takeBreakStop": "Rest Now",
+    "minutesShort": "min",
+    "clinicalNote": "SmritiSetu supports cognitive engagement and helps families track changes over time. It is not a diagnosis. Please consult a doctor for medical advice.",
+    "install": "Install App",
+    "cardFaceDown": "Face-down card",
+    "tapWhenHeard": "I heard it!"
+  },
+  "roles": {
+    "choosePrompt": "Who is using SmritiSetu right now?",
+    "patient": "I want to play",
+    "caregiver": "I am a caregiver"
+  },
+  "onboarding": {
+    "welcome": "Welcome to SmritiSetu",
+    "chooseLanguage": "Choose your language",
+    "chooseLanguageBody": "Tap the language you are most comfortable with.",
+    "setupPatientName": "What is the patient's name?",
+    "setupPatientNamePlaceholder": "Enter name",
+    "setupCaregiverPin": "Create a 4-digit PIN for caregiver login",
+    "setupCaregiverPinConfirm": "Enter the PIN again",
+    "setupComplete": "All set!",
+    "setupCompleteBody": "SmritiSetu is ready to use, even without internet.",
+    "getStarted": "Get Started"
+  },
+  "caregiverAuth": {
+    "title": "Caregiver Login",
+    "enterPin": "Enter your PIN",
+    "wrongPin": "That PIN doesn't match. Try again.",
+    "scanQr": "Or scan your caregiver QR code",
+    "logout": "Log Out"
+  },
+  "patientHome": {
+    "greeting": "Hello, {{name}}",
+    "todaysSet": "Today's Set",
+    "todaysSetBody": "Three games picked just for today",
+    "moreGames": "All Games",
+    "playAgain": "Play Again",
+    "streakLabel": "{{count}} day streak",
+    "newBadge": "New"
+  },
+  "domains": {
+    "memory": "Memory",
+    "attention": "Attention & Focus",
+    "routine": "Daily Routine",
+    "pattern": "Pattern & Recognition",
+    "orientation": "Orientation"
+  },
+  "reminders": {
+    "title": "Today",
+    "medicine": "Medicine",
+    "hydration": "Water",
+    "activity": "Activity",
+    "appointment": "Appointment",
+    "markTaken": "Mark as Taken",
+    "taken": "Taken",
+    "takenAt": "Taken at {{time}}",
+    "noneToday": "Nothing scheduled right now. Well done!",
+    "manageTitle": "Manage Reminders",
+    "addReminder": "Add Reminder",
+    "label": "What is it for?",
+    "schedule": "Time",
+    "category": "Type",
+    "withWhom": "With",
+    "notes": "Notes"
+  },
+  "familyManager": {
+    "title": "Family & Faces",
+    "body": "Add photos, names and voice notes for Naam Yaad.",
+    "addMember": "Add Family Member",
+    "name": "Name",
+    "relation": "Relationship",
+    "photo": "Photo",
+    "voiceNote": "Voice Note (optional)",
+    "recordVoiceNote": "Record Voice Note",
+    "reRecord": "Re-record",
+    "noMembers": "No family members added yet."
+  },
+  "dashboard": {
+    "title": "Caregiver Dashboard",
+    "trends": "Progress Over Time",
+    "last30": "Last 30 Days",
+    "last90": "Last 90 Days",
+    "domainBalance": "Domain Balance",
+    "domainBalanceBody": "How evenly {{name}} is playing across all 5 areas",
+    "adaptiveLog": "Adaptive Engine Log",
+    "adaptiveLogBody": "Every level change, explained",
+    "adherence": "Reminder Adherence",
+    "streak": "Current Streak",
+    "weeklySummary": "This Week in Brief",
+    "exportPdf": "Export PDF",
+    "exportCsv": "Export CSV",
+    "disclaimer": "This dashboard shows trends to discuss with a doctor. It is not a diagnosis or a medical device.",
+    "noData": "Not enough data yet — play a few games first.",
+    "demoPanel": "Offline / Sync Demo",
+    "airplaneMode": "Simulate Offline (Airplane Mode)",
+    "forceSyncNow": "Sync Now",
+    "settings": "Settings",
+    "extraLargeText": "Extra-Large Text",
+    "highContrastPalette": "Colour Theme",
+    "language": "Language"
+  },
+  "orientationCheckin": {
+    "whatDay": "What day is it today?",
+    "whatTime": "What time of day is it?",
+    "whatSeason": "What season is it?",
+    "days": {
+      "sunday": "Sunday",
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday"
+    },
+    "times": {
+      "morning": "Morning",
+      "afternoon": "Afternoon",
+      "evening": "Evening",
+      "night": "Night"
+    },
+    "seasons": {
+      "winter": "Winter",
+      "summer": "Summer",
+      "monsoon": "Monsoon",
+      "autumn": "Autumn"
+    }
+  },
+  "games": {
+    "smriti-cards": {
+      "name": "Smriti Cards",
+      "tagline": "Match the pairs",
+      "instructions": "Tap two cards to find matching pairs. Try to remember where each picture is.",
+      "clinicalMapping": "Maps to delayed recall (MoCA) and word recognition (ADAS-Cog) through visual pair matching."
+    },
+    "smriti-katha": {
+      "name": "Smriti Katha",
+      "tagline": "Listen to a story",
+      "instructions": "Listen to a short story, then answer simple questions about it by picking a picture.",
+      "clinicalMapping": "Maps to episodic and verbal recall (MoCA delayed recall; ADAS-Cog word recall) using an everyday spoken story instead of a word list."
+    },
+    "naam-yaad": {
+      "name": "Naam Yaad",
+      "tagline": "Remember the family",
+      "instructions": "A photo of someone you know will appear. Tap their correct name.",
+      "clinicalMapping": "Maps to personally-meaningful recognition memory (MoCA/ADAS-Cog recall & recognition), using the patient's real family photos."
+    },
+    "dhyan-dhaam": {
+      "name": "Dhyan Dhaam",
+      "tagline": "Find the matching pattern",
+      "instructions": "Tap every tile that matches the target pattern shown at the top.",
+      "clinicalMapping": "Maps to sustained visual attention and cancellation tasks (MoCA attention; ADAS-Cog number cancellation)."
+    },
+    "ginti-dhyan": {
+      "name": "Ginti Dhyan",
+      "tagline": "Count in order",
+      "instructions": "Tap the numbers in counting order, smallest first.",
+      "clinicalMapping": "Maps to attention and working memory (MoCA digit span and serial subtraction), at an elderly-accessible pace."
+    },
+    "awaaz-pehchan": {
+      "name": "Awaaz Pehchan",
+      "tagline": "Listen for the sound",
+      "instructions": "Listen carefully. Tap the button only when you hear the target word or sound.",
+      "clinicalMapping": "Maps to sustained auditory attention (MoCA attention/vigilance), fully audio-driven for patients with limited reading ability."
+    },
+    "dinacharya-sequence": {
+      "name": "Dinacharya Sequence",
+      "tagline": "Put the day in order",
+      "instructions": "Drag the picture cards into the order you do them each day.",
+      "clinicalMapping": "Maps to instrumental activities of daily living (IADL) planning and sequencing."
+    },
+    "bazaar-list": {
+      "name": "Bazaar List",
+      "tagline": "Remember the list",
+      "instructions": "Listen to the shopping list, then find only those items in the grid.",
+      "clinicalMapping": "Maps to prospective memory and IADL planning, similar to everyday errand-list recall."
+    },
+    "ghar-ka-kaam": {
+      "name": "Ghar ka Kaam",
+      "tagline": "Match tool to task",
+      "instructions": "Tap a household tool, then tap the task it is used for.",
+      "clinicalMapping": "Maps to routine-object association, a common early sign area in IADL assessment."
+    },
+    "aakar-milan": {
+      "name": "Aakar Milan",
+      "tagline": "Complete the pattern",
+      "instructions": "Find the piece that completes the pattern correctly.",
+      "clinicalMapping": "Maps to visuospatial and executive function (MoCA visuospatial/executive; ADAS-Cog constructional praxis)."
+    },
+    "chaya-khoj": {
+      "name": "Chaya Khoj",
+      "tagline": "Find the shadow",
+      "instructions": "Look at the object, then tap its matching shadow.",
+      "clinicalMapping": "Maps to visuospatial matching (MoCA visuospatial), with no reading required."
+    },
+    "naksha-jodo": {
+      "name": "Naksha Jodo",
+      "tagline": "Build the shape",
+      "instructions": "Drag the large pieces together to build the picture. Take your time.",
+      "clinicalMapping": "Maps to constructional praxis (ADAS-Cog), a gentler analogue of the clock-drawing/figure-copy task."
+    },
+    "aaj-ka-din": {
+      "name": "Aaj Ka Din",
+      "tagline": "Today's check-in",
+      "instructions": "Answer a few simple questions about today.",
+      "clinicalMapping": "Maps to temporal and spatial orientation (MoCA orientation subtest). A daily check-in, not a difficulty drill."
+    }
+  }
+}

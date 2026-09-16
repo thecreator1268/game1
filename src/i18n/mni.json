@@ -1,0 +1,44 @@
+{
+  "_meta": {
+    "status": "STUB — partial translation only, not reviewed by a native speaker. Do not present as production-ready.",
+    "scriptChoice": "Bengali script chosen for this stub (Meitei Mayek is the other valid option and is increasingly used officially in Manipur — this choice should be revisited with native speakers/community stakeholders before production, not treated as settled).",
+    "fallback": "Any key missing here falls back to English automatically (see i18n/index.ts)."
+  },
+  "common": {
+    "appName": "স্মৃতিসেতু",
+    "home": "য়ুম",
+    "play": "শানবিয়ু",
+    "listen": "তাবিয়ু",
+    "correct": "চুম্মি!",
+    "tryAgain": "আমুক হন্না হৌবিয়ু",
+    "wellDone": "ফজরবা তৌখ্রে!"
+  },
+  "roles": {
+    "patient": "ঐ শানগনি",
+    "caregiver": "ঐহাক্তা য়েংশিন্নবা মচু ওইরি"
+  },
+  "onboarding": {
+    "welcome": "স্মৃতিসেতুদা তরাম্না ওকচরি"
+  },
+  "domains": {
+    "memory": "নিংশিং",
+    "attention": "পুকচিং শিংবা",
+    "routine": "নুমিৎ খুদিংগী থবক",
+    "pattern": "মখল খংবা",
+    "orientation": "মফম অমসুং মতম খংবা"
+  },
+  "games": {
+    "smriti-cards": {
+      "name": "স্মৃতি কার্ড",
+      "instructions": "কার্ড অনি অমুক অমদা চপচবা ফংনবা সেল্লু।"
+    },
+    "naam-yaad": {
+      "name": "নাম যাদ",
+      "instructions": "মিং চুম্মিবা খল্লু।"
+    },
+    "aaj-ka-din": {
+      "name": "ঙসিগী নুমিৎ",
+      "instructions": "ঙসিগী মথংদা ৱাহং খরাগী পাউখুম পীয়ু।"
+    }
+  }
+}

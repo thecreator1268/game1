@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Two high-contrast palettes, both targeting WCAG AAA (7:1) for body text:
+  - theme-1 (default): warm cream/teal/saffron, the general elderly-accessible palette.
+  - theme-2 (alt): blue/amber substituted for red/green cues, for common elderly
+    color-vision changes (red-green discrimination loss).
+  Selected via [data-theme] on <html>; text scale via [data-text-scale].
+*/
+:root,
+[data-theme='theme-1'] {
+  --color-bg: #fffaf0;
+  --color-surface: #ffffff;
+  --color-surface-alt: #fff3e0;
+  --color-text: #10151a;
+  --color-text-muted: #3d4650;
+  --color-primary: #0d5c5c;
+  --color-primary-hover: #0a4747;
+  --color-primary-text: #ffffff;
+  --color-accent: #b8440e;
+  --color-accent-text: #ffffff;
+  --color-success: #1b5e20;
+  --color-success-text: #ffffff;
+  --color-danger: #8b1a1a;
+  --color-danger-text: #ffffff;
+  --color-border: #cbb99a;
+  --color-focus: #1a5cff;
+}
+
+[data-theme='theme-2'] {
+  --color-bg: #fbf9f4;
+  --color-surface: #ffffff;
+  --color-surface-alt: #eef3fa;
+  --color-text: #0e1116;
+  --color-text-muted: #3a3f47;
+  --color-primary: #1a3c6e;
+  --color-primary-hover: #14315a;
+  --color-primary-text: #ffffff;
+  --color-accent: #b45309;
+  --color-accent-text: #ffffff;
+  --color-success: #0e5f6e;
+  --color-success-text: #ffffff;
+  --color-danger: #9a3412;
+  --color-danger-text: #ffffff;
+  --color-border: #b8c4d4;
+  --color-focus: #d97706;
+}
+
+html {
+  font-size: 16px;
+}
+html[data-text-scale='large'] {
+  font-size: 18px;
+}
+html[data-text-scale='xl'] {
+  font-size: 20px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family:
+    'Noto Sans',
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    sans-serif;
+  font-size: 1.125rem;
+  line-height: 1.65;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  font-family: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+@layer components {
+  .tap-target {
+    @apply min-h-tap min-w-tap;
+  }
+
+  .btn-elderly {
+    @apply tap-target inline-flex items-center justify-center gap-3 rounded-card px-6 py-4 text-action font-semibold shadow-card transition-colors active:scale-[0.98];
+  }
+
+  .btn-primary {
+    @apply btn-elderly bg-primary text-primary-text hover:bg-primary-hover;
+  }
+
+  .btn-secondary {
+    @apply btn-elderly bg-surface text-text border-2 border-border hover:bg-surface-alt;
+  }
+
+  .btn-accent {
+    @apply btn-elderly bg-accent text-accent-text;
+  }
+
+  .card-elderly {
+    @apply rounded-card bg-surface border border-border shadow-card p-6;
+  }
+}

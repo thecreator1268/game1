@@ -1,0 +1,44 @@
+{
+  "_meta": {
+    "status": "STUB — partial translation only, not reviewed by a native speaker. Do not present as production-ready.",
+    "script": "Nagamese is written in the Latin alphabet, as used here.",
+    "fallback": "Any key missing here falls back to English automatically (see i18n/index.ts)."
+  },
+  "common": {
+    "appName": "SmritiSetu",
+    "home": "Ghor",
+    "play": "Khela koribi",
+    "listen": "Huni lobi",
+    "correct": "Thik ase!",
+    "tryAgain": "Aru ekbar cheshta koribi, joldi nai",
+    "wellDone": "Bhal korise!"
+  },
+  "roles": {
+    "patient": "Moi khela mangise",
+    "caregiver": "Moi dekha-bhal koridi thaka manu"
+  },
+  "onboarding": {
+    "welcome": "SmritiSetu te apnalok ke swagot"
+  },
+  "domains": {
+    "memory": "Mon te thaka kotha",
+    "attention": "Mon dibi",
+    "routine": "Hodai laga kaam",
+    "pattern": "Rong-dhong chini lobi",
+    "orientation": "Din aru jagah chini lobi"
+  },
+  "games": {
+    "smriti-cards": {
+      "name": "Smriti Cards",
+      "instructions": "Milikena thaka card duita bisari bi."
+    },
+    "naam-yaad": {
+      "name": "Naam Yaad",
+      "instructions": "Thik naam ta bisari chapi bi."
+    },
+    "aaj-ka-din": {
+      "name": "Aji Laga Din",
+      "instructions": "Aji laga kisu shaanti sawal laga jowab dibi."
+    }
+  }
+}
