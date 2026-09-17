@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
+import { BridgeIcon } from '@/components/icons';
 import { db } from '@/db/schema';
 import type { SupportedLanguage } from '@/db/types';
 import { SUPPORTED_LANGUAGES } from '@/i18n';
@@ -80,21 +81,29 @@ export default function Onboarding() {
     <div className="flex min-h-screen items-center justify-center bg-bg px-4 py-10">
       <div className="w-full max-w-xl">
         {step === 'language' && (
-          <Card>
-            <h1 className="text-heading-lg font-bold">{t('onboarding.chooseLanguage')}</h1>
-            <p className="mt-2 text-body text-text-muted">{t('onboarding.chooseLanguageBody')}</p>
-            <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3">
-              {SUPPORTED_LANGUAGES.map((lang) => (
-                <button
-                  key={lang.code}
-                  onClick={() => chooseLanguage(lang.code as SupportedLanguage)}
-                  className="tap-target rounded-card border-2 border-border bg-surface p-4 text-action font-semibold hover:bg-surface-alt"
-                >
-                  {lang.label}
-                </button>
-              ))}
+          <>
+            <div className="mb-8 flex flex-col items-center gap-3 text-center">
+              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-primary shadow-card">
+                <BridgeIcon width={38} height={38} className="text-primary-text" />
+              </div>
+              <h1 className="text-heading-lg font-bold text-primary">{t('onboarding.welcome')}</h1>
             </div>
-          </Card>
+            <Card>
+              <h2 className="text-heading font-bold">{t('onboarding.chooseLanguage')}</h2>
+              <p className="mt-2 text-body text-text-muted">{t('onboarding.chooseLanguageBody')}</p>
+              <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3">
+                {SUPPORTED_LANGUAGES.map((lang) => (
+                  <button
+                    key={lang.code}
+                    onClick={() => chooseLanguage(lang.code as SupportedLanguage)}
+                    className="tap-target rounded-card border-2 border-border bg-surface p-4 text-action font-semibold shadow-card transition-transform hover:border-primary hover:bg-surface-alt active:scale-[0.97]"
+                  >
+                    {lang.label}
+                  </button>
+                ))}
+              </div>
+            </Card>
+          </>
         )}
 
         {step === 'consent' && (

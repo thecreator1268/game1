@@ -5,6 +5,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { Button } from '@/components/Button';
 import { db } from '@/db/schema';
 import { usePatientStore } from '@/store/patientStore';
+import { SplashScreen } from './SplashScreen';
 
 export default function RoleSelect() {
   const { t } = useTranslation();
@@ -18,7 +19,7 @@ export default function RoleSelect() {
     }
   }, [patients, navigate]);
 
-  if (!patients || patients.length === 0) return null;
+  if (!patients || patients.length === 0) return <SplashScreen />;
 
   const primaryPatient = patients[0];
 

@@ -39,6 +39,9 @@
     "cardFaceDown": "Face-down card",
     "tapWhenHeard": "I heard it!"
   },
+  "splash": {
+    "tagline": "A bridge to memory"
+  },
   "roles": {
     "choosePrompt": "Who is using SmritiSetu right now?",
     "patient": "I want to play",

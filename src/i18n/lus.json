@@ -44,6 +44,9 @@
     "cardFaceDown": "Card kal lam",
     "tapWhenHeard": "Ka hria tawh!"
   },
+  "splash": {
+    "tagline": "Rilru hriatna kalna kawng"
+  },
   "roles": {
     "choosePrompt": "Tunah SmritiSetu tu nge a hman mek?",
     "patient": "Ka inven duh",

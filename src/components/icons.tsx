@@ -100,3 +100,15 @@ export function StarIcon(props: IconProps) {
     </svg>
   );
 }
+
+// The app's own motif — "Setu" (bridge) — used on the splash screen and the
+// onboarding welcome, nowhere else, so it stays a distinctive brand mark.
+export function BridgeIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M3 17c1.8-5.3 5-8.5 9-8.5s7.2 3.2 9 8.5" />
+      <path d="M2 17h20" />
+      <path d="M6.5 17v3.5M17.5 17v3.5" />
+    </svg>
+  );
+}

@@ -44,6 +44,9 @@
     "cardFaceDown": "মমাং লৈত্রবা কার্দ",
     "tapWhenHeard": "ঐ তাখ্রে!"
   },
+  "splash": {
+    "tagline": "ৱাখল্লোনদা চৎপা লম্বী অমা"
+  },
   "roles": {
     "choosePrompt": "হৌজিক স্মৃতিসেতু কনা শীজিন্নরি?",
     "patient": "ঐ শানগনি",

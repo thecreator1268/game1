@@ -44,6 +44,9 @@
     "cardFaceDown": "Ulta card",
     "tapWhenHeard": "Moi hunise!"
   },
+  "splash": {
+    "tagline": "Yaad-r ekta setu"
+  },
   "roles": {
     "choosePrompt": "Etiya SmritiSetu kun use koridi ase?",
     "patient": "Moi khela mangise",

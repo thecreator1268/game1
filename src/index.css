@@ -112,3 +112,27 @@ button {
     @apply rounded-card bg-surface border border-border shadow-card p-6;
   }
 }
+
+/* Splash screen's badge — a slow, gentle breathing motion, never a spinner.
+   Calm and predictable matters more than "loading feedback" for this
+   audience (see README's accessibility section); reduced-motion users get
+   a static badge instead. */
+@keyframes splash-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+}
+
+.splash-badge {
+  animation: splash-breathe 2.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash-badge {
+    animation: none;
+  }
+}

@@ -44,6 +44,9 @@
     "cardFaceDown": "Card ba shong tluid",
     "tapWhenHeard": "Nga la sngap!"
   },
+  "splash": {
+    "tagline": "U lynter sha ka jingiathuh"
+  },
   "roles": {
     "choosePrompt": "Mynta u/ka ei kin pyndonkam ïa ka SmritiSetu?",
     "patient": "Nga kwah dulïióh",

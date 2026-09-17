@@ -39,6 +39,9 @@
     "cardFaceDown": "उल्टा कार्ड",
     "tapWhenHeard": "मैंने सुना!"
   },
+  "splash": {
+    "tagline": "स्मृति की ओर एक सेतु"
+  },
   "roles": {
     "choosePrompt": "अभी स्मृतिसेतु कौन उपयोग कर रहा है?",
     "patient": "मुझे खेलना है",

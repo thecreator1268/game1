@@ -39,6 +39,9 @@
     "cardFaceDown": "উবুৰি কাৰ্ড",
     "tapWhenHeard": "মই শুনিলোঁ!"
   },
+  "splash": {
+    "tagline": "স্মৃতিলৈ এখন সেতু"
+  },
   "roles": {
     "choosePrompt": "এতিয়া স্মৃতিসেতু কোনে ব্যৱহাৰ কৰি আছে?",
     "patient": "মই খেলিব বিচাৰো",
