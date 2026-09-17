@@ -145,7 +145,8 @@
     "schedule": "समय",
     "category": "प्रकार",
     "withWhom": "किसके साथ",
-    "notes": "टिप्पणी"
+    "notes": "टिप्पणी",
+    "notificationTitle": "समय हो गया: {{label}}"
   },
   "familyManager": {
     "title": "परिवार व चेहरे",
@@ -189,7 +190,13 @@
     "settings": "सेटिंग्स",
     "extraLargeText": "बड़ा अक्षर आकार",
     "highContrastPalette": "रंग योजना",
-    "language": "भाषा"
+    "language": "भाषा",
+    "reminderAlerts": "रिमाइंडर अलर्ट",
+    "reminderAlertsBody": "दवा, पानी या गतिविधि का समय होने पर इस डिवाइस पर अलर्ट पाएं — यह तब काम करता है जब स्मृतिसेतु खुला हो, बैकग्राउंड में भी। यह पूरी तरह बंद टैब को नहीं जगा सकता।",
+    "reminderAlertsEnable": "अलर्ट चालू करें",
+    "reminderAlertsOn": "इस डिवाइस पर अलर्ट चालू हैं",
+    "reminderAlertsDenied": "अनुमति अवरुद्ध कर दी गई थी। इसे चालू करने के लिए अपने ब्राउज़र या डिवाइस सेटिंग्स में इस साइट के लिए सूचनाएं सक्षम करें।",
+    "reminderAlertsUnsupported": "इस ब्राउज़र में समर्थित नहीं है।"
   },
   "orientationCheckin": {
     "whatDay": "आज कौन सा दिन है?",

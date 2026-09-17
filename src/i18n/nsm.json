@@ -150,7 +150,8 @@
     "schedule": "Somoy",
     "category": "Kisim",
     "withWhom": "Kun logot",
-    "notes": "Kotha"
+    "notes": "Kotha",
+    "notificationTitle": "Somoi hoise: {{label}}"
   },
   "familyManager": {
     "title": "Poriwar aru mukh khan",
@@ -194,7 +195,13 @@
     "settings": "Settings",
     "extraLargeText": "Dangor akhor",
     "highContrastPalette": "Rong laga scheme",
-    "language": "Bhasha"
+    "language": "Bhasha",
+    "reminderAlerts": "Reminder Alert",
+    "reminderAlertsBody": "Dawai, pani, nohoile activity-r somoi hoile ei device-t alert pabo — SmritiSetu khula thakile, background-o kaam kore. Ei ekdom bondho tab-ke uthabo napare.",
+    "reminderAlertsEnable": "Alert On Koribi",
+    "reminderAlertsOn": "Ei device-t alert on ase",
+    "reminderAlertsDenied": "Permission block hoise. Etu on koribole apnar browser nohoile device settings-t ei site-r babe notification enable koribi.",
+    "reminderAlertsUnsupported": "Ei browser-t support nai."
   },
   "orientationCheckin": {
     "whatDay": "Aji kun din ase?",

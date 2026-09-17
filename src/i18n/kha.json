@@ -150,7 +150,8 @@
     "schedule": "Por",
     "category": "Bynta",
     "withWhom": "Bad u/ka mano",
-    "notes": "Jingthoh"
+    "notes": "Jingthoh",
+    "notificationTitle": "Por sha: {{label}}"
   },
   "familyManager": {
     "title": "Ïing bad ki Khmat",
@@ -194,7 +195,13 @@
     "settings": "Settings",
     "extraLargeText": "Jingthoh kaba lyoh dkhot",
     "highContrastPalette": "Jinglaitluid Rong",
-    "language": "Ktien"
+    "language": "Ktien",
+    "reminderAlerts": "Jingpynhiar kaba iarap",
+    "reminderAlertsBody": "Ïoh ka jingpynhiar ha kane ka device haba wan ka por jong ka dawai, um, ne khelh — ka rung haba don ka SmritiSetu bynta khyndiat, ha ka background sha. Ka ym lah ban pyndap ïa ka tab kaba shu khlem.",
+    "reminderAlertsEnable": "Pynshong ïa ki jingpynhiar",
+    "reminderAlertsOn": "Ki jingpynhiar la shong ha kane ka device",
+    "reminderAlertsDenied": "Ka jingiaid ka la ïalade. Pynshong ïa ki notification jong kane ka site ha ka browser ne ka device settings jong phi ban pynshong kane.",
+    "reminderAlertsUnsupported": "Ym don sndep ha kane ka browser."
   },
   "orientationCheckin": {
     "whatDay": "Mynta ka sngi eiei?",

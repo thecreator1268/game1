@@ -145,7 +145,8 @@
     "schedule": "সময়",
     "category": "প্ৰকাৰ",
     "withWhom": "কাৰ সৈতে",
-    "notes": "টোকা"
+    "notes": "টোকা",
+    "notificationTitle": "সময় হ'ল: {{label}}"
   },
   "familyManager": {
     "title": "পৰিয়াল আৰু মুখ",
@@ -189,7 +190,13 @@
     "settings": "ছেটিংছ",
     "extraLargeText": "অতিৰিক্ত ডাঙৰ আখৰ",
     "highContrastPalette": "ৰং যোজনা",
-    "language": "ভাষা"
+    "language": "ভাষা",
+    "reminderAlerts": "ৰিমাইণ্ডাৰ সতৰ্কবাৰ্তা",
+    "reminderAlertsBody": "ঔষধ, পানী বা কাৰ্যকলাপৰ সময় হ'লে এই ডিভাইচত সতৰ্কবাৰ্তা পাওক — স্মৃতিসেতু খোলা থাকিলে, পটভূমিতো কাম কৰে। ই সম্পূৰ্ণ বন্ধ থকা টেব খুলিব নোৱাৰে।",
+    "reminderAlertsEnable": "সতৰ্কবাৰ্তা অন কৰক",
+    "reminderAlertsOn": "এই ডিভাইচত সতৰ্কবাৰ্তা অন আছে",
+    "reminderAlertsDenied": "অনুমতি অৱৰোধ কৰা হৈছিল। ইয়াক অন কৰিবলৈ আপোনাৰ ব্ৰাউজাৰ বা ডিভাইচ ছেটিংছত এই ছাইটৰ বাবে জাননী সক্ষম কৰক।",
+    "reminderAlertsUnsupported": "এই ব্ৰাউজাৰত সমৰ্থিত নহয়।"
   },
   "orientationCheckin": {
     "whatDay": "আজি কি বাৰ?",

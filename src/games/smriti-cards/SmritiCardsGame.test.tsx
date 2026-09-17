@@ -32,6 +32,7 @@ const FAKE_PATIENT: Patient = {
   highContrastPalette: 'theme-1',
   textScale: 'normal',
   consentGivenAt: Date.now(),
+  reminderAlertsEnabled: false,
   createdAt: Date.now(),
 };
 

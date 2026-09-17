@@ -26,7 +26,11 @@
   --color-danger: #8b1a1a;
   --color-danger-text: #ffffff;
   --color-border: #cbb99a;
-  --color-focus: #1a5cff;
+  /* Not blue: age-related lens yellowing reduces blue discrimination, so a
+     blue focus ring is one of the worst choices for this audience — see
+     README's accessibility research notes. Reuses theme-2's already-chosen
+     amber so "what focus looks like" stays predictable across both themes. */
+  --color-focus: #d97706;
 }
 
 [data-theme='theme-2'] {

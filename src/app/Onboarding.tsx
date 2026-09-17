@@ -57,6 +57,7 @@ export default function Onboarding() {
       highContrastPalette: 'theme-1',
       textScale: 'normal',
       consentGivenAt: consentGivenAt ?? Date.now(),
+      reminderAlertsEnabled: false,
       createdAt: Date.now(),
     });
     await db.caregivers.add({

@@ -9,7 +9,9 @@ import Onboarding from '@/app/Onboarding';
 import PatientHome from '@/app/PatientHome';
 import RoleSelect from '@/app/RoleSelect';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
+import { useActivePatient } from '@/hooks/useActivePatient';
 import { useApplyTheme } from '@/hooks/useApplyTheme';
+import { startReminderWatcher } from '@/reminders/notificationService';
 import { startAutoSync } from '@/sync/queue';
 
 // Recharts/jsPDF/dashboard code is caregiver-only and sizeable — lazy-loaded
@@ -32,11 +34,17 @@ function DashboardFallback() {
 
 function AppShell() {
   useApplyTheme();
+  const patient = useActivePatient();
 
   useEffect(() => {
     const stop = startAutoSync();
     return stop;
   }, []);
+
+  useEffect(() => {
+    if (!patient?.id || !patient.reminderAlertsEnabled) return undefined;
+    return startReminderWatcher(patient.id);
+  }, [patient?.id, patient?.reminderAlertsEnabled]);
 
   return (
     <Routes>

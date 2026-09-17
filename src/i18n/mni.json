@@ -150,7 +150,8 @@
     "schedule": "মতম",
     "category": "মখল",
     "withWhom": "কনাগা লোয়ননা",
-    "notes": "ইখিবা"
+    "notes": "ইখিবা",
+    "notificationTitle": "মতম ওইখ্রে: {{label}}"
   },
   "familyManager": {
     "title": "ইমুং মনুংগী মি অমসুং মমাই",
@@ -194,7 +195,13 @@
     "settings": "সেটিং",
     "extraLargeText": "মপি অচৌবা লাইরিক",
     "highContrastPalette": "মচু খন্নবা",
-    "language": "লোন"
+    "language": "লোন",
+    "reminderAlerts": "চেংবা লাউথোকপা",
+    "reminderAlertsBody": "লাই, ঈশিং নত্রগা থৌৱাংগী মতম ওইরবদি দেভাইছ অসিদা চেংবা লাউথোকপা ফংগনি — স্মৃতিসেতু হাংনা লৈরবদি, background-তাসু থবক তৌই। মসিনা পুরকপা লোয়ননা লোনবা tab অদু হৌদোকপা ঙমদে।",
+    "reminderAlertsEnable": "চেংবা লাউথোকপা হাপচিনবিয়ু",
+    "reminderAlertsOn": "দেভাইছ অসিদা চেংবা লাউথোকপা হাংলি",
+    "reminderAlertsDenied": "য়াথংনবা অদু থিংখ্রে। মসি হাপচিনবা নহাক্কী browser নত্রগা device settings-তা site অসিগীদমক notification হাপচিনবিয়ু।",
+    "reminderAlertsUnsupported": "browser অসিদা support তৌদে।"
   },
   "orientationCheckin": {
     "whatDay": "ঙসি নুমিৎ করিনো?",

@@ -31,7 +31,7 @@ Every component the official problem statement asks for is implemented, not aspi
 | AI/ML algorithms adjusting difficulty based on patient performance | `engine/adaptiveEngine.ts` — explainable rule-based staircase, 10 levels |
 | Cognitive performance analytics | `engine/trendAnalysis.ts` — linear-regression trend + z-score anomaly detection, on-device (see below) |
 | Multilingual voice-assisted interaction, regional language support, culturally familiar themes | 7 languages (`src/i18n/`) incl. 4 NER languages (Manipuri, Khasi, Mizo, Nagamese); Web Speech API TTS in `src/lib/speech.ts`; game names rooted in Hindi/Sanskrit with real-language subtitles |
-| Medication, hydration, activity, and appointment reminders | `src/reminders/` + the "Today" card on the patient home screen |
+| Medication, hydration, activity, and appointment reminders | `src/reminders/` + the "Today" card on the patient home screen; opt-in local alerts (`notificationService.ts`) fire via the Notification API while the app is open |
 | Caregiver monitoring dashboards tracking patient progress | `src/dashboard/` — trend charts, domain balance, adherence, adaptive log, cognitive insights, PDF/CSV export |
 | Offline functionality for low-connectivity areas | Dexie/IndexedDB-first reads and writes everywhere, `vite-plugin-pwa` service worker, sync is opportunistic never required |
 | Mobile/tablet accessibility with elderly-friendly interface | ≥64px tap targets, ≥18px body text, two high-contrast palettes, zero swipe/double-tap/hard-timer interactions |
@@ -205,7 +205,10 @@ since it's a check-in, not part of the rotation.
 - Minimum 64×64px tap targets, 16px+ spacing.
 - Two WCAG-AAA-targeted high-contrast palettes (`src/index.css`): a default warm
   cream/teal/saffron palette, and an alternate blue/amber palette that avoids
-  red/green cues for common elderly color-vision changes.
+  red/green cues for common elderly color-vision changes. Both palettes' focus
+  indicator is amber, deliberately never blue — age-related lens yellowing reduces
+  blue discrimination, making blue one of the worse choices for a focus ring in
+  this specific population.
 - No swipe gestures, no double-tap, no auto-advancing carousels, no hard timers that
   fail the patient. The two placement-style games (Dinacharya Sequence, Naksha Jodo)
   use **tap-to-place with tap-to-undo** rather than continuous drag — a deliberate
@@ -351,8 +354,11 @@ settings need somewhere to live).
 2. Replace placeholder visuals with commissioned regional artwork per game.
 3. Real backend for `/sync` with per-clinic or per-family account boundaries, feeding
    the same multi-patient Admin Panel that already exists client-side.
-4. Native background push notifications where the OS/device reliably supports them,
-   as a second channel alongside the in-app "Today" reminders card.
+4. **Partially done:** local (non-push) reminder alerts now exist
+   (`src/reminders/notificationService.ts`, opt-in from Settings) — they fire via the
+   Notification API while the app/tab is open, including backgrounded, but can't wake
+   a fully closed browser. True background push (via a real `/sync` backend) is the
+   remaining step for a reminder to arrive even after the tablet's browser was closed.
 5. A small aggregated, anonymized cross-patient dataset (with consent) to prototype
    the Bayesian Knowledge Tracing extension point in `adaptiveEngine.ts`.
 6. A real clinical pilot with a geriatric psychiatrist partner to validate the

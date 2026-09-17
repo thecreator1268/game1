@@ -150,7 +150,8 @@
     "schedule": "Hun",
     "category": "Chi",
     "withWhom": "Tu nen nge",
-    "notes": "Ziahna"
+    "notes": "Ziahna",
+    "notificationTitle": "A hun tawh: {{label}}"
   },
   "familyManager": {
     "title": "Chhungkaw leh Hmel",
@@ -194,7 +195,13 @@
     "settings": "Settings",
     "extraLargeText": "Ziak Lian Tak",
     "highContrastPalette": "Rong Ruahman",
-    "language": "Ṭawng"
+    "language": "Ṭawng",
+    "reminderAlerts": "Hriattirna Vaubelh",
+    "reminderAlertsBody": "Damdawi, tui, emaw thil tih hun a lo thleng chuan hi device hian vaubelh a pe ang che — SmritiSetu a hawn lai, background-ah pawh a lo work thei. Tab khar famkim tawh chu a kai thei lo.",
+    "reminderAlertsEnable": "Vaubelh Hawng Rawh",
+    "reminderAlertsOn": "Hi device-ah hian vaubelh a hawn tawh",
+    "reminderAlertsDenied": "Phalna hi din a ni. Hei hi hawng nan i browser emaw device settings-ah hian hi site atan notification hawng rawh.",
+    "reminderAlertsUnsupported": "Hi browser hian a support lo."
   },
   "orientationCheckin": {
     "whatDay": "Vawiin ni eng nge ni?",

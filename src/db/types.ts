@@ -31,6 +31,10 @@ export interface Patient {
   // Timestamp the setting caregiver accepted the on-device data-storage
   // notice during onboarding (see Onboarding.tsx's "consent" step).
   consentGivenAt: number;
+  // Opt-in only, off by default — Notification permission is intrusive to
+  // ask for automatically, so this stays false until a caregiver explicitly
+  // enables it from Settings (see reminders/notificationService.ts).
+  reminderAlertsEnabled: boolean;
   createdAt: number;
 }
 

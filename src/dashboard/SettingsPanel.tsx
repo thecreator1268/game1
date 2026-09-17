@@ -1,15 +1,30 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { db } from '@/db/schema';
 import type { SupportedLanguage } from '@/db/types';
 import { useCaregiverPatient } from '@/hooks/useCaregiverPatient';
 import { SUPPORTED_LANGUAGES } from '@/i18n';
+import { isNotificationSupported, requestNotificationPermission } from '@/reminders/notificationService';
 
 export default function SettingsPanel() {
   const { t } = useTranslation();
   const patient = useCaregiverPatient();
+  const [permissionDenied, setPermissionDenied] = useState(false);
 
   if (!patient) return null;
+
+  async function enableReminderAlerts() {
+    if (!patient) return;
+    const result = await requestNotificationPermission();
+    if (result === 'granted') {
+      setPermissionDenied(false);
+      await db.patients.update(patient.id, { reminderAlertsEnabled: true });
+    } else {
+      setPermissionDenied(true);
+    }
+  }
 
   return (
     <div className="flex flex-col gap-6">
@@ -71,6 +86,23 @@ export default function SettingsPanel() {
         <p className="mt-2 text-sm text-text-muted">
           Theme 2 substitutes blue/amber for red/green, for common colour-vision changes.
         </p>
+      </Card>
+
+      <Card>
+        <h2 className="text-action font-bold">{t('dashboard.reminderAlerts')}</h2>
+        <p className="mt-1 text-sm text-text-muted">{t('dashboard.reminderAlertsBody')}</p>
+        {!isNotificationSupported() ? (
+          <p className="mt-3 text-sm text-danger">{t('dashboard.reminderAlertsUnsupported')}</p>
+        ) : patient.reminderAlertsEnabled ? (
+          <p className="mt-3 text-body font-semibold text-success">{t('dashboard.reminderAlertsOn')}</p>
+        ) : (
+          <div className="mt-3">
+            <Button onClick={() => void enableReminderAlerts()}>{t('dashboard.reminderAlertsEnable')}</Button>
+            {permissionDenied && (
+              <p className="mt-2 text-sm text-danger">{t('dashboard.reminderAlertsDenied')}</p>
+            )}
+          </div>
+        )}
       </Card>
     </div>
   );

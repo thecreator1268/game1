@@ -145,7 +145,8 @@
     "schedule": "Time",
     "category": "Type",
     "withWhom": "With",
-    "notes": "Notes"
+    "notes": "Notes",
+    "notificationTitle": "Time for: {{label}}"
   },
   "familyManager": {
     "title": "Family & Faces",
@@ -189,7 +190,13 @@
     "settings": "Settings",
     "extraLargeText": "Extra-Large Text",
     "highContrastPalette": "Colour Theme",
-    "language": "Language"
+    "language": "Language",
+    "reminderAlerts": "Reminder Alerts",
+    "reminderAlertsBody": "Get an alert on this device when it's time for medicine, water, or an activity — works while SmritiSetu is open, even in the background. It can't wake a fully closed browser tab.",
+    "reminderAlertsEnable": "Turn On Alerts",
+    "reminderAlertsOn": "Alerts are on for this device",
+    "reminderAlertsDenied": "Permission was blocked. Enable notifications for this site in your browser or device settings to turn this on.",
+    "reminderAlertsUnsupported": "Not supported on this browser."
   },
   "orientationCheckin": {
     "whatDay": "What day is it today?",

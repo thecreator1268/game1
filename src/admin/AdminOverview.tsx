@@ -55,6 +55,7 @@ export default function AdminOverview() {
       // Added by an already-authenticated admin to a device whose consent
       // notice was already accepted during the original onboarding.
       consentGivenAt: Date.now(),
+      reminderAlertsEnabled: false,
       createdAt: Date.now(),
     });
     const admin = await db.caregivers.get(adminId);
