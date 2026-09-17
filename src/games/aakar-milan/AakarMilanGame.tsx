@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { GameShell } from '@/components/GameShell';
+import { RoundFeedback } from '@/components/RoundFeedback';
 import { SessionSummary } from '@/components/SessionSummary';
 import { VoicePrompt } from '@/components/VoicePrompt';
 import { useActivePatient } from '@/hooks/useActivePatient';
@@ -205,11 +206,7 @@ export default function AakarMilanGame() {
           ))}
         </div>
 
-        {feedback && (
-          <p className={`mt-4 text-body font-semibold ${feedback === 'correct' ? 'text-success' : 'text-danger'}`}>
-            {feedback === 'correct' ? t('common.correct') : t('common.tryAgain')}
-          </p>
-        )}
+        <RoundFeedback feedback={feedback} />
       </div>
     </GameShell>
   );

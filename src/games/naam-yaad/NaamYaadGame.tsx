@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { GameShell } from '@/components/GameShell';
+import { RoundFeedback } from '@/components/RoundFeedback';
 import { SessionSummary } from '@/components/SessionSummary';
 import { VoicePrompt } from '@/components/VoicePrompt';
 import { Button } from '@/components/Button';
@@ -231,11 +232,7 @@ export default function NaamYaadGame() {
           ))}
         </div>
 
-        {feedback && (
-          <p className={`mt-4 text-body font-semibold ${feedback === 'correct' ? 'text-success' : 'text-danger'}`}>
-            {feedback === 'correct' ? t('common.correct') : t('common.tryAgain')}
-          </p>
-        )}
+        <RoundFeedback feedback={feedback} />
       </div>
     </GameShell>
   );
