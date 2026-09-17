@@ -53,6 +53,13 @@
     "welcome": "SmritiSetu te apnalok ke swagot",
     "chooseLanguage": "Apuni laga bhasha basi lobi",
     "chooseLanguageBody": "Juntu bhasha te apuni aram pai etu chapi dibi.",
+    "consentTitle": "Shuru koribar age te",
+    "consentBody": "SmritiSetu-e rogi laga sob tothyo — naam, khela khela, aru unnoti — khali ei device-tei rakhe. Apuni sync koribole nabhabile, kunu tothyo ei device-r bahir-loi najabo.",
+    "consentPointStorage": "Sob data default-e ei device-tei thake, internet nathakile bhi.",
+    "consentPointControl": "Apuni jekono somoi-te Admin Panel pora sob data export koribo pare nohoile hodai-loi delete koribo pare.",
+    "consentPointNotDiagnosis": "SmritiSetu-e mon-r kaam-t modot kore — ei ekta medical diagnosis nohoi.",
+    "consentAgree": "Moi bujisi aru moi mani loise",
+    "consentDecline": "Etiya nohoi",
     "setupPatientName": "Rogi laga naam ki?",
     "setupPatientNamePlaceholder": "Naam likhibi",
     "setupCaregiverPin": "Dekha-bhal koridi thaka manu laga 4 number PIN bonabi",
@@ -60,6 +67,11 @@
     "setupComplete": "Sob taiyar ase!",
     "setupCompleteBody": "SmritiSetu etiya use koribole taiyar ase, internet nathakile bhi.",
     "getStarted": "Shuru koribi"
+  },
+  "errorBoundary": {
+    "title": "Kiba samasya hoise",
+    "body": "SmritiSetu-t ekta samasya hoise. Kunu data harai nai — apuni ghuri jaike aru ekbar cheshta koribo pare.",
+    "action": "Ghor-loi ghuri jabi"
   },
   "caregiverAuth": {
     "title": "Dekha-bhal koridi thaka manu laga login",

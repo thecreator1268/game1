@@ -28,6 +28,9 @@ export interface Patient {
   caregiverIds: string[];
   highContrastPalette: 'theme-1' | 'theme-2';
   textScale: 'normal' | 'large' | 'xl';
+  // Timestamp the setting caregiver accepted the on-device data-storage
+  // notice during onboarding (see Onboarding.tsx's "consent" step).
+  consentGivenAt: number;
   createdAt: number;
 }
 
@@ -97,6 +100,7 @@ export interface Caregiver {
   name: string;
   relation: string;
   pinHash: string;
+  pinSalt: string;
   patientIds: string[];
   role: CaregiverRole;
   createdAt: number;

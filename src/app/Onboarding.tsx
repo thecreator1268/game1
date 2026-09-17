@@ -7,10 +7,10 @@ import { db } from '@/db/schema';
 import type { SupportedLanguage } from '@/db/types';
 import { SUPPORTED_LANGUAGES } from '@/i18n';
 import { newId } from '@/lib/id';
-import { hashPin } from '@/lib/pin';
+import { generatePinSalt, hashPin } from '@/lib/pin';
 import { usePatientStore } from '@/store/patientStore';
 
-type Step = 'language' | 'patientName' | 'pin' | 'done';
+type Step = 'language' | 'consent' | 'patientName' | 'pin' | 'done';
 
 const PIN_LENGTH = 4;
 
@@ -21,6 +21,7 @@ export default function Onboarding() {
 
   const [step, setStep] = useState<Step>('language');
   const [language, setLanguage] = useState<SupportedLanguage>('en');
+  const [consentGivenAt, setConsentGivenAt] = useState<number | null>(null);
   const [patientName, setPatientName] = useState('');
   const [pin, setPin] = useState('');
   const [confirmPin, setConfirmPin] = useState('');
@@ -29,6 +30,11 @@ export default function Onboarding() {
   function chooseLanguage(code: SupportedLanguage) {
     setLanguage(code);
     void i18n.changeLanguage(code);
+    setStep('consent');
+  }
+
+  function giveConsent() {
+    setConsentGivenAt(Date.now());
     setStep('patientName');
   }
 
@@ -39,7 +45,8 @@ export default function Onboarding() {
     }
     const patientId = newId();
     const caregiverId = newId();
-    const pinHash = await hashPin(pin);
+    const pinSalt = generatePinSalt();
+    const pinHash = await hashPin(pin, pinSalt);
 
     await db.patients.add({
       id: patientId,
@@ -48,6 +55,7 @@ export default function Onboarding() {
       caregiverIds: [caregiverId],
       highContrastPalette: 'theme-1',
       textScale: 'normal',
+      consentGivenAt: consentGivenAt ?? Date.now(),
       createdAt: Date.now(),
     });
     await db.caregivers.add({
@@ -55,6 +63,7 @@ export default function Onboarding() {
       name: 'Caregiver',
       relation: 'Family',
       pinHash,
+      pinSalt,
       patientIds: [patientId],
       // The caregiver who completes first-time setup on a device owns the
       // Admin Panel for that install (see AdminLogin.tsx) — there is no
@@ -84,6 +93,26 @@ export default function Onboarding() {
                   {lang.label}
                 </button>
               ))}
+            </div>
+          </Card>
+        )}
+
+        {step === 'consent' && (
+          <Card>
+            <h1 className="text-heading-lg font-bold">{t('onboarding.consentTitle')}</h1>
+            <p className="mt-2 text-body text-text-muted">{t('onboarding.consentBody')}</p>
+            <ul className="mt-4 list-disc space-y-2 pl-5 text-body text-text-muted">
+              <li>{t('onboarding.consentPointStorage')}</li>
+              <li>{t('onboarding.consentPointControl')}</li>
+              <li>{t('onboarding.consentPointNotDiagnosis')}</li>
+            </ul>
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row-reverse">
+              <Button className="w-full" onClick={giveConsent}>
+                {t('onboarding.consentAgree')}
+              </Button>
+              <Button variant="secondary" className="w-full" onClick={() => navigate('/')}>
+                {t('onboarding.consentDecline')}
+              </Button>
             </div>
           </Card>
         )}

@@ -12,13 +12,16 @@ export default function CaregiverLogin() {
   const login = useAuthStore((s) => s.login);
 
   async function verify(pin: string): Promise<boolean> {
-    const hash = await hashPin(pin);
     const caregivers = await db.caregivers.toArray();
-    const match = caregivers.find((c) => c.pinHash === hash);
-    if (!match) return false;
-    login(match.id);
-    navigate('/caregiver');
-    return true;
+    for (const c of caregivers) {
+      const hash = await hashPin(pin, c.pinSalt);
+      if (hash === c.pinHash) {
+        login(c.id);
+        navigate('/caregiver');
+        return true;
+      }
+    }
+    return false;
   }
 
   return (

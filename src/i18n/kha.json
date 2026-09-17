@@ -53,6 +53,13 @@
     "welcome": "Khublei sha SmritiSetu",
     "chooseLanguage": "Pdiang ïa ka ktien phi",
     "chooseLanguageBody": "Toh ïa ka ktien kaba phi lah ban bteng ïa ka bha.",
+    "consentTitle": "Ha kwah ban pule",
+    "consentBody": "Ka SmritiSetu ka rung ïa baroh ki jingiathuh jong u nongshongthait — ka kyrteng, ki khel ki la khelh, bad ka jingïarap — namar ka device kani lang. Ym don ki jingiathuh uba wan shaphrang na kane ka device haba phi ym la pyndep ban sync.",
+    "consentPointStorage": "Baroh ka data ka rung ha kane ka device, ha ka jingdon ka internet ne cha.",
+    "consentPointControl": "Phi la lah ban export ne pynïap baroh ka data naduh sha naduh na ka Admin Panel.",
+    "consentPointNotDiagnosis": "Ka SmritiSetu ka iasoh ïa ka jingsngew jong ka mynsiem — kane ym long u nongkren jingpang.",
+    "consentAgree": "Nga la pule bad nga ïaid",
+    "consentDecline": "Mynta lada",
     "setupPatientName": "Kaba u/ka nongïatiit u kyrteng eiei?",
     "setupPatientNamePlaceholder": "Sar kyrteng",
     "setupCaregiverPin": "Thoh kawei ka PIN ba 4 ïa u nongïalam",
@@ -60,6 +67,11 @@
     "setupComplete": "Ban long jrong sa!",
     "setupCompleteBody": "Ka SmritiSetu ka la pyndep sa ban leit dulïióh, na ka internet ne cha.",
     "getStarted": "Ïai"
+  },
+  "errorBoundary": {
+    "title": "Ka kam ïa jem",
+    "body": "Ka SmritiSetu ka la ïalam da ka jem. Ym la mang un ïa ka data — phi la lah ban leit sha pynkut bad buit shuwa.",
+    "action": "Leit sha ka Iing"
   },
   "caregiverAuth": {
     "title": "Login jong u Nongïalam",

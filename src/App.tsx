@@ -8,6 +8,7 @@ import LevelSelect from '@/app/LevelSelect';
 import Onboarding from '@/app/Onboarding';
 import PatientHome from '@/app/PatientHome';
 import RoleSelect from '@/app/RoleSelect';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { useApplyTheme } from '@/hooks/useApplyTheme';
 import { startAutoSync } from '@/sync/queue';
 
@@ -44,7 +45,14 @@ function AppShell() {
 
       <Route path="/patient" element={<PatientHome />} />
       <Route path="/patient/game/:gameId/levels" element={<LevelSelect />} />
-      <Route path="/patient/game/:gameId" element={<GameRoute />} />
+      <Route
+        path="/patient/game/:gameId"
+        element={
+          <ErrorBoundary homePath={`${import.meta.env.BASE_URL}patient`}>
+            <GameRoute />
+          </ErrorBoundary>
+        }
+      />
 
       <Route path="/caregiver/login" element={<CaregiverLogin />} />
       <Route path="/caregiver" element={<CaregiverLayout />}>
@@ -115,8 +123,10 @@ function AppShell() {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <AppShell />
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <ErrorBoundary>
+        <AppShell />
+      </ErrorBoundary>
     </BrowserRouter>
   );
 }

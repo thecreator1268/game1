@@ -12,13 +12,17 @@ export default function AdminLogin() {
   const login = useAdminAuthStore((s) => s.login);
 
   async function verify(pin: string): Promise<boolean> {
-    const hash = await hashPin(pin);
     const caregivers = await db.caregivers.toArray();
-    const match = caregivers.find((c) => c.role === 'admin' && c.pinHash === hash);
-    if (!match) return false;
-    login(match.id);
-    navigate('/admin');
-    return true;
+    for (const c of caregivers) {
+      if (c.role !== 'admin') continue;
+      const hash = await hashPin(pin, c.pinSalt);
+      if (hash === c.pinHash) {
+        login(c.id);
+        navigate('/admin');
+        return true;
+      }
+    }
+    return false;
   }
 
   return (

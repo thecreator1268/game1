@@ -8,7 +8,7 @@ import type { SupportedLanguage } from '@/db/types';
 import { SUPPORTED_LANGUAGES } from '@/i18n';
 import { countPendingSync } from '@/sync/queue';
 import { newId } from '@/lib/id';
-import { hashPin } from '@/lib/pin';
+import { generatePinSalt, hashPin } from '@/lib/pin';
 import { usePatientStore } from '@/store/patientStore';
 import { useAdminAuthStore } from '@/store/adminAuthStore';
 
@@ -52,6 +52,9 @@ export default function AdminOverview() {
       caregiverIds: [adminId],
       highContrastPalette: 'theme-1',
       textScale: 'normal',
+      // Added by an already-authenticated admin to a device whose consent
+      // notice was already accepted during the original onboarding.
+      consentGivenAt: Date.now(),
       createdAt: Date.now(),
     });
     const admin = await db.caregivers.get(adminId);
@@ -64,8 +67,9 @@ export default function AdminOverview() {
 
   async function resetCaregiverPin(caregiverId: string) {
     const pin = randomPin();
-    const pinHash = await hashPin(pin);
-    await db.caregivers.update(caregiverId, { pinHash });
+    const pinSalt = generatePinSalt();
+    const pinHash = await hashPin(pin, pinSalt);
+    await db.caregivers.update(caregiverId, { pinHash, pinSalt });
     setRevealedPin({ caregiverId, pin });
   }
 
@@ -85,9 +89,9 @@ export default function AdminOverview() {
       const payload = {
         exportedAt: new Date().toISOString(),
         patients: allPatients,
-        // Caregiver PIN hashes are one-way (SHA-256) but are still left out
-        // of the export — a backup file is not the place for auth material.
-        caregivers: allCaregivers.map(({ pinHash: _pinHash, ...rest }) => rest),
+        // Caregiver PIN hashes are salted SHA-256 but are still left out of
+        // the export — a backup file is not the place for auth material.
+        caregivers: allCaregivers.map(({ pinHash: _pinHash, pinSalt: _pinSalt, ...rest }) => rest),
         sessions: allSessions,
         levelChanges: allLevelChanges,
         reminders: allReminders,
@@ -125,7 +129,7 @@ export default function AdminOverview() {
     );
     setActivePatient(null);
     window.localStorage.clear();
-    window.location.href = '/';
+    window.location.href = import.meta.env.BASE_URL;
   }
 
   return (

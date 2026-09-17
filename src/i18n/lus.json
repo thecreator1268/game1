@@ -53,6 +53,13 @@
     "welcome": "SmritiSetu-ah kan lo lawm che u",
     "chooseLanguage": "I ṭawng thlang rawh",
     "chooseLanguageBody": "I awlsam ber ṭawng chu tep rawh.",
+    "consentTitle": "I tan hma ah",
+    "consentBody": "SmritiSetu-in dam mi chungchang thil zawng zawng — a hming, game an tih te, leh a hmasawnna — hi device hi chauhah a khaikhawm. Sync tih tur i thlan loh chuan eng emaw hi device ata a chhuak lo vang.",
+    "consentPointStorage": "Data zawng zawng hi default-in hi device ah a awm a, internet awm lo pawhin.",
+    "consentPointControl": "Engtik pawhin Admin Panel atangin data export emaw permanent-a delete emaw i tih thei.",
+    "consentPointNotDiagnosis": "SmritiSetu chuan rilru lama tanpui tho tho a ni — sik dan enfiah a ni lo.",
+    "consentAgree": "Ka hria a, ka pawm",
+    "consentDecline": "Tunah hi ni lo",
     "setupPatientName": "Damlo hming eng nge ni?",
     "setupPatientNamePlaceholder": "Hming ziak rawh",
     "setupCaregiverPin": "Enkawltu tan number 4 PIN siam rawh",
@@ -60,6 +67,11 @@
     "setupComplete": "A zo tawh!",
     "setupCompleteBody": "SmritiSetu hman ngai a la tawh, internet awm lo pawhin.",
     "getStarted": "Ṭan rawh"
+  },
+  "errorBoundary": {
+    "title": "Thil eng emaw a sual",
+    "body": "SmritiSetu-in buaina a nei. Data engmah a bo lo — i lo kir a, beisei leh theih a ni.",
+    "action": "In lam kir rawh"
   },
   "caregiverAuth": {
     "title": "Enkawltu Login",

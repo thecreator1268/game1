@@ -48,6 +48,13 @@
     "welcome": "Welcome to SmritiSetu",
     "chooseLanguage": "Choose your language",
     "chooseLanguageBody": "Tap the language you are most comfortable with.",
+    "consentTitle": "Before we begin",
+    "consentBody": "SmritiSetu stores everything about the patient — their name, games played, and progress — only on this device. Nothing leaves this device unless you choose to sync it.",
+    "consentPointStorage": "All data stays on this device by default, even without internet.",
+    "consentPointControl": "You can export or permanently erase all data anytime from the Admin Panel.",
+    "consentPointNotDiagnosis": "SmritiSetu supports cognitive engagement — it is not a medical diagnosis.",
+    "consentAgree": "I Understand & Agree",
+    "consentDecline": "Not Now",
     "setupPatientName": "What is the patient's name?",
     "setupPatientNamePlaceholder": "Enter name",
     "setupCaregiverPin": "Create a 4-digit PIN for caregiver login",
@@ -55,6 +62,11 @@
     "setupComplete": "All set!",
     "setupCompleteBody": "SmritiSetu is ready to use, even without internet.",
     "getStarted": "Get Started"
+  },
+  "errorBoundary": {
+    "title": "Something went wrong",
+    "body": "SmritiSetu ran into a problem. No data was lost — you can go back and try again.",
+    "action": "Return to Home"
   },
   "caregiverAuth": {
     "title": "Caregiver Login",

@@ -15,6 +15,12 @@ Development of North Eastern Region).
 > diagnosis and treatment. This line also appears as a persistent footer in the
 > caregiver dashboard.
 
+**Live demo:** deploys automatically from `main` via GitHub Actions
+(`.github/workflows/deploy.yml`) to GitHub Pages — see the repo's "Deployments" or
+Actions tab for the current URL once Pages is enabled (Settings → Pages → Source:
+"GitHub Actions", a one-time manual step). CI (`ci.yml`) runs lint, the full test
+suite, and a production build on every push and PR.
+
 ## SIH26003 requirement mapping
 
 Every component the official problem statement asks for is implemented, not aspirational:
@@ -309,11 +315,23 @@ settings need somewhere to live).
   tablet.
 - **PIN auth is a lightweight gate**, not a security boundary — it keeps a patient
   from wandering into the dashboard or admin panel, not a defense against a
-  determined adult. A short lockout after 5 wrong PIN attempts discourages idle
-  keypad-mashing, but this is still not meant to resist a determined attacker.
+  determined adult. PINs are salted (per-caregiver, via `crypto.getRandomValues`)
+  and hashed (SHA-256) before storage (`src/lib/pin.ts`), and a short lockout after 5
+  wrong attempts discourages idle keypad-mashing, but this is still not meant to
+  resist a determined attacker with device access.
 - **The `/sync` backend is mocked** (`src/sync/mockServer.ts`) — it simulates
   latency and keeps a local received-count, so the offline→online flow is fully
   demoable, but there's no real server persisting data across devices yet.
+- **No encryption at rest.** IndexedDB (via Dexie) stores patient data in plaintext
+  on-device — reasonable for a single-device hackathon prototype, but a real clinical
+  deployment handling health-adjacent data under India's DPDP Act 2023 would need
+  device-level encryption (OS full-disk encryption today; app-level encryption as a
+  roadmap item).
+- **Component/integration test coverage is representative, not exhaustive.**
+  `engine/` has full unit coverage; a cross-section of the riskiest UI surfaces
+  (the error boundary, the onboarding consent gate, the cognitive-insights card, and
+  one full game end-to-end) has component tests via React Testing Library, but not
+  all 13 games do yet.
 - **TTS voice coverage depends entirely on the device.** Hindi and English are
   reliable on most Android/Chrome devices; Assamese support is inconsistent; the four
   North Eastern Region languages fall back to English audio (flagged, not hidden).
