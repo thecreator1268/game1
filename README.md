@@ -15,6 +15,21 @@ Development of North Eastern Region).
 > diagnosis and treatment. This line also appears as a persistent footer in the
 > caregiver dashboard.
 
+## SIH26003 requirement mapping
+
+Every component the official problem statement asks for is implemented, not aspirational:
+
+| Required (from the SIH26003 problem statement) | Implemented as |
+|---|---|
+| Interactive cognitive games: memory, attention, daily routine recall, pattern recognition | 13 games across exactly those 4 domains + a bonus orientation domain — see the clinical grounding table below |
+| AI/ML algorithms adjusting difficulty based on patient performance | `engine/adaptiveEngine.ts` — explainable rule-based staircase, 10 levels |
+| Cognitive performance analytics | `engine/trendAnalysis.ts` — linear-regression trend + z-score anomaly detection, on-device (see below) |
+| Multilingual voice-assisted interaction, regional language support, culturally familiar themes | 7 languages (`src/i18n/`) incl. 4 NER languages (Manipuri, Khasi, Mizo, Nagamese); Web Speech API TTS in `src/lib/speech.ts`; game names rooted in Hindi/Sanskrit with real-language subtitles |
+| Medication, hydration, activity, and appointment reminders | `src/reminders/` + the "Today" card on the patient home screen |
+| Caregiver monitoring dashboards tracking patient progress | `src/dashboard/` — trend charts, domain balance, adherence, adaptive log, cognitive insights, PDF/CSV export |
+| Offline functionality for low-connectivity areas | Dexie/IndexedDB-first reads and writes everywhere, `vite-plugin-pwa` service worker, sync is opportunistic never required |
+| Mobile/tablet accessibility with elderly-friendly interface | ≥64px tap targets, ≥18px body text, two high-contrast palettes, zero swipe/double-tap/hard-timer interactions |
+
 ## Why offline-first is the core constraint, not a feature
 
 NER has some of the lowest neurologist/geriatric-psychiatrist-to-population ratios in
@@ -139,6 +154,33 @@ An explainable staircase algorithm, **10 discrete levels** per game:
 
 Unit-tested in `src/engine/adaptiveEngine.test.ts` (13 cases across the level range)
 and `src/engine/sessionComposer.test.ts` (6 cases for the "Today's Set" rotation).
+
+## Cognitive analytics (`src/engine/trendAnalysis.ts`)
+
+The adaptive engine above decides *in-game* difficulty. This is a separate, real
+statistical-learning layer that answers the caregiver-facing question the problem
+statement calls out explicitly — "cognitive performance analytics" — using two
+classical, well-established techniques rather than a black box:
+
+- **Ordinary least-squares linear regression** of accuracy over time, per cognitive
+  domain, so "is this person actually declining" is answered from the *slope of a
+  fitted trend line across all their sessions*, not a fragile today-vs-yesterday
+  comparison. The R² of the fit is surfaced alongside the slope, so a noisy, low-R²
+  trend is never presented with false confidence.
+- **Rolling z-score anomaly detection**, flagging a session that's a statistical
+  outlier (|z| ≥ 2) against *that patient's own* recent baseline — never a population
+  norm, since this app never sees another patient's data.
+
+Both run instantly on-device against a few dozen data points, need no training phase,
+no external dataset, and no network call — the same explainability and offline-first
+constraints as the adaptive engine, applied to analytics instead of difficulty. The
+caregiver dashboard's **Cognitive Insights** card shows, per domain: Improving /
+Stable / Declining / Gathering data, the plain-language reason string the model
+computed, and any flagged sessions with a one-line explanation of why they stood out.
+
+Unit-tested in `src/engine/trendAnalysis.test.ts` (9 cases: trend direction, R²
+confidence, order-independence, anomaly detection against a stable baseline, and
+windowed-vs-whole-history behavior).
 
 ## "Today's Set" — avoiding daily monotony
 
@@ -275,9 +317,12 @@ settings need somewhere to live).
 - **TTS voice coverage depends entirely on the device.** Hindi and English are
   reliable on most Android/Chrome devices; Assamese support is inconsistent; the four
   North Eastern Region languages fall back to English audio (flagged, not hidden).
-- **The adaptive engine is a rule-based staircase**, deliberately — it needs zero
-  training data and runs fully on-device, which matters for an offline-first app. The
-  extension point for a learned model is real (see above), not aspirational filler.
+- **The in-game adaptive engine is a rule-based staircase, deliberately** — it needs
+  zero training data and runs fully on-device, which matters for an offline-first app.
+  The extension point for a learned model is real (see above), not aspirational
+  filler. The separate cognitive-analytics layer (`trendAnalysis.ts`) *is* genuine
+  statistical learning (linear regression + anomaly detection) — the two are
+  complementary, not the same thing wearing different names.
 
 ## Roadmap
 

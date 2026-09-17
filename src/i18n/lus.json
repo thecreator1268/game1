@@ -156,6 +156,14 @@
     "last90": "Ni 90 Kal Tawh",
     "domainBalance": "Bial Inzeitihna",
     "domainBalanceBody": "{{name}} chuan bial 5 zawng a inven dan inzeitihna",
+    "cognitiveInsights": "Rilru Chhinchhiahna",
+    "cognitiveInsightsBody": "Bial tinrenga statistical trend, he damlo taka session ata ata chhawn — biakna pahnih inzawm bawk lo, tute dang data nena inzawm lo tawh.",
+    "insightDirection": {
+      "improving": "A Ṭha Zel",
+      "stable": "A Inhlem",
+      "declining": "A Tlem Zel",
+      "insufficient-data": "Data Lâk Lai"
+    },
     "adaptiveLog": "Level Danglamna Log",
     "adaptiveLogBody": "Level danglamna tinreng chhan pêk",
     "adherence": "Hriattirna Zawhna",

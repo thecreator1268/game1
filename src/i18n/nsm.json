@@ -156,6 +156,14 @@
     "last90": "Pichila 90 din",
     "domainBalance": "Sob field laga balance",
     "domainBalanceBody": "{{name}} sob 5 ta field te kineka somoke khela ase",
+    "cognitiveInsights": "Mon laga khobor",
+    "cognitiveInsightsBody": "Field khan laga trend, ei rogi laga nijor session pora he bahar hoise — dui ta point compare kora nohoi, aru kunu dusra manu laga data logot compare kora nohoi.",
+    "insightDirection": {
+      "improving": "Bhal hoi thake",
+      "stable": "Thik ase",
+      "declining": "Kom hoi thake",
+      "insufficient-data": "Data joma hoi thake"
+    },
     "adaptiveLog": "Level bodol laga log",
     "adaptiveLogBody": "Sob level-bodol laga karon logote",
     "adherence": "Reminder mana",

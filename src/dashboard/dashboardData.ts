@@ -1,6 +1,13 @@
 import { db } from '@/db/schema';
 import type { Domain, GameSession, LevelChange, Reminder, ReminderLog } from '@/db/types';
 import { DOMAINS } from '@/games/gameList';
+import {
+  computeDomainTrend,
+  detectAnomalies,
+  type AnomalyFlag,
+  type DomainTrendResult,
+  type TrendPoint,
+} from '@/engine/trendAnalysis';
 
 function dayKey(timestamp: number): string {
   const d = new Date(timestamp);
@@ -91,6 +98,35 @@ export async function getDomainBalance(patientId: string, days: number): Promise
   for (const domain of DOMAINS) counts.set(domain, 0);
   for (const s of recent) counts.set(s.domain, (counts.get(s.domain) ?? 0) + 1);
   return DOMAINS.map((domain) => ({ domain, sessionCount: counts.get(domain) ?? 0 }));
+}
+
+export interface DomainInsight {
+  domain: Domain;
+  trend: DomainTrendResult;
+  anomalies: AnomalyFlag[];
+}
+
+// The "AI/ML" analytics layer the problem statement asks for, surfaced
+// per-domain: a real linear-regression trend (not a two-point comparison)
+// plus outlier detection against the patient's own baseline. See
+// engine/trendAnalysis.ts for the method and why it's deliberately simple
+// and explainable rather than a black box.
+export async function getCognitiveInsights(patientId: string): Promise<DomainInsight[]> {
+  const sessions = await db.sessions.where('patientId').equals(patientId).toArray();
+  const byDomain = new Map<Domain, TrendPoint[]>();
+  for (const domain of DOMAINS) byDomain.set(domain, []);
+  for (const s of sessions) {
+    byDomain.get(s.domain)?.push({ timestamp: s.startedAt, accuracy: s.accuracy });
+  }
+
+  return DOMAINS.map((domain) => {
+    const points = byDomain.get(domain) ?? [];
+    return {
+      domain,
+      trend: computeDomainTrend(points),
+      anomalies: detectAnomalies(points).slice(-3),
+    };
+  });
 }
 
 export async function getAdaptiveLog(patientId: string, limit = 50): Promise<LevelChange[]> {

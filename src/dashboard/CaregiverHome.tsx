@@ -9,6 +9,7 @@ import {
   buildWeeklySummary,
   getAdaptiveLog,
   getAdherence,
+  getCognitiveInsights,
   getDomainAveragesForRange,
   getDomainBalance,
   getDomainTrends,
@@ -17,6 +18,7 @@ import { DomainTrendsChart } from './DomainTrendsChart';
 import { DomainBalanceChart } from './DomainBalanceChart';
 import { AdherenceChart } from './AdherenceChart';
 import { AdaptiveLogList } from './AdaptiveLogList';
+import { CognitiveInsights } from './CognitiveInsights';
 import { DemoPanel } from './DemoPanel';
 import { exportSessionsCsv, exportSummaryPdf } from './exportReport';
 
@@ -42,6 +44,10 @@ export default function CaregiverHome() {
   const adherence = useLiveQuery(
     () => (patient ? getAdherence(patient.id, range) : undefined),
     [patient?.id, range],
+  );
+  const insights = useLiveQuery(
+    () => (patient ? getCognitiveInsights(patient.id) : undefined),
+    [patient?.id],
   );
   const weeklySummary = useLiveQuery(async () => {
     if (!patient) return '';
@@ -133,6 +139,14 @@ export default function CaregiverHome() {
             <AdherenceChart data={adherence.series} />
           </>
         )}
+      </Card>
+
+      <Card>
+        <h2 className="text-action font-bold">{t('dashboard.cognitiveInsights')}</h2>
+        <p className="text-body text-text-muted">{t('dashboard.cognitiveInsightsBody')}</p>
+        <div className="mt-4">
+          {insights && <CognitiveInsights insights={insights} />}
+        </div>
       </Card>
 
       <Card>

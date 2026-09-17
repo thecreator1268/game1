@@ -151,6 +151,14 @@
     "last90": "Last 90 Days",
     "domainBalance": "Domain Balance",
     "domainBalanceBody": "How evenly {{name}} is playing across all 5 areas",
+    "cognitiveInsights": "Cognitive Insights",
+    "cognitiveInsightsBody": "A statistical trend line per domain, computed from this patient's own sessions — not a two-point comparison, and never compared against anyone else's data.",
+    "insightDirection": {
+      "improving": "Improving",
+      "stable": "Stable",
+      "declining": "Declining",
+      "insufficient-data": "Gathering data"
+    },
     "adaptiveLog": "Adaptive Engine Log",
     "adaptiveLogBody": "Every level change, explained",
     "adherence": "Reminder Adherence",

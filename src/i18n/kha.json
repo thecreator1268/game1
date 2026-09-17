@@ -156,6 +156,14 @@
     "last90": "Ki sngi 90 ba la ïeh",
     "domainBalance": "Ka jingïatylli jong ki bynta",
     "domainBalanceBody": "Kumno u/ka {{name}} u/ka leit dulïióh ïa baroh ki bynta 5",
+    "cognitiveInsights": "Jingtip Mynsiem",
+    "cognitiveInsightsBody": "Kawei ka jinglaitluid statistical ïa katkata bynta, na ka jingdulïióh jong u nongïatiit ha lade — ym long ka jingïatylli ar dieng khmat, bad ym rah shuwa ïa ka data jong u briew shuwa.",
+    "insightDirection": {
+      "improving": "Ka Bha Bad Bha",
+      "stable": "Ka Stable",
+      "declining": "Ka Sniew Bad Sniew",
+      "insufficient-data": "Ka Pynkhein Data"
+    },
     "adaptiveLog": "Log jong jingthrew level",
     "adaptiveLogBody": "Baroh ka jingthrew level bad ka jingïalam",
     "adherence": "Jingdonkam reminder",
