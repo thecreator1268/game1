@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { GameShell } from '@/components/GameShell';
+import { RoundFeedback } from '@/components/RoundFeedback';
 import { SessionSummary } from '@/components/SessionSummary';
 import { VoicePrompt } from '@/components/VoicePrompt';
 import { useActivePatient } from '@/hooks/useActivePatient';
@@ -55,6 +56,7 @@ export default function DhyanDhaamGame() {
   const [foundCount, setFoundCount] = useState(0);
   const [tapDurations, setTapDurations] = useState<number[]>([]);
   const [errorTypes, setErrorTypes] = useState<ErrorType[]>([]);
+  const [feedback, setFeedback] = useState<'correct' | 'wrong' | null>(null);
   const [levelDecision, setLevelDecision] = useState<LevelDecision | null>(null);
 
   const sessionStartRef = useRef(0);
@@ -123,6 +125,8 @@ export default function DhyanDhaamGame() {
     );
     setTiles(nextTiles);
     setErrorTypes((prev) => [...prev, tile.isTarget ? 'none' : 'wrong-choice']);
+    setFeedback(tile.isTarget ? 'correct' : 'wrong');
+    window.setTimeout(() => setFeedback(null), 600);
 
     if (tile.isTarget) {
       const newFoundCount = foundCount + 1;
@@ -182,6 +186,8 @@ export default function DhyanDhaamGame() {
             {foundCount} / {targetTotal}
           </span>
         </div>
+
+        <RoundFeedback feedback={feedback} />
 
         <div className="grid gap-3" style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}>
           {tiles.map((tile, index) => (

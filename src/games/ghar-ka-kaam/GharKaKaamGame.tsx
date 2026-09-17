@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { GameShell } from '@/components/GameShell';
+import { RoundFeedback } from '@/components/RoundFeedback';
 import { SessionSummary } from '@/components/SessionSummary';
 import { VoicePrompt } from '@/components/VoicePrompt';
 import { useActivePatient } from '@/hooks/useActivePatient';
@@ -53,6 +54,7 @@ export default function GharKaKaamGame() {
   const [matchedTasks, setMatchedTasks] = useState<Set<string>>(new Set());
   const [selectedToolKey, setSelectedToolKey] = useState<string | null>(null);
   const [wrongFlashTask, setWrongFlashTask] = useState<string | null>(null);
+  const [feedback, setFeedback] = useState<'correct' | 'wrong' | null>(null);
   const [responseTimes, setResponseTimes] = useState<number[]>([]);
   const [errorTypes, setErrorTypes] = useState<ErrorType[]>([]);
   const [levelDecision, setLevelDecision] = useState<LevelDecision | null>(null);
@@ -123,13 +125,19 @@ export default function GharKaKaamGame() {
       const nextMatched = new Set(matchedTasks).add(task);
       setMatchedTasks(nextMatched);
       setSelectedToolKey(null);
+      setFeedback('correct');
+      window.setTimeout(() => setFeedback(null), 600);
       if (nextMatched.size === totalPairsRef.current) {
         void finishRound(nextTimes, nextErrors);
       }
     } else {
       setWrongFlashTask(task);
       setSelectedToolKey(null);
-      window.setTimeout(() => setWrongFlashTask(null), 500);
+      setFeedback('wrong');
+      window.setTimeout(() => {
+        setWrongFlashTask(null);
+        setFeedback(null);
+      }, 500);
     }
   }
 
@@ -168,6 +176,8 @@ export default function GharKaKaamGame() {
           <VoicePrompt text={t('games.ghar-ka-kaam.instructions')} label={t('common.listen')} />
           <p className="text-body text-text-muted">{t('games.ghar-ka-kaam.instructions')}</p>
         </div>
+
+        <RoundFeedback feedback={feedback} />
 
         <p className="mb-2 text-sm font-semibold text-text-muted">Tools</p>
         <div className="mb-8 flex flex-wrap gap-3">

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { GameShell } from '@/components/GameShell';
+import { RoundFeedback } from '@/components/RoundFeedback';
 import { SessionSummary } from '@/components/SessionSummary';
 import { VoicePrompt } from '@/components/VoicePrompt';
 import { useActivePatient } from '@/hooks/useActivePatient';
@@ -42,6 +43,7 @@ export default function GintiDhyanGame() {
   const [tapDurations, setTapDurations] = useState<number[]>([]);
   const [errorTypes, setErrorTypes] = useState<ErrorType[]>([]);
   const [wrongFlash, setWrongFlash] = useState<string | null>(null);
+  const [feedback, setFeedback] = useState<'correct' | 'wrong' | null>(null);
   const [levelDecision, setLevelDecision] = useState<LevelDecision | null>(null);
 
   const sessionStartRef = useRef(0);
@@ -110,6 +112,8 @@ export default function GintiDhyanGame() {
 
       const newNextIndex = nextIndex + 1;
       setNextIndex(newNextIndex);
+      setFeedback('correct');
+      window.setTimeout(() => setFeedback(null), 600);
 
       if (newNextIndex >= sortedValuesRef.current.length) {
         void finishRound(nextTiles.filter((t) => t.status === 'done'), nextTimes, nextErrors);
@@ -117,7 +121,11 @@ export default function GintiDhyanGame() {
     } else {
       setErrorTypes((prev) => [...prev, 'sequence-error']);
       setWrongFlash(tile.key);
-      window.setTimeout(() => setWrongFlash(null), 500);
+      setFeedback('wrong');
+      window.setTimeout(() => {
+        setWrongFlash(null);
+        setFeedback(null);
+      }, 500);
     }
   }
 
@@ -159,6 +167,8 @@ export default function GintiDhyanGame() {
           <VoicePrompt text={t('games.ginti-dhyan.instructions')} label={t('common.listen')} />
           <p className="text-body text-text-muted">{t('games.ginti-dhyan.instructions')}</p>
         </div>
+
+        <RoundFeedback feedback={feedback} />
 
         <div className="grid gap-3" style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}>
           {tiles.map((tile, index) => (
