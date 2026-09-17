@@ -6,7 +6,7 @@ import { Button } from '@/components/Button';
 import { db } from '@/db/schema';
 import { useCaregiverPatient } from '@/hooks/useCaregiverPatient';
 import { useAudioRecorder } from '@/hooks/useAudioRecorder';
-import { readFileAsDataUrl } from '@/lib/file';
+import { readImageFileAsCompressedDataUrl } from '@/lib/file';
 import { addFamilyMember, deleteFamilyMember } from '@/family/familyService';
 
 export default function FamilyManager() {
@@ -26,7 +26,7 @@ export default function FamilyManager() {
   async function handlePhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
-    setPhotoUrl(await readFileAsDataUrl(file));
+    setPhotoUrl(await readImageFileAsCompressedDataUrl(file));
   }
 
   async function handleAdd() {

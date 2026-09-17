@@ -43,4 +43,16 @@ void i18n
     returnEmptyString: false,
   });
 
+// WCAG 3.1.1 (Language of Page) and screen-reader pronunciation both depend
+// on <html lang> matching what's actually on screen — every i18n.changeLanguage
+// call (onboarding's language picker, useApplyTheme syncing a patient's saved
+// preference) goes through here, so this one listener keeps it correct
+// regardless of which call site triggered the change.
+if (typeof document !== 'undefined') {
+  document.documentElement.lang = i18n.language;
+  i18n.on('languageChanged', (lng) => {
+    document.documentElement.lang = lng;
+  });
+}
+
 export default i18n;
