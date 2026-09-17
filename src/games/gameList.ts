@@ -6,7 +6,7 @@ export interface GameMeta {
   usesAdaptiveEngine: boolean;
 }
 
-// Canonical list of all 13 games and the clinical domain each maps to.
+// Canonical list of all 14 games and the clinical domain each maps to.
 // Order here is the stable tie-break order used by the session composer.
 export const GAME_LIST: GameMeta[] = [
   { id: 'smriti-cards', domain: 'memory', usesAdaptiveEngine: true },
@@ -22,6 +22,7 @@ export const GAME_LIST: GameMeta[] = [
   { id: 'chaya-khoj', domain: 'pattern', usesAdaptiveEngine: true },
   { id: 'naksha-jodo', domain: 'pattern', usesAdaptiveEngine: true },
   { id: 'aaj-ka-din', domain: 'orientation', usesAdaptiveEngine: false },
+  { id: 'ghadi-dekho', domain: 'orientation', usesAdaptiveEngine: true },
 ];
 
 export const DOMAINS: Domain[] = ['memory', 'attention', 'routine', 'pattern', 'orientation'];

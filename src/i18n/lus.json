@@ -320,6 +320,13 @@
       "tagline": "Vawiin Zawhna",
       "instructions": "Vawiin chungchang zawhna awlsam tam thleng chhang rawh.",
       "clinicalMapping": "Hun leh hmun hriatna (MoCA orientation) nena inzawm. Hei hi nikhua enna a ni, harsatna zirna a ni lo."
+    },
+    "ghadi-dekho": {
+      "name": "Dar En Rawh",
+      "meaning": "Dar chhiar dan",
+      "tagline": "Engzat nge a ni tawh?",
+      "instructions": "Dar chu en la, hun dik chu tep rawh.",
+      "clinicalMapping": "Hmuhruh leh hun hriatna nena inzawm (MoCA visuospatial/executive) - khawvel pumin dementia enfiahna atana hman Clock Drawing Test nen a inang."
     }
   }
 }

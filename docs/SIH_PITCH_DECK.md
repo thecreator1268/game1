@@ -62,9 +62,10 @@ own regional language, and gives caregivers a clear, explainable picture of whet
 their loved one is improving or declining.*
 
 **Key features (5):**
-1. **13 clinically-grounded games** across memory, attention, daily-routine recall,
+1. **14 clinically-grounded games** across memory, attention, daily-routine recall,
    pattern recognition, and orientation — each explicitly mapped to a real MoCA/ADAS-Cog
-   clinical assessment domain, not generic puzzles.
+   clinical assessment domain, not generic puzzles. Includes a Clock Drawing Test
+   analogue (Ghadi Dekho), one of the most recognized dementia-screening tasks worldwide.
 2. **Explainable adaptive difficulty engine** — 10 levels per game, adjusts to the
    patient's real-time performance on-device; every level change is logged with a
    plain-language reason, auditable by a caregiver, not a black box.
@@ -72,9 +73,10 @@ their loved one is improving or declining.*
    trend detection + anomaly flagging) surfaces whether each cognitive domain is
    genuinely improving, stable, or declining over time, computed from that patient's
    own history only.
-4. **Voice-first, 7 languages** — English, Hindi, Assamese, plus four languages of the
-   North East itself (Manipuri, Khasi, Mizo, Nagamese) — works even for a patient who
-   cannot read.
+4. **Voice-first, 9 languages** — English, Hindi, Assamese, plus six languages of the
+   North East itself (Manipuri, Khasi, Mizo, Nagamese, Kokborok, Nepali), covering 7
+   of the 8 official NER states — works even for a patient who cannot read, and the
+   patient's chosen language drives text-to-speech automatically too.
 5. **100% offline-first** — every read and write hits local on-device storage first;
    network sync is opportunistic, never required for the app to function.
 
@@ -103,17 +105,18 @@ dementia-assessment clinical scales, not generic gamification.
 - **Analytics engine:** on-device linear regression + z-score anomaly detection —
   genuine statistical learning, zero training data, zero cloud
 - **Dashboard/export:** Recharts for visualization, jsPDF/CSV export for doctor visits
-- **State/i18n:** Zustand, i18next (7 languages)
+- **State/i18n:** Zustand, i18next (9 languages)
 
 **Architecture (describe as a simple diagram):**
 `Patient/Caregiver device (browser/PWA) → IndexedDB (local, source of truth) ⇄
 opportunistic sync queue → mock backend today, real per-clinic backend as the next step`
 
 **Feasibility statement:** *Already built and working end-to-end — this is a
-functioning prototype today, not a concept slide. All 13 games, the adaptive engine,
+functioning prototype today, not a concept slide. All 14 games, the adaptive engine,
 the analytics layer, the caregiver dashboard, and offline sync are implemented, covered
-by 28 automated unit tests, and demonstrable live on a tablet with no internet
-connection.*
+by 60+ automated tests, and demonstrable live on a tablet with no internet
+connection. A live demo is deployed and open right now:
+https://thecreator1268.github.io/game1/*
 
 ---
 

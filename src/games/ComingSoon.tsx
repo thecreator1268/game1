@@ -7,7 +7,7 @@ import { Button } from '@/components/Button';
 
 // Temporary placeholder used only while a game is still being built — wired
 // into the real GameShell/routing so the rest of the app is fully testable
-// before every one of the 13 games is finished.
+// before every one of the games is finished.
 export function ComingSoon({ gameId }: { gameId: GameId }) {
   const { t } = useTranslation();
   const navigate = useNavigate();

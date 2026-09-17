@@ -320,6 +320,13 @@
       "tagline": "Aji laga sawal-jowab",
       "instructions": "Aji laga bare te kisu shaanti sawal laga jowab dibi.",
       "clinicalMapping": "Somoy aru jaga bujha (MoCA orientation) logote milise. Etu hodai laga cheking, hisab laga abhyas nohoi."
+    },
+    "ghadi-dekho": {
+      "name": "Ghori Sabo",
+      "meaning": "Ghori porha",
+      "tagline": "Kiman baji ase?",
+      "instructions": "Ghori-ke sabi, tar pichete thik somoi-t tap koribi.",
+      "clinicalMapping": "Chokh-r orientation aru somoi-r gyaan-r logot jorit (MoCA visuospatial/executive) — duniya-bhor-t dementia check koribole hoi thaka Clock Drawing Test-r logot mil ase."
     }
   }
 }

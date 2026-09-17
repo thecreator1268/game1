@@ -7,14 +7,18 @@ import mni from './mni.json';
 import kha from './kha.json';
 import lus from './lus.json';
 import nsm from './nsm.json';
+import kok from './kok.json';
+import ne from './ne.json';
 
-// All 7 languages now cover the full UI key structure (see each file's
-// "_meta" note) — any key that's still missing anywhere falls back to
-// English via fallbackLng below, rather than showing a blank or a raw key
-// to the patient. en/hi/as are widely-spoken, high-resource languages;
-// mni/kha/lus/nsm are AI-assisted best-effort drafts for languages of
-// India's North Eastern Region, not yet reviewed by a native speaker —
-// see each file's "_meta.status" before treating them as production-ready.
+// All 9 languages now cover the full UI key structure — any key that's
+// still missing anywhere falls back to English via fallbackLng below,
+// rather than showing a blank or a raw key to the patient. en/hi/as are
+// widely-spoken, high-resource languages; mni/kha/lus/nsm/kok/ne are
+// AI-assisted best-effort drafts for languages of India's North Eastern
+// Region, not yet reviewed by a native speaker. Confidence varies a lot
+// within that group — ne (Nepali, Sikkim) is a well-documented language;
+// kok (Kokborok, Tripura) has far fewer digital resources to draw on and
+// needs native-speaker review before it's treated as production-ready.
 export const SUPPORTED_LANGUAGES = [
   { code: 'en', label: 'English', complete: true },
   { code: 'hi', label: 'हिन्दी', complete: true },
@@ -23,6 +27,8 @@ export const SUPPORTED_LANGUAGES = [
   { code: 'kha', label: 'Khasi', complete: true },
   { code: 'lus', label: 'Mizo ṭawng', complete: true },
   { code: 'nsm', label: 'Nagamese', complete: true },
+  { code: 'kok', label: 'Kokborok', complete: true },
+  { code: 'ne', label: 'नेपाली', complete: true },
 ] as const;
 
 void i18n
@@ -36,6 +42,8 @@ void i18n
       kha: { translation: kha },
       lus: { translation: lus },
       nsm: { translation: nsm },
+      kok: { translation: kok },
+      ne: { translation: ne },
     },
     lng: 'en',
     fallbackLng: 'en',

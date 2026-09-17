@@ -1,0 +1,332 @@
+{
+  "_meta": {
+    "status": "Best-effort AI-assisted translation for the SIH26003 prototype — not yet reviewed by a native speaker or community linguist. Confidence here is meaningfully lower than the other language files in this app: Kokborok has far fewer digital-text resources to draw on. Treat this as a rough first draft only, and have it corrected by a Kokborok speaker before any real deployment in Tripura.",
+    "script": "Roman/Latin script, matching Tripura's officially adopted script for Kokborok since the 1970s (Bengali script is the traditional alternative).",
+    "fallback": "Any key missing here falls back to English automatically (see i18n/index.ts)."
+  },
+  "common": {
+    "appName": "SmritiSetu",
+    "home": "Nok",
+    "back": "Kaham",
+    "play": "Khela",
+    "next": "Hachukni",
+    "done": "Thangbai",
+    "cancel": "Hatai",
+    "save": "Rakha",
+    "edit": "Sikhaya",
+    "delete": "Phelai",
+    "add": "Yathok",
+    "yes": "Ong",
+    "no": "Kaubo",
+    "loading": "Rai thangdo...",
+    "offline": "Internet bo",
+    "online": "Internet dong",
+    "synced": "Sync thangbai",
+    "syncing": "Sync thangdo...",
+    "pendingSync": "{{count}} sync noksani",
+    "level": "Level",
+    "score": "Score",
+    "today": "Chondi",
+    "aboutThisGame": "Bo khela bagwi",
+    "close": "Hatai",
+    "listen": "Thangnai",
+    "correct": "Khalam!",
+    "tryAgain": "Sale sale sale, taram ye",
+    "wellDone": "Bagwi thanglaikha!",
+    "personalBest": "Nwng bo khelani chekhang mathaijo!",
+    "takeBreakTitle": "Chotwi arai chelo?",
+    "takeBreakBody": "Nwng chekhang khelakha. Chotwi arai bagwi.",
+    "takeBreakContinue": "Khela thangdo",
+    "takeBreakStop": "Arai lo",
+    "minutesShort": "min",
+    "clinicalNote": "SmritiSetu-ni khela ekhali twiswm kaham hachuk laimani lama sahaiya thangdo, bar songnwi bwlwi twiswm bikhini paribortonni khoborkho lakha. Ye diagnosis kaubo. Doctor-ni kotha nono.",
+    "install": "App install thangdo",
+    "cardFaceDown": "Card mukh onkha",
+    "tapWhenHeard": "Ang thangnai!"
+  },
+  "splash": {
+    "tagline": "Twiswmni khan setu"
+  },
+  "roles": {
+    "choosePrompt": "Chondi SmritiSetu tai khelado?",
+    "patient": "Ang khela hamjani",
+    "caregiver": "Ang songnwi bwlwini manshi"
+  },
+  "onboarding": {
+    "welcome": "SmritiSetu-ni khan khulumbai",
+    "chooseLanguage": "Bini bibar khonai",
+    "chooseLanguageBody": "Bini bibar swrwng thaha, honi tap thok.",
+    "consentTitle": "Khelani agei",
+    "consentBody": "SmritiSetu-ni khela-ni thangnai kotha pumthang — mung, khela nokha, bar unnoti — bo device-o rakha. Sync thangnai kaubo bathai bo device-o thangbo.",
+    "consentPointStorage": "Data pumthang bo device-o rakha, internet dongbo bo thangbo.",
+    "consentPointControl": "Nwng chondi Admin Panel-o data export tokhro bathai pumthang phelai jokdok.",
+    "consentPointNotDiagnosis": "SmritiSetu twiswmni khan kaham hachuk laimani lama sahaiya thangdo — ye diagnosis kaubo.",
+    "consentAgree": "Ang bujha bar mani",
+    "consentDecline": "Chondi kaubo",
+    "setupPatientName": "Khela hamjani mung tai?",
+    "setupPatientNamePlaceholder": "Mung riya",
+    "setupCaregiverPin": "Songnwi bwlwini login-ni khan 4 ankiya PIN sajai",
+    "setupCaregiverPinConfirm": "PIN sale riya",
+    "setupComplete": "Pumthang taiyar!",
+    "setupCompleteBody": "SmritiSetu chondi khelani khan taiyar, internet dongbo bo thangbo.",
+    "getStarted": "Sarai lo"
+  },
+  "errorBoundary": {
+    "title": "Chotwi bwtwr thangbai",
+    "body": "SmritiSetu-o bwtwr swrwngbai. Data kaubo mangbai — nwng kaham hasei sale sale lo.",
+    "action": "Nok-o kaham lo"
+  },
+  "caregiverAuth": {
+    "title": "Songnwi bwlwini login",
+    "enterPin": "Bini PIN riya",
+    "wrongPin": "Bo PIN khalam kaubo. Sale sale lo.",
+    "tooManyAttempts": "Chekhang bwtwr sale. {{seconds}} second-o sale sale lo.",
+    "scanQr": "Tokhro bini QR code scan thok",
+    "logout": "Logout thok"
+  },
+  "adminAuth": {
+    "title": "Admin login",
+    "enterPin": "Bini admin PIN riya",
+    "wrongPin": "Bo PIN khalam kaubo. Sale sale lo.",
+    "panelTitle": "Admin Panel",
+    "entryLink": "Admin Panel"
+  },
+  "adminPanel": {
+    "totalPatients": "Khela hamjani pumthang",
+    "totalCaregivers": "Songnwi bwlwini manshi pumthang",
+    "totalSessions": "Session pumthang",
+    "patients": "Khela hamjani",
+    "addPatient": "Khela hamjani yathok",
+    "activePatient": "Chondini khela hamjani",
+    "setActive": "Chondini sajai",
+    "caregivers": "Songnwi bwlwini manshi",
+    "role": "Kam",
+    "resetPin": "PIN sale sajai",
+    "newPin": "Chukwi PIN",
+    "languages": "Bibar",
+    "complete": "Thangbai",
+    "beta": "Beta",
+    "dataTools": "Data-ni sara",
+    "exportAllData": "Data pumthang export thok",
+    "dangerZone": "Bikhang jaiga",
+    "resetAllDataBody": "Bo-e bo device-ni data pumthang chirodini phelai jokdok. Thangnani khan \"{{word}}\" riya.",
+    "resetAllData": "Data pumthang phelai"
+  },
+  "levelSelect": {
+    "title": "Level tai khonai",
+    "body": "Chotwi lock kaubo — tai level khela lai khonai jokdok. SmritiSetu chondi khelani khan swrwng khonaidok.",
+    "recommended": "Sasa khang",
+    "chooseLevel": "Level khonai"
+  },
+  "patientHome": {
+    "greeting": "Khulumbai, {{name}}",
+    "todaysSet": "Chondini khela",
+    "todaysSetBody": "Chondini khan khonaikha khela tham",
+    "moreGames": "Khela pumthang",
+    "playAgain": "Sale khela",
+    "streakLabel": "{{count}} sal khela sale sale",
+    "newBadge": "Chukwi"
+  },
+  "domains": {
+    "memory": "Twiswm",
+    "attention": "Twk bar mon dongnai",
+    "routine": "Chondini kam",
+    "pattern": "Rup bar chinha",
+    "orientation": "Jaiga bar twiswmni khan"
+  },
+  "reminders": {
+    "title": "Chondi",
+    "medicine": "Ha",
+    "hydration": "Twi",
+    "activity": "Kam",
+    "appointment": "Doctor-o thangnai",
+    "markTaken": "Nokha bathai chinha thok",
+    "taken": "Nokha",
+    "takenAt": "{{time}}-o nokha",
+    "noneToday": "Chondi chotwi dongbo kaubo. Bagwi thanglaikha!",
+    "manageTitle": "Reminder sasai",
+    "addReminder": "Reminder yathok",
+    "label": "Ye tai bagwi?",
+    "schedule": "Somoi",
+    "category": "Bibhag",
+    "withWhom": "Tokhro",
+    "notes": "Kotha",
+    "notificationTitle": "Somoi thangbai: {{label}}"
+  },
+  "familyManager": {
+    "title": "Songnwi bar mukh",
+    "body": "Naam Yaad khelani khan photo, mung, bar twk-thok yathok.",
+    "addMember": "Songnwini manshi yathok",
+    "name": "Mung",
+    "relation": "Songnwi",
+    "photo": "Photo",
+    "voiceNote": "Twk-thok (thangnai kaubo)",
+    "recordVoiceNote": "Twk-thok record thok",
+    "reRecord": "Sale record",
+    "noMembers": "Songnwini manshi tokhro yathok kaubo."
+  },
+  "dashboard": {
+    "title": "Songnwi bwlwini dashboard",
+    "trends": "Somoini bagwi unnoti",
+    "last30": "Chotwi 30 sal",
+    "last90": "Chotwi 90 sal",
+    "domainBalance": "Bibhagni bhaga",
+    "domainBalanceBody": "{{name}} pumthang 5 bibhag-o taibo khelado",
+    "cognitiveInsights": "Kaham hachuk laimani khobor",
+    "cognitiveInsightsBody": "Bibhag tai-tai-ni statistics unnoti rekha, bo khela hamjani thangnai session-o gonona thangkha — duini tulna kaubo, tokhro-ni data-tokhro tulna thangkha kaubo.",
+    "insightDirection": {
+      "improving": "Unnoti thangdo",
+      "stable": "Chekhang",
+      "declining": "Sitidongdo",
+      "insufficient-data": "Data twk thangdo"
+    },
+    "adaptiveLog": "Adaptive engine log",
+    "adaptiveLogBody": "Level paribortonni khan pumthang, bujhaikha",
+    "adherence": "Reminder nokha",
+    "streak": "Chondini sale sale sal",
+    "weeklySummary": "Bo saptahni chotwi kotha",
+    "exportPdf": "PDF export thok",
+    "exportCsv": "CSV export thok",
+    "disclaimer": "Bo dashboard-e doctor tokhro kotha sanani khan unnoti khobor lakha. Ye diagnosis tokhro chikitsha sara kaubo.",
+    "noData": "Data chekhang kaubo — agei chotwi khela khela.",
+    "demoPanel": "Offline / Sync demo",
+    "airplaneMode": "Offline bathai nokol (Airplane Mode)",
+    "forceSyncNow": "Chondi sync thok",
+    "settings": "Settings",
+    "extraLargeText": "Bwrwi mahaphi akhor",
+    "highContrastPalette": "Rang theme",
+    "language": "Bibar",
+    "reminderAlerts": "Reminder sotorko",
+    "reminderAlertsBody": "Ha, twi, tokhro kam-ni somoi thangbaidwi bo device-o sotorko naikha — SmritiSetu khula dongdwi kam thangdo, background-o bo. Bo-e chirodini bondho tab-kho khulumbai jokdok kaubo.",
+    "reminderAlertsEnable": "Sotorko sarai",
+    "reminderAlertsOn": "Bo device-o sotorko sarai dongdo",
+    "reminderAlertsDenied": "Anumoti bondho thangbai. Bo sarainani khan bini browser tokhro device settings-o bo site-ni khan notification sarai.",
+    "reminderAlertsUnsupported": "Bo browser-o support kaubo."
+  },
+  "orientationCheckin": {
+    "whatDay": "Chondi tai sal?",
+    "whatTime": "Chondi din-ni tai somoi?",
+    "whatSeason": "Chondi tai rwtwi?",
+    "days": {
+      "sunday": "Robibar",
+      "monday": "Sombar",
+      "tuesday": "Mongolbar",
+      "wednesday": "Budhbar",
+      "thursday": "Brihospotibar",
+      "friday": "Shukrobar",
+      "saturday": "Shonibar"
+    },
+    "times": {
+      "morning": "Sokal",
+      "afternoon": "Bela",
+      "evening": "Sandhya",
+      "night": "Rati"
+    },
+    "seasons": {
+      "winter": "Sitkal",
+      "summer": "Rwtwi ga",
+      "monsoon": "Borsha",
+      "autumn": "Sorot"
+    }
+  },
+  "games": {
+    "smriti-cards": {
+      "name": "Smriti Cards",
+      "meaning": "Twiswmni card",
+      "tagline": "Jora milai",
+      "instructions": "Milkha card mainai khan duitha card-o tap thok. Tai phai tai jaiga-o dong bathai twiswm thanga.",
+      "clinicalMapping": "Chinha jora milaini bathai twiswm bar mung chinha (MoCA/ADAS-Cog) tokhro jorwi dongdo."
+    },
+    "smriti-katha": {
+      "name": "Smriti Katha",
+      "meaning": "Twiswmni kotha",
+      "tagline": "Kotha thangnai",
+      "instructions": "Chotwi kotha thangnai, tokhro chinha khonai bathai sarol proshno-ni uttor riya.",
+      "clinicalMapping": "Chondini kotha bathai twiswm bar kotha-twiswm (MoCA/ADAS-Cog) tokhro jorwi dongdo."
+    },
+    "naam-yaad": {
+      "name": "Naam Yaad",
+      "meaning": "Mukh bar mung",
+      "tagline": "Songnwi chinha",
+      "instructions": "Nwng chinhakha manshini photo naisai. Bini khalam mung-o tap thok.",
+      "clinicalMapping": "Khela hamjani thangnai songnwini photo bathai twiswm bar chinha (MoCA/ADAS-Cog) tokhro jorwi dongdo."
+    },
+    "dhyan-dhaam": {
+      "name": "Dhyan Dhaam",
+      "meaning": "Twk dongnaini jaiga",
+      "tagline": "Milkha rup mainai",
+      "instructions": "Athok-o naikha rup-ni khalam milkha tile pumthang-o tap thok.",
+      "clinicalMapping": "Chinha twk dongnai bar cancellation kam (MoCA/ADAS-Cog) tokhro jorwi dongdo."
+    },
+    "ginti-dhyan": {
+      "name": "Ginti Dhyan",
+      "meaning": "Gonona twk",
+      "tagline": "Sale sale gonona",
+      "instructions": "Sasa chotwi-o sarai bathai ank pumthang sale sale-o tap thok.",
+      "clinicalMapping": "Twk bar kam-o thangnai twiswm (MoCA) khela hamjani bathai bagwi gotini thok."
+    },
+    "awaaz-pehchan": {
+      "name": "Awaaz Pehchan",
+      "meaning": "Twk chinha",
+      "tagline": "Twk thangnai",
+      "instructions": "Bagwi thok thangnai. Khalam kotha tokhro twk thangbaidwi tap thok.",
+      "clinicalMapping": "Rai swrwng kam kaubo hamjani bathai chinha twk twiswm (MoCA) tokhro jorwi dongdo."
+    },
+    "dinacharya-sequence": {
+      "name": "Dinacharya Sequence",
+      "meaning": "Chondini kam",
+      "tagline": "Din sale sale sajai",
+      "instructions": "Photo card-tokhro nwng chondi tai kam thangdo bo sale sale-o kaham lo.",
+      "clinicalMapping": "Chondini kam-ni planning bar sale sale (IADL) tokhro jorwi dongdo."
+    },
+    "bazaar-list": {
+      "name": "Bazaar List",
+      "meaning": "Bazar-ni list",
+      "tagline": "List twiswm thok",
+      "instructions": "Bazar-ni list thangnai, tokhro grid-o bo hakhrai jinis mainai.",
+      "clinicalMapping": "Chondini kam-list twiswm bar planning (IADL) tokhro jorwi dongdo."
+    },
+    "ghar-ka-kaam": {
+      "name": "Ghar ka Kaam",
+      "meaning": "Nokni kam",
+      "tagline": "Sara-ni kam milai",
+      "instructions": "Nokni sara-o tap thok, tokhro bo tai kam-ni khan bebohar thangdo bo-o tap thok.",
+      "clinicalMapping": "Kam bar jinis-ni jorwi (IADL) tokhro jorwi dongdo."
+    },
+    "aakar-milan": {
+      "name": "Aakar Milan",
+      "meaning": "Rup milai",
+      "tagline": "Rup thangbai",
+      "instructions": "Rup khalam-o thangbaidok tokhro tukra mainai.",
+      "clinicalMapping": "Chinha-jaiga bar kam twiswm (MoCA/ADAS-Cog) tokhro jorwi dongdo."
+    },
+    "chaya-khoj": {
+      "name": "Chaya Khoj",
+      "meaning": "Chaya mainai",
+      "tagline": "Chaya mainai",
+      "instructions": "Jinis-o naisai, tokhro bini milkha chaya-o tap thok.",
+      "clinicalMapping": "Padha thangbo kaubo chinha-jaiga milai (MoCA) tokhro jorwi dongdo."
+    },
+    "naksha-jodo": {
+      "name": "Naksha Jodo",
+      "meaning": "Photo puzzle",
+      "tagline": "Rup sajai",
+      "instructions": "Photo sajaini khan bwrwi tukra-tokhro tokhro kaham lo. Somoi la.",
+      "clinicalMapping": "Rup sajaini kam (ADAS-Cog), gudi-bora rup-ni khan chotwi jorwi."
+    },
+    "aaj-ka-din": {
+      "name": "Aaj Ka Din",
+      "meaning": "Chondini khobor",
+      "tagline": "Chondini twk",
+      "instructions": "Chondi bagwi chotwi sarol proshno-ni uttor riya.",
+      "clinicalMapping": "Somoi bar jaiga-ni twiswmni khan (MoCA orientation) tokhro jorwi dongdo. Bo-e chondini twk, bikhang khela kaubo."
+    },
+    "ghadi-dekho": {
+      "name": "Ghadi Dekho",
+      "meaning": "Ghadi pathwi",
+      "tagline": "Tai somoi?",
+      "instructions": "Ghadi-o naisai, tokhro bo-e sabhaikha somoi-o tap thok.",
+      "clinicalMapping": "Chinha-jaiga bar somoini twiswmni khan (MoCA/ADAS-Cog) tokhro jorwi dongdo — pumthang duniya-o dementia porikha thangnani khan bebohar thangkha Clock Drawing Test-ni khalam."
+    }
+  }
+}

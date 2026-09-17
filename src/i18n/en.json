@@ -315,6 +315,13 @@
       "tagline": "Today's check-in",
       "instructions": "Answer a few simple questions about today.",
       "clinicalMapping": "Maps to temporal and spatial orientation (MoCA orientation subtest). A daily check-in, not a difficulty drill."
+    },
+    "ghadi-dekho": {
+      "name": "Ghadi Dekho",
+      "meaning": "Read the Clock",
+      "tagline": "What time is it?",
+      "instructions": "Look at the clock, then tap the time it shows.",
+      "clinicalMapping": "Maps to visuospatial and temporal orientation (MoCA visuospatial/executive) — a close analogue of the Clock Drawing Test used in dementia screening worldwide."
     }
   }
 }

@@ -320,6 +320,13 @@
       "tagline": "Jingpule mynta",
       "instructions": "Khie ïa kajingkylli bajrong ba dei ïa mynta.",
       "clinicalMapping": "Ka pyndonkam ïa ka jinghikai por bad jaka (MoCA orientation). Kane ym dei jingkai jing haiñ, ka jingpule sngi baba."
+    },
+    "ghadi-dekho": {
+      "name": "Peit ïa ka jam",
+      "meaning": "Pule ka jam",
+      "tagline": "Kata ka por?",
+      "instructions": "Peit ïa ka jam, namar toh ïa ka por kaba lah pule.",
+      "clinicalMapping": "Ka rung ïa ka jingïatiplem jong ka jaka bad ka por (MoCA visuospatial/executive) — hangne ka don ka jingïalam bha bad ka Clock Drawing Test kaba pyndonkam bynta ban wan sngew ïa ka dementia lyngba pyrthei baroh."
     }
   }
 }

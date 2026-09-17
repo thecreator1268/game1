@@ -27,10 +27,10 @@ Every component the official problem statement asks for is implemented, not aspi
 
 | Required (from the SIH26003 problem statement) | Implemented as |
 |---|---|
-| Interactive cognitive games: memory, attention, daily routine recall, pattern recognition | 13 games across exactly those 4 domains + a bonus orientation domain — see the clinical grounding table below |
+| Interactive cognitive games: memory, attention, daily routine recall, pattern recognition | 14 games across exactly those 4 domains + a bonus orientation domain — see the clinical grounding table below |
 | AI/ML algorithms adjusting difficulty based on patient performance | `engine/adaptiveEngine.ts` — explainable rule-based staircase, 10 levels |
 | Cognitive performance analytics | `engine/trendAnalysis.ts` — linear-regression trend + z-score anomaly detection, on-device (see below) |
-| Multilingual voice-assisted interaction, regional language support, culturally familiar themes | 7 languages (`src/i18n/`) incl. 4 NER languages (Manipuri, Khasi, Mizo, Nagamese); Web Speech API TTS in `src/lib/speech.ts`; game names rooted in Hindi/Sanskrit with real-language subtitles |
+| Multilingual voice-assisted interaction, regional language support, culturally familiar themes | 9 languages (`src/i18n/`) incl. 6 NER-region languages (Manipuri, Khasi, Mizo, Nagamese, Kokborok, Nepali) covering 7 of the 8 official NER states; Web Speech API TTS in `src/lib/speech.ts` — automatically follows whichever language the patient profile is set to; game names rooted in Hindi/Sanskrit with real-language subtitles |
 | Medication, hydration, activity, and appointment reminders | `src/reminders/` + the "Today" card on the patient home screen; opt-in local alerts (`notificationService.ts`) fire via the Notification API while the app is open |
 | Caregiver monitoring dashboards tracking patient progress | `src/dashboard/` — trend charts, domain balance, adherence, adaptive log, cognitive insights, PDF/CSV export |
 | Offline functionality for low-connectivity areas | Dexie/IndexedDB-first reads and writes everywhere, `vite-plugin-pwa` service worker, sync is opportunistic never required |
@@ -137,6 +137,7 @@ for that game.
 | Game | Mechanic | Clinical mapping |
 |---|---|---|
 | **Aaj Ka Din** | Once-daily check-in: what day, what time of day, what season | Temporal orientation. **Does not use the adaptive engine** — it logs correct/incorrect only, since it's a daily check-in, not a difficulty drill |
+| **Ghadi Dekho** | Read an analog clock, tap the matching digital time from multiple choices | Visuospatial + temporal orientation — a close analogue of the Clock Drawing Test, one of the most widely used dementia-screening tasks. **Does use the adaptive engine** — the domain's only leveled, repeatable game |
 
 ## Adaptive difficulty engine (`src/engine/adaptiveEngine.ts`)
 
@@ -226,19 +227,29 @@ since it's a check-in, not part of the rotation.
 
 - **High-resource, native-quality UI translations:** English, Hindi, Assamese
   (`src/i18n/{en,hi,as}.json`).
-- **Full-structure translations for four North Eastern Region languages** —
-  Manipuri (Bengali script — see that file's `_meta.scriptChoice` for why, and why
-  it isn't settled), Khasi, Mizo, Nagamese (`src/i18n/{mni,kha,lus,nsm}.json`). Every
-  key in the UI (including all 13 game names/taglines/instructions) has a
-  translation, but each file is flagged with a `_meta.status` note: these are
+- **Full-structure translations for six North Eastern Region languages** — Manipuri
+  (Bengali script — see that file's `_meta.scriptChoice` for why, and why it isn't
+  settled), Khasi, Mizo, Nagamese, Kokborok, Nepali
+  (`src/i18n/{mni,kha,lus,nsm,kok,ne}.json`), covering 7 of the 8 official NER
+  states (only Arunachal Pradesh, whose extreme linguistic diversity makes a single
+  representative language a genuinely hard call, is left to the English/Hindi
+  fallback). Every key in the UI (including all 14 game names/taglines/instructions)
+  has a translation, but each file is flagged with a `_meta.status` note: these are
   AI-assisted best-effort drafts, not yet reviewed by a native speaker or community
-  linguist. Any key that's still missing anywhere falls back to English
+  linguist — confidence varies within the group too (Nepali is comparatively
+  well-documented; Kokborok has far fewer digital resources and its `_meta.status`
+  says so explicitly). Any key that's still missing anywhere falls back to English
   automatically (`i18n/index.ts`).
+- **The selected language drives TTS automatically, not just UI text.** Changing a
+  patient's `preferredLanguage` (onboarding, or Settings) changes both at once —
+  `VoicePrompt` always speaks in `patient.preferredLanguage`, and `<html lang>` stays
+  in sync too (`i18n/index.ts`'s `languageChanged` listener) — there's no separate
+  "TTS language" setting to keep in sync by hand, by construction.
 - **TTS is opt-in everywhere, never automatic.** A speaker-icon button next to the
-  relevant text reads it aloud on tap via `SpeechSynthesisUtterance`, in the
-  patient's language; it never plays on its own when a screen loads. If no matching
-  voice is installed (very likely for as/mni/kha/lus/nsm on most devices today), it
-  falls back to a pre-recorded clip path and then to English TTS — audio never
+  relevant text reads it aloud on tap via `SpeechSynthesisUtterance`; it never plays
+  on its own when a screen loads. If no matching voice is installed (Nepali has
+  genuine broad device support; most of the other NER-region languages don't yet),
+  it falls back to a pre-recorded clip path and then to English TTS — audio never
   blocks the tap targets underneath it (`src/lib/speech.ts`).
 - **Smriti Katha, Awaaz Pehchan, and Aaj Ka Din are voice-first**: fully playable with
   audio alone and tap-only responses, zero required reading.
@@ -334,7 +345,7 @@ settings need somewhere to live).
   `engine/` has full unit coverage; a cross-section of the riskiest UI surfaces
   (the error boundary, the onboarding consent gate, the cognitive-insights card, and
   one full game end-to-end) has component tests via React Testing Library, but not
-  all 13 games do yet.
+  all 14 games do yet.
 - **TTS voice coverage depends entirely on the device.** Hindi and English are
   reliable on most Android/Chrome devices; Assamese support is inconsistent; the four
   North Eastern Region languages fall back to English audio (flagged, not hidden).
@@ -347,9 +358,10 @@ settings need somewhere to live).
 
 ## Roadmap
 
-1. Native-speaker/community review of the four North Eastern Region language
-   translation files (they're structurally complete but AI-assisted and unreviewed),
-   and a decision (with community input, not just engineering convenience) on Meitei
+1. Native-speaker/community review of the six North Eastern Region language
+   translation files (they're structurally complete but AI-assisted and unreviewed —
+   Kokborok most urgently, given how few digital resources exist for it), and a
+   decision (with community input, not just engineering convenience) on Meitei
    Mayek vs. Bengali script for Manipuri.
 2. Replace placeholder visuals with commissioned regional artwork per game.
 3. Real backend for `/sync` with per-clinic or per-family account boundaries, feeding

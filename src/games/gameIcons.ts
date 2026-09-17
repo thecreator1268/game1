@@ -14,4 +14,5 @@ export const GAME_EMOJI: Record<GameId, string> = {
   'chaya-khoj': '🌓',
   'naksha-jodo': '🏞️',
   'aaj-ka-din': '📅',
+  'ghadi-dekho': '🕐',
 };

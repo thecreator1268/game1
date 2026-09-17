@@ -11,11 +11,12 @@ export type GameId =
   | 'aakar-milan'
   | 'chaya-khoj'
   | 'naksha-jodo'
-  | 'aaj-ka-din';
+  | 'aaj-ka-din'
+  | 'ghadi-dekho';
 
 export type Domain = 'memory' | 'attention' | 'routine' | 'pattern' | 'orientation';
 
-export type SupportedLanguage = 'en' | 'hi' | 'as' | 'mni' | 'kha' | 'lus' | 'nsm';
+export type SupportedLanguage = 'en' | 'hi' | 'as' | 'mni' | 'kha' | 'lus' | 'nsm' | 'kok' | 'ne';
 
 export type ErrorType = 'none' | 'wrong-choice' | 'timeout-skip' | 'sequence-error' | 'no-response';
 

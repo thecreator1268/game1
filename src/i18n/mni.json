@@ -320,6 +320,13 @@
       "tagline": "ঙসিগী পাউখুম",
       "instructions": "ঙসিগী মতাংদা ৱাহং খরাগী পাউখুম পীবিয়ু।",
       "clinicalMapping": "মতম অমসুং মফম খংবা (MoCA orientation) দা মরি লৈ। মসি নুমিৎ খুদিংগী চেক নি, য়াম্না ৱাংবা শান নত্তে।"
+    },
+    "ghadi-dekho": {
+      "name": "ঘড়ী য়েংবা",
+      "meaning": "ঘড়ী পাঙথোকপা",
+      "tagline": "মতম করিনো ওইরিবগে?",
+      "instructions": "ঘড়ী অদু য়েংবিয়ু, অদুগা মতম চুম্লবা অদুদা তম্বিয়ু।",
+      "clinicalMapping": "য়েংবা-মফমগী অমসুং মতমগী orientation-দা মরি লৈ (MoCA visuospatial/executive) — মসি Clock Drawing Test-কা মান্নই, মদু তলোকপুম্বদা dementia check তৌবদা শিজিন্নই।"
     }
   }
 }

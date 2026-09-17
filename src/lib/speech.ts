@@ -15,6 +15,10 @@ const BCP47_BY_LANG: Record<SupportedLanguage, string> = {
   kha: 'en-IN',
   lus: 'en-IN',
   nsm: 'en-IN',
+  // Nepali has genuine, widely-installed TTS voice support on Android/Chrome
+  // (unlike most of the languages above) — worth calling out, not a guess.
+  ne: 'ne-NP',
+  kok: 'en-IN',
 };
 
 export function isSpeechSynthesisSupported(): boolean {
