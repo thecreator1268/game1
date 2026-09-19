@@ -80,7 +80,10 @@ so the level-up/down behavior is auditable rather than a black box.
 React + Vite + TypeScript · Tailwind CSS (custom elderly-accessible design tokens) ·
 Dexie.js (IndexedDB) + dexie-react-hooks · Zustand · React Router · Recharts ·
 i18next/react-i18next · Web Speech API (TTS + optional speech recognition) · jsPDF
-(lazy-loaded, caregiver-only) · vite-plugin-pwa · Vitest.
+(lazy-loaded, caregiver-only) · `motion` (screen transitions, level-up celebration,
+dashboard bar/count-up/typewriter effects — every effect respects
+`prefers-reduced-motion`; the spec lives in `.claude/skills/motion-system/SKILL.md`) ·
+vite-plugin-pwa · Vitest.
 
 **Dev environment runs in Docker** (`docker-compose.yml` / `Dockerfile.dev`) at the
 user's request, so the host machine only needs Docker Desktop, not a matching Node
@@ -306,6 +309,15 @@ screen (`RoleSelect.tsx`) — not a third big button next to "I want to play" /
 "I am a caregiver", so it doesn't add a confusing extra choice to the one screen a
 patient with cognitive impairment sees on every app launch.
 
+**The panel is off in production builds.** The `/admin` routes and that link are
+only registered when `ADMIN_ENABLED` is true (`src/lib/featureFlags.ts`): always in
+the dev server, and in a production build only if it was built with
+`VITE_ENABLE_ADMIN=true`. The reason is the "Forgot PIN" flow, which (like the
+caregiver one) lets anyone on the device set a new PIN with no proof of identity —
+acceptable for the caregiver gate, not for a panel that can reset every caregiver
+PIN and wipe all data. In a build without the flag, `/admin` falls through to the
+catch-all and redirects home, so the public demo never exposes it.
+
 ## Data model (Dexie, `src/db/schema.ts` / `src/db/types.ts`)
 
 Matches the brief closely, with two small additions: a `reminderLogs` table (so
@@ -315,9 +327,10 @@ settings need somewhere to live).
 
 ## Known limitations (naming our own gaps)
 
-- **Placeholder art, not commissioned regional artwork.** Smriti Cards uses emoji for
-  its culturally-themed pairs; Aakar Milan uses geometric glyphs; Chaya Khoj derives
-  "shadows" by CSS-desaturating the same emoji; Naksha Jodo assembles a generated
+- **Placeholder art, not commissioned regional artwork.** Smriti Cards' culturally-themed
+  pairs are line icons from the shared SVG sprite (`IconSprite.tsx` — the app uses no
+  emoji); Aakar Milan uses geometric glyphs; Chaya Khoj derives "shadows" by
+  CSS-blackening (`brightness(0)`) the same sprite icons; Naksha Jodo assembles a generated
   radial color mosaic rather than a literal bamboo-hut/boat/mountain illustration.
   All are functionally real cognitive tasks, but the visuals are a hackathon
   stand-in for hand-drawn or photographed regional motifs (gamosa/jaapi/Naga shawl
