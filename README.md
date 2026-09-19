@@ -21,6 +21,12 @@ Actions tab for the current URL once Pages is enabled (Settings → Pages → So
 "GitHub Actions", a one-time manual step). CI (`ci.yml`) runs lint, the full test
 suite, and a production build on every push and PR.
 
+Deployment notes: link previews use `public/og-image.png` (1200×630) with absolute
+URLs built from `SITE_URL` (set by the deploy workflow). A new deploy shows a
+"New version available" toast to anyone with the old build open. **The very first
+visit to the URL needs a connection** — nothing can be cached before then — after
+which the app runs fully offline.
+
 ## SIH26003 requirement mapping
 
 Every component the official problem statement asks for is implemented, not aspirational:

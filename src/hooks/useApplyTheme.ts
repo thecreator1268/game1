@@ -10,6 +10,15 @@ export function useApplyTheme(): void {
     root.dataset.theme = patient?.highContrastPalette ?? 'theme-1';
     root.dataset.textScale = patient?.textScale ?? 'normal';
     root.dataset.colorMode = patient?.colorMode ?? 'light';
+    // Keep the browser/PWA chrome in step with the page background — dark
+    // mode is a per-patient setting here, not prefers-color-scheme, so the
+    // static <meta> in index.html can only ever describe the light default.
+    const bg = getComputedStyle(root).getPropertyValue('--color-bg').trim();
+    if (bg) {
+      document
+        .querySelectorAll('meta[name="theme-color"]')
+        .forEach((meta) => meta.setAttribute('content', bg));
+    }
   }, [patient?.highContrastPalette, patient?.textScale, patient?.colorMode]);
 
   useEffect(() => {

@@ -9,6 +9,7 @@ import PatientHome from '@/app/PatientHome';
 import RoleSelect from '@/app/RoleSelect';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { IconSprite } from '@/components/IconSprite';
+import { UpdateToast } from '@/components/UpdateToast';
 import { RouteTransition } from '@/components/RouteTransition';
 import { DashboardSkeleton } from '@/components/Skeleton';
 import { useActivePatient } from '@/hooks/useActivePatient';
@@ -194,6 +195,7 @@ export default function App() {
       <ErrorBoundary>
         <AppShell />
       </ErrorBoundary>
+      <UpdateToast />
     </BrowserRouter>
   );
 }

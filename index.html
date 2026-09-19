@@ -3,19 +3,139 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover"
     />
-    <meta name="theme-color" content="#0d5c5c" />
+    <!-- Matches --color-bg (light). The app never follows prefers-color-scheme
+         — dark is a per-patient setting — so useApplyTheme rewrites this at
+         runtime when a patient turns dark mode on. -->
+    <meta name="theme-color" content="#F5F4ED" />
     <meta
       name="description"
       content="SmritiSetu — offline-first cognitive gaming and memory assistance for elderly dementia patients in India's North Eastern Region."
     />
     <title>SmritiSetu</title>
+
+    <!-- Link previews (WhatsApp, Slack, X, iMessage). %SITE_URL% is filled in
+         at build time by vite.config.ts — crawlers need absolute URLs. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="SmritiSetu" />
+    <meta property="og:title" content="SmritiSetu — Memory Bridge" />
+    <meta
+      property="og:description"
+      content="Offline-first memory games and gentle reminders for elders living with dementia, in 9 languages of India's North East."
+    />
+    <meta property="og:url" content="%SITE_URL%" />
+    <meta property="og:image" content="%SITE_URL%og-image.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="SmritiSetu logo beside colourful game tiles with friendly faces"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="SmritiSetu — Memory Bridge" />
+    <meta
+      name="twitter:description"
+      content="Offline-first memory games and gentle reminders for elders living with dementia, in 9 languages of India's North East."
+    />
+    <meta name="twitter:image" content="%SITE_URL%og-image.png" />
+
+    <style>
+      /* Pre-React shell: paints instantly and is replaced when React mounts.
+         Inline (not index.css) so it still shows if the JS/CSS bundle never
+         arrives — e.g. a connection that drops right after the HTML loads. */
+      html {
+        background: #f5f4ed;
+      }
+      #boot {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 24px;
+        text-align: center;
+        font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        color: #100f06;
+      }
+      #boot-mark {
+        width: 72px;
+        height: 72px;
+      }
+      #boot h1 {
+        margin: 0;
+        font-size: 28px;
+        font-weight: 800;
+      }
+      #boot p {
+        margin: 0;
+        max-width: 30ch;
+        font-size: 20px;
+        line-height: 1.4;
+      }
+      #boot-error {
+        display: none;
+      }
+      #boot.failed #boot-loading {
+        display: none;
+      }
+      #boot.failed #boot-error {
+        display: block;
+      }
+      #boot button {
+        margin-top: 8px;
+        min-height: 64px;
+        padding: 0 32px;
+        border: 0;
+        border-radius: 999px;
+        background: #100f06;
+        color: #f5f4ed;
+        font: 700 22px system-ui, sans-serif;
+        cursor: pointer;
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div id="boot" role="status">
+        <img id="boot-mark" src="/favicon.svg" alt="" />
+        <h1>SmritiSetu</h1>
+        <p id="boot-loading">Getting things ready…</p>
+        <div id="boot-error">
+          <p>
+            SmritiSetu couldn't load. Please connect to the internet once, then try again — after
+            that it works without a connection.
+          </p>
+          <button type="button" onclick="location.reload()">Try again</button>
+        </div>
+      </div>
+    </div>
+    <noscript>
+      <p style="padding: 24px; font: 20px system-ui, sans-serif">
+        SmritiSetu needs JavaScript turned on to run.
+      </p>
+    </noscript>
+    <script>
+      // A module <script> that fails to fetch (offline, blocked, CDN hiccup)
+      // fires an 'error' event on the element but nothing else — without this,
+      // the shell above would say "Getting things ready…" forever.
+      window.addEventListener(
+        'error',
+        function (e) {
+          var t = e.target;
+          if (t && t.tagName === 'SCRIPT') {
+            var boot = document.getElementById('boot');
+            if (boot) boot.className = 'failed';
+          }
+        },
+        true,
+      );
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

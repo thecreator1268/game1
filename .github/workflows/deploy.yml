@@ -32,6 +32,8 @@ jobs:
           # Pages, not domain root — see the BASE_PATH comment in
           # vite.config.ts for why this has to match at build time.
           BASE_PATH: /${{ github.event.repository.name }}/
+          # Absolute origin for og:image / og:url link-preview tags.
+          SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
 
       - uses: actions/upload-pages-artifact@v5
         with:
