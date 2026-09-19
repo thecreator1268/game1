@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { GameShell } from '@/components/GameShell';
+import { Icon, type IconName } from '@/components/IconSprite';
 import { RoundFeedback } from '@/components/RoundFeedback';
 import { SessionSummary } from '@/components/SessionSummary';
 import { VoicePrompt } from '@/components/VoicePrompt';
@@ -18,7 +19,7 @@ import { paramsForLevel } from './params';
 interface ToolTile {
   key: string;
   id: string;
-  emoji: string;
+  icon: IconName;
   label: string;
   correctTask: string | null; // null for distractor tools (no valid match this round)
   matched: boolean;
@@ -33,8 +34,8 @@ function buildRound(level: number): { tools: ToolTile[]; tasks: string[]; pairs:
   const distractorTools = shuffled.slice(pairCount, pairCount + distractors);
 
   const tools: ToolTile[] = shuffle([
-    ...pairs.map((p) => ({ key: p.id, id: p.id, emoji: p.toolEmoji, label: p.toolLabel, correctTask: p.task, matched: false })),
-    ...distractorTools.map((p) => ({ key: `d-${p.id}`, id: p.id, emoji: p.toolEmoji, label: p.toolLabel, correctTask: null, matched: false })),
+    ...pairs.map((p) => ({ key: p.id, id: p.id, icon: p.toolIcon, label: p.toolLabel, correctTask: p.task, matched: false })),
+    ...distractorTools.map((p) => ({ key: `d-${p.id}`, id: p.id, icon: p.toolIcon, label: p.toolLabel, correctTask: null, matched: false })),
   ]);
   const tasks = shuffle(pairs.map((p) => p.task));
   return { tools, tasks, pairs };
@@ -187,7 +188,7 @@ export default function GharKaKaamGame() {
               onClick={() => setSelectedToolKey(tool.key === selectedToolKey ? null : tool.key)}
               disabled={tool.matched}
               aria-label={tool.label}
-              className={`tap-target flex h-20 w-20 flex-col items-center justify-center gap-1 rounded-card border-2 text-3xl transition-colors ${
+              className={`tap-target flex h-20 w-20 flex-col items-center justify-center gap-1 rounded-card border-2 transition-colors ${
                 tool.matched
                   ? 'border-success bg-surface-alt opacity-40'
                   : selectedToolKey === tool.key
@@ -195,7 +196,7 @@ export default function GharKaKaamGame() {
                     : 'border-border bg-surface hover:bg-surface-alt'
               }`}
             >
-              {tool.emoji}
+              <Icon name={tool.icon} size={32} />
             </button>
           ))}
         </div>

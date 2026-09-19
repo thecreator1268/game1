@@ -3,8 +3,14 @@ import { create } from 'zustand';
 interface CaregiverAuthState {
   caregiverId: string | null;
   isAuthenticated: boolean;
+  // Which of this caregiver's linked patients the dashboard is currently
+  // showing — null means "default to the first one" (useCaregiverPatient
+  // handles that fallback). Only meaningful for a caregiver linked to more
+  // than one patient; see CaregiverPatientSwitcher.
+  viewPatientId: string | null;
   login: (caregiverId: string) => void;
   logout: () => void;
+  setViewPatientId: (patientId: string) => void;
 }
 
 // Deliberately in-memory only: caregiver login is a lightweight gate (PIN or
@@ -13,6 +19,8 @@ interface CaregiverAuthState {
 export const useAuthStore = create<CaregiverAuthState>((set) => ({
   caregiverId: null,
   isAuthenticated: false,
-  login: (caregiverId) => set({ caregiverId, isAuthenticated: true }),
-  logout: () => set({ caregiverId: null, isAuthenticated: false }),
+  viewPatientId: null,
+  login: (caregiverId) => set({ caregiverId, isAuthenticated: true, viewPatientId: null }),
+  logout: () => set({ caregiverId: null, isAuthenticated: false, viewPatientId: null }),
+  setViewPatientId: (patientId) => set({ viewPatientId: patientId }),
 }));

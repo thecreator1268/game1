@@ -1,15 +1,9 @@
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '@/db/schema';
 import type { GameId } from '@/db/types';
-import { composeTodaysSet, type PlayHistoryEntry, type TodaysSet } from '@/engine/sessionComposer';
+import { composeTodaysSet, type PlayHistoryEntry } from '@/engine/sessionComposer';
 
-function startOfDay(date = new Date()): number {
-  const d = new Date(date);
-  d.setHours(0, 0, 0, 0);
-  return d.getTime();
-}
-
-export function useTodaysSet(patientId: string): TodaysSet | undefined {
+export function useTodaysSet(patientId: string): GameId[] | undefined {
   return useLiveQuery(async () => {
     const sessions = await db.sessions.where('patientId').equals(patientId).toArray();
 
@@ -22,11 +16,6 @@ export function useTodaysSet(patientId: string): TodaysSet | undefined {
       ([gameId, lastPlayedAt]) => ({ gameId, lastPlayedAt }),
     );
 
-    const todayStart = startOfDay();
-    const orientationCompletedToday = sessions.some(
-      (s) => s.gameId === 'aaj-ka-din' && s.startedAt >= todayStart,
-    );
-
-    return composeTodaysSet(playHistory, { orientationCompletedToday });
+    return composeTodaysSet(playHistory);
   }, [patientId]);
 }

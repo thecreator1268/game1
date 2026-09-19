@@ -18,8 +18,11 @@ export default {
         'success-text': 'var(--color-success-text)',
         danger: 'var(--color-danger)',
         'danger-text': 'var(--color-danger-text)',
+        warn: 'var(--color-warn)',
+        'warn-text': 'var(--color-warn-text)',
         border: 'var(--color-border)',
         focus: 'var(--color-focus)',
+        'chip-pink': 'var(--chip-pink)',
       },
       fontSize: {
         body: ['1.125rem', { lineHeight: '1.65' }],
@@ -39,10 +42,28 @@ export default {
         tap: '4rem',
       },
       borderRadius: {
-        card: '1.25rem',
+        chip: '0.875rem',
+        card: '1.625rem',
+        // One-corner-squared motif, reused everywhere something should
+        // read as "hand-set" rather than uniformly rounded: speech-bubble
+        // tags, domain swatches/legend chips.
+        tag: '16px 16px 16px 0px',
+        swatch: '8px 8px 8px 2px',
+        nav: '22px',
       },
       boxShadow: {
-        card: '0 2px 10px 0 rgb(0 0 0 / 0.08)',
+        // Hard, single-direction offset shadow (no blur) — reads as a
+        // cut-paper sticker, not a soft clay surface. Three sizes: pills
+        // get the smallest, cards the default, and hero/"Today's Set"
+        // cards the largest. CSS custom property so it adapts per
+        // theme/dark mode without a second copy of this value living in JS.
+        'card-sm': '0 4px 0 var(--shadow-flat-color)',
+        card: '0 5px 0 var(--shadow-flat-color)',
+        'card-lg': '0 7px 0 var(--shadow-flat-color)',
+      },
+      fontFamily: {
+        heading: ['Unbounded', '"Noto Sans"', 'system-ui', 'sans-serif'],
+        body: ['"Space Grotesk"', '"Noto Sans"', 'system-ui', 'sans-serif'],
       },
     },
   },

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { Button } from '@/components/Button';
 import { db } from '@/db/schema';
+import { ADMIN_ENABLED } from '@/lib/featureFlags';
 import { usePatientStore } from '@/store/patientStore';
 import { SplashScreen } from './SplashScreen';
 
@@ -41,12 +42,14 @@ export default function RoleSelect() {
           {t('roles.caregiver')}
         </Button>
       </div>
-      <button
-        onClick={() => navigate('/admin/login')}
-        className="text-sm text-text-muted underline hover:text-text"
-      >
-        {t('adminAuth.entryLink')}
-      </button>
+      {ADMIN_ENABLED && (
+        <button
+          onClick={() => navigate('/admin/login')}
+          className="text-sm text-text-muted underline hover:text-text"
+        >
+          {t('adminAuth.entryLink')}
+        </button>
+      )}
     </div>
   );
 }

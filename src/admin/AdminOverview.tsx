@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
+import { Icon } from '@/components/IconSprite';
 import { db } from '@/db/schema';
 import type { SupportedLanguage } from '@/db/types';
 import { SUPPORTED_LANGUAGES } from '@/i18n';
@@ -52,6 +53,7 @@ export default function AdminOverview() {
       caregiverIds: [adminId],
       highContrastPalette: 'theme-1',
       textScale: 'normal',
+      colorMode: 'light',
       // Added by an already-authenticated admin to a device whose consent
       // notice was already accepted during the original onboarding.
       consentGivenAt: Date.now(),
@@ -196,87 +198,70 @@ export default function AdminOverview() {
           </div>
         )}
 
-        <div className="mt-4 overflow-x-auto">
-          <table className="w-full text-left text-body">
-            <thead>
-              <tr className="border-b border-border text-sm text-text-muted">
-                <th className="py-2 pr-4">{t('onboarding.setupPatientName')}</th>
-                <th className="py-2 pr-4">{t('dashboard.language')}</th>
-                <th className="py-2 pr-4">{t('common.score')}</th>
-                <th className="py-2 pr-4" />
-              </tr>
-            </thead>
-            <tbody>
-              {(patients ?? []).map((p) => (
-                <tr key={p.id} className="border-b border-border last:border-0">
-                  <td className="py-2 pr-4 font-semibold">{p.name}</td>
-                  <td className="py-2 pr-4">{SUPPORTED_LANGUAGES.find((l) => l.code === p.preferredLanguage)?.label ?? p.preferredLanguage}</td>
-                  <td className="py-2 pr-4">{sessionCountsByPatient?.get(p.id) ?? 0}</td>
-                  <td className="py-2 pr-4">
-                    {activePatientId === p.id ? (
-                      <span className="rounded-full bg-surface-alt px-3 py-1 text-sm font-semibold text-primary">
-                        {t('adminPanel.activePatient')}
-                      </span>
-                    ) : (
-                      <button
-                        onClick={() => setActivePatient(p.id)}
-                        className="rounded-full border-2 border-border px-3 py-1 text-sm font-semibold hover:bg-surface-alt"
-                      >
-                        {t('adminPanel.setActive')}
-                      </button>
-                    )}
-                  </td>
-                </tr>
-              ))}
-              {(patients ?? []).length === 0 && (
-                <tr>
-                  <td colSpan={4} className="py-4 text-text-muted">
-                    {t('dashboard.noData')}
-                  </td>
-                </tr>
+        <div className="mt-4 flex flex-col gap-3">
+          {(patients ?? []).map((p) => (
+            <Card key={p.id} className="flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <p className="font-semibold">{p.name}</p>
+                <p className="text-sm text-text-muted">
+                  {SUPPORTED_LANGUAGES.find((l) => l.code === p.preferredLanguage)?.label ?? p.preferredLanguage}
+                  {' · '}
+                  {t('common.score')}: {sessionCountsByPatient?.get(p.id) ?? 0}
+                </p>
+              </div>
+              {activePatientId === p.id ? (
+                <span className="rounded-full bg-surface-alt px-3 py-1 text-sm font-semibold text-primary">
+                  {t('adminPanel.activePatient')}
+                </span>
+              ) : (
+                <Button variant="secondary" onClick={() => setActivePatient(p.id)}>
+                  {t('adminPanel.setActive')}
+                </Button>
               )}
-            </tbody>
-          </table>
+            </Card>
+          ))}
+          {(patients ?? []).length === 0 && (
+            <div className="flex flex-col items-center gap-2 rounded-card border-2 border-dashed border-border p-8 text-center">
+              <span className="icon-chip bg-surface-alt" aria-hidden>
+                <Icon name="family" size={22} />
+              </span>
+              <p className="text-body text-text-muted">{t('adminPanel.noPatients')}</p>
+            </div>
+          )}
         </div>
       </Card>
 
       <Card>
         <h2 className="text-action font-bold">{t('adminPanel.caregivers')}</h2>
-        <div className="mt-4 overflow-x-auto">
-          <table className="w-full text-left text-body">
-            <thead>
-              <tr className="border-b border-border text-sm text-text-muted">
-                <th className="py-2 pr-4">{t('familyManager.name')}</th>
-                <th className="py-2 pr-4">{t('familyManager.relation')}</th>
-                <th className="py-2 pr-4">{t('adminPanel.role')}</th>
-                <th className="py-2 pr-4">{t('adminPanel.patients')}</th>
-                <th className="py-2 pr-4" />
-              </tr>
-            </thead>
-            <tbody>
-              {(caregivers ?? []).map((c) => (
-                <tr key={c.id} className="border-b border-border last:border-0">
-                  <td className="py-2 pr-4 font-semibold">{c.name}</td>
-                  <td className="py-2 pr-4">{c.relation}</td>
-                  <td className="py-2 pr-4 capitalize">{c.role}</td>
-                  <td className="py-2 pr-4">{c.patientIds.length}</td>
-                  <td className="py-2 pr-4">
-                    <button
-                      onClick={() => void resetCaregiverPin(c.id)}
-                      className="rounded-full border-2 border-border px-3 py-1 text-sm font-semibold hover:bg-surface-alt"
-                    >
-                      {t('adminPanel.resetPin')}
-                    </button>
-                    {revealedPin?.caregiverId === c.id && (
-                      <span className="ml-2 rounded-full bg-surface-alt px-3 py-1 text-sm font-bold text-primary">
-                        {t('adminPanel.newPin')}: {revealedPin.pin}
-                      </span>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="mt-4 flex flex-col gap-3">
+          {(caregivers ?? []).map((c) => (
+            <Card key={c.id} className="flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <p className="font-semibold">{c.name}</p>
+                <p className="text-sm capitalize text-text-muted">
+                  {c.relation} · {c.role} · {t('adminPanel.patients')}: {c.patientIds.length}
+                </p>
+              </div>
+              <div className="flex flex-wrap items-center gap-2">
+                {revealedPin?.caregiverId === c.id && (
+                  <span className="rounded-full bg-surface-alt px-3 py-1 text-sm font-bold text-primary">
+                    {t('adminPanel.newPin')}: {revealedPin.pin}
+                  </span>
+                )}
+                <Button variant="secondary" onClick={() => void resetCaregiverPin(c.id)}>
+                  {t('adminPanel.resetPin')}
+                </Button>
+              </div>
+            </Card>
+          ))}
+          {(caregivers ?? []).length === 0 && (
+            <div className="flex flex-col items-center gap-2 rounded-card border-2 border-dashed border-border p-8 text-center">
+              <span className="icon-chip bg-surface-alt" aria-hidden>
+                <Icon name="person" size={22} />
+              </span>
+              <p className="text-body text-text-muted">{t('adminPanel.noCaregivers')}</p>
+            </div>
+          )}
         </div>
       </Card>
 

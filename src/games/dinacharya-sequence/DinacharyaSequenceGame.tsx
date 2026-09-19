@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { GameShell } from '@/components/GameShell';
+import { Icon } from '@/components/IconSprite';
 import { SessionSummary } from '@/components/SessionSummary';
 import { VoicePrompt } from '@/components/VoicePrompt';
 import { Button } from '@/components/Button';
@@ -154,7 +155,7 @@ export default function DinacharyaSequenceGame() {
               }`}
               aria-label={item ? item.label : `Empty slot ${index + 1}`}
             >
-              {item ? item.emoji : index + 1}
+              {item ? <Icon name={item.icon} size={32} /> : index + 1}
             </button>
           ))}
         </div>
@@ -170,7 +171,7 @@ export default function DinacharyaSequenceGame() {
               }`}
               aria-label={item.label}
             >
-              {item.emoji}
+              <Icon name={item.icon} size={32} />
             </button>
           ))}
         </div>

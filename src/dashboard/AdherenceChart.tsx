@@ -32,7 +32,13 @@ export function AdherenceChart({ data }: { data: AdherenceDay[] }) {
               return [`${payload?.taken ?? 0} / ${payload?.expected ?? 0}`, 'Taken'];
             }}
           />
-          <Bar dataKey="pct" fill={SEQUENTIAL_BLUE} radius={[4, 4, 0, 0]} />
+          <Bar
+            dataKey="pct"
+            fill={SEQUENTIAL_BLUE}
+            radius={[4, 4, 0, 0]}
+            animationDuration={700}
+            animationEasing="ease-out"
+          />
         </BarChart>
       </ResponsiveContainer>
     </div>

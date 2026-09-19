@@ -3,53 +3,181 @@
 @tailwind utilities;
 
 /*
-  Two high-contrast palettes, both targeting WCAG AAA (7:1) for body text:
-  - theme-1 (default): warm cream/teal/saffron, the general elderly-accessible palette.
-  - theme-2 (alt): blue/amber substituted for red/green cues, for common elderly
-    color-vision changes (red-green discrimination loss).
-  Selected via [data-theme] on <html>; text scale via [data-text-scale].
+  Self-hosted (not loaded from Google's CDN) so typography renders correctly
+  fully offline — this app's core constraint (see README) means a CDN
+  font request is a real failure mode, not a nice-to-have to avoid. This is
+  a deliberate deviation from the "Indopendence" design brief's literal
+  "load both from Google Fonts" instruction, for the same reason the brief's
+  own reference mockup is a throwaway HTML page and this app isn't: an
+  installed PWA that's meant to work with zero connectivity can't depend on
+  fonts.googleapis.com being reachable on first paint. See
+  src/assets/fonts/LICENSE.txt.
+  Unbounded: headings, card name-tags, toasts, section labels — chunky and
+  rounded, reads as confident at the large sizes the accessibility spec
+  requires anyway. Space Grotesk: body text, buttons, descriptions, chips.
+  Neither has Devanagari/Bengali glyphs, so Hindi/Assamese/Manipuri/Kokborok
+  text falls through to 'Noto Sans' in the stacks below for those
+  characters — unchanged from how this app always handled non-Latin scripts.
+*/
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 500 800;
+  font-display: swap;
+  src: url('./assets/fonts/unbounded-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2122, U+2191, U+2193, U+2212, U+2215;
+}
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 500 800;
+  font-display: swap;
+  src: url('./assets/fonts/unbounded-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02FF, U+1E00-1EFF, U+2020, U+20A0-20AB, U+2113, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('./assets/fonts/spacegrotesk-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2122, U+2191, U+2193, U+2212, U+2215;
+}
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('./assets/fonts/spacegrotesk-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02FF, U+1E00-1EFF, U+2020, U+20A0-20AB, U+2113, U+A720-A7FF;
+}
+
+/*
+  "Indopendence" system (see CLAUDE_CODE_BUILD_PROMPT.md) — bold flat color,
+  no soft shadows, ink-anchored chrome. theme-1 is the exact token set from
+  that brief. theme-2 is the same system with the Pattern domain hue swapped
+  from coral to amber: {coral, teal} validates at ΔE 2.1 for protanopia via
+  the dataviz skill's validator (scripts/validate_palette.js) — effectively
+  indistinguishable to red-green colorblind viewers — while every use of
+  these hues in this app also carries an icon and a text label (card name,
+  domain caption, chart axis label), so identity is never color-alone even
+  under theme-1; theme-2 exists for the caregiver who'd still rather the
+  hues themselves separate cleanly. {gold, malibu, teal, amber, lavender}
+  clears CVD separation at ΔE 11.2. Selected via [data-theme] on <html>;
+  text scale via [data-text-scale].
 */
 :root,
 [data-theme='theme-1'] {
-  --color-bg: #fffaf0;
+  color-scheme: light;
+  --color-bg: #f5f4ed;
   --color-surface: #ffffff;
-  --color-surface-alt: #fff3e0;
-  --color-text: #10151a;
-  --color-text-muted: #3d4650;
-  --color-primary: #0d5c5c;
-  --color-primary-hover: #0a4747;
+  --color-surface-alt: #ede9d8;
+  --color-text: #100f06;
+  --color-text-muted: #4a493f;
+  --color-primary: #00917a;
+  --color-primary-hover: #00785f;
   --color-primary-text: #ffffff;
-  --color-accent: #b8440e;
-  --color-accent-text: #ffffff;
-  --color-success: #1b5e20;
+  --color-accent: #100f06;
+  --color-accent-text: #f5f4ed;
+  --color-success: #00917a;
   --color-success-text: #ffffff;
-  --color-danger: #8b1a1a;
+  --color-danger: #d6483f;
   --color-danger-text: #ffffff;
-  --color-border: #cbb99a;
-  /* Not blue: age-related lens yellowing reduces blue discrimination, so a
-     blue focus ring is one of the worst choices for this audience — see
-     README's accessibility research notes. Reuses theme-2's already-chosen
-     amber so "what focus looks like" stays predictable across both themes. */
-  --color-focus: #d97706;
+  /* Non-alarming "try again" tone — dark enough for AA text contrast on
+     white, distinct from --color-danger so a wrong answer never reads as
+     an error/alarm (see RoundFeedback). */
+  --color-warn: #8a6d1f;
+  --color-warn-text: #ffffff;
+  --color-border: #e1dfd2;
+  /* Ink, not blue: age-related lens yellowing reduces blue discrimination
+     in this app's elderly audience — see README's accessibility notes. Ink
+     also reads clearly against every surface in this palette, colored
+     cards included. */
+  --color-focus: #100f06;
+  /* "Indopendence v2" hard-offset shadow: one direction, no blur, reads as
+     a cut-paper sticker rather than a soft clay surface. Always ink-dark
+     regardless of theme (see the dark-mode block below for why). */
+  --shadow-flat-color: rgba(16, 15, 6, 0.9);
+  --domain-memory: #ffda57;
+  --domain-attention: #7dcaf6;
+  --domain-routine: #00917a;
+  --domain-pattern: #f47575;
+  --domain-orientation: #a293ff;
+  --chip-pink: #ffbbf4;
+  --texture-dot: rgba(16, 15, 6, 0.085);
+  --aura-a: rgba(255, 218, 87, 0.35);
+  --aura-b: rgba(162, 147, 255, 0.3);
 }
 
 [data-theme='theme-2'] {
-  --color-bg: #fbf9f4;
+  color-scheme: light;
+  --color-bg: #f5f4ed;
   --color-surface: #ffffff;
-  --color-surface-alt: #eef3fa;
-  --color-text: #0e1116;
-  --color-text-muted: #3a3f47;
-  --color-primary: #1a3c6e;
-  --color-primary-hover: #14315a;
+  --color-surface-alt: #ede9d8;
+  --color-text: #100f06;
+  --color-text-muted: #4a493f;
+  --color-primary: #00917a;
+  --color-primary-hover: #00785f;
   --color-primary-text: #ffffff;
-  --color-accent: #b45309;
-  --color-accent-text: #ffffff;
-  --color-success: #0e5f6e;
+  --color-accent: #100f06;
+  --color-accent-text: #f5f4ed;
+  --color-success: #00917a;
   --color-success-text: #ffffff;
-  --color-danger: #9a3412;
+  --color-danger: #d6483f;
   --color-danger-text: #ffffff;
-  --color-border: #b8c4d4;
-  --color-focus: #d97706;
+  --color-warn: #8a6d1f;
+  --color-warn-text: #ffffff;
+  --color-border: #e1dfd2;
+  --color-focus: #100f06;
+  --shadow-flat-color: rgba(16, 15, 6, 0.9);
+  --domain-memory: #ffda57;
+  --domain-attention: #7dcaf6;
+  --domain-routine: #00917a;
+  --domain-pattern: #e08a2e;
+  --domain-orientation: #a293ff;
+  --chip-pink: #ffbbf4;
+  --texture-dot: rgba(16, 15, 6, 0.085);
+  --aura-a: rgba(255, 218, 87, 0.35);
+  --aura-b: rgba(162, 147, 255, 0.3);
+}
+
+/*
+  Dark mode (independent [data-color-mode] toggle, caregiver Settings >
+  Display Mode). The "ink pill" pattern inverts rather than staying literal
+  black-on-dark: --color-accent becomes the light tone so primary-action
+  pills stay the highest-contrast element on the screen in either mode,
+  exactly like the light mode's black pill against its light background.
+*/
+:root[data-color-mode='dark'],
+[data-theme='theme-1'][data-color-mode='dark'],
+[data-theme='theme-2'][data-color-mode='dark'] {
+  color-scheme: dark;
+  --color-bg: #1a1912;
+  --color-surface: #24231a;
+  --color-surface-alt: #2e2c20;
+  --color-text: #f5f4ed;
+  --color-text-muted: #b8b6a6;
+  --color-primary: #3ddbbe;
+  --color-primary-hover: #5ce6cc;
+  --color-primary-text: #0b2620;
+  --color-accent: #f5f4ed;
+  --color-accent-text: #100f06;
+  --color-success: #3ddbbe;
+  --color-success-text: #0b2620;
+  --color-danger: #ff8a80;
+  --color-danger-text: #330a06;
+  --color-warn: #f2c14e;
+  --color-warn-text: #2b2100;
+  --color-border: #3a3828;
+  --color-focus: #ffda57;
+  --shadow-flat-color: rgba(0, 0, 0, 0.55);
+  --texture-dot: rgba(245, 244, 237, 0.06);
+  --aura-a: rgba(255, 218, 87, 0.12);
+  --aura-b: rgba(162, 147, 255, 0.12);
+}
+
+[data-theme='theme-2'][data-color-mode='dark'] {
+  --domain-pattern: #e0a24e;
 }
 
 html {
@@ -68,9 +196,14 @@ html[data-text-scale='xl'] {
 
 body {
   margin: 0;
+  position: relative;
   background-color: var(--color-bg);
   color: var(--color-text);
+  transition:
+    background-color 200ms ease,
+    color 200ms ease;
   font-family:
+    'Space Grotesk',
     'Noto Sans',
     system-ui,
     -apple-system,
@@ -80,15 +213,64 @@ body {
   font-size: 1.125rem;
   line-height: 1.65;
   -webkit-tap-highlight-color: transparent;
+  isolation: isolate;
+  /* The dot-grain that keeps every flat-color screen from reading as a
+     default/unstyled page — never enough to touch text contrast (see the
+     "no vibe-coded tells" self-check in the build brief). */
+  background-image: radial-gradient(var(--texture-dot) 1px, transparent 1px);
+  background-size: 13px 13px;
+}
+
+/* Two large, slow-drifting radial auras behind everything — the only
+   gradients in the system, always below content (z-index -1 + isolate on
+   body keeps them from ever painting over a card). Pure CSS, zero JS/DOM
+   cost, so every screen gets this ambient motion for free. Fixed (not
+   scrolled with the page) so it reads as one continuous backdrop rather
+   than per-screen chrome. */
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  z-index: -1;
+  width: min(70vw, 620px);
+  height: min(70vw, 620px);
+  border-radius: 50%;
+  filter: blur(60px);
+  pointer-events: none;
+}
+body::before {
+  top: -18vw;
+  right: -14vw;
+  background: radial-gradient(circle, var(--aura-a), transparent 70%);
+  animation: ssDrift 27s ease-in-out infinite;
+}
+body::after {
+  bottom: -20vw;
+  left: -16vw;
+  background: radial-gradient(circle, var(--aura-b), transparent 70%);
+  animation: ssDriftB 34s ease-in-out infinite;
 }
 
 button {
   font-family: inherit;
 }
 
+h1,
+h2,
+h3,
+.font-heading {
+  font-family: 'Unbounded', 'Noto Sans', system-ui, sans-serif;
+}
+
+/* The 2026 UI spec calls for a teal focus ring specifically (matches the
+   primary/success color everywhere else); this supersedes the earlier
+   ink-colored ring chosen for age-related blue-discrimination loss — teal's
+   luminance contrast against both the cream background and every domain
+   card carries the ring on its own, and it now matches --color-primary in
+   both light and dark mode rather than hardcoding one hex. */
 :focus-visible {
-  outline: 3px solid var(--color-focus);
-  outline-offset: 2px;
+  outline: 4px solid var(--color-primary);
+  outline-offset: 4px;
 }
 
 @layer components {
@@ -96,31 +278,436 @@ button {
     @apply min-h-tap min-w-tap;
   }
 
+  /* Card tap: 120ms scale to 0.96, spring back on release — the one press
+     effect every tappable surface in the app shares now that there's no
+     shadow left to invert on :active. */
+  .tap-press {
+    @apply transition-transform duration-[120ms] ease-out active:scale-[0.96];
+  }
+
   .btn-elderly {
-    @apply tap-target inline-flex items-center justify-center gap-3 rounded-card px-6 py-4 text-action font-semibold shadow-card transition-colors active:scale-[0.98];
+    @apply tap-press tap-target inline-flex items-center justify-center gap-3 rounded-full px-6 py-4 text-action font-semibold;
   }
-
   .btn-primary {
-    @apply btn-elderly bg-primary text-primary-text hover:bg-primary-hover;
+    @apply btn-elderly shadow-card-sm bg-primary text-primary-text hover:bg-primary-hover;
   }
-
   .btn-secondary {
-    @apply btn-elderly bg-surface text-text border-2 border-border hover:bg-surface-alt;
+    @apply btn-elderly shadow-card-sm border-[3px] border-text bg-surface text-text hover:bg-surface-alt;
   }
-
   .btn-accent {
-    @apply btn-elderly bg-accent text-accent-text;
+    @apply btn-elderly shadow-card-sm bg-accent text-accent-text;
   }
 
   .card-elderly {
-    @apply rounded-card bg-surface border border-border shadow-card p-6;
+    @apply shadow-card rounded-card border-[3px] border-text bg-surface p-6;
+  }
+
+  /* White rounded pill/row family — identity pill, streak, sync badge,
+     reminder rows, in-game option buttons all resolve to this one flat
+     surface + hard offset shadow + ink border, never a solid color fill. */
+  .pill-flat {
+    @apply shadow-card-sm inline-flex items-center gap-2 rounded-full border-[3px] border-text bg-surface px-4 py-2 text-sm font-bold text-text;
+  }
+  /* Solid ink (light in dark mode) pill for primary taps — Play, Mark,
+     nav-bar buttons. */
+  .pill-ink {
+    @apply tap-press shadow-card-sm inline-flex items-center justify-center gap-1.5 rounded-full bg-accent px-4 py-2.5 text-sm font-semibold text-accent-text;
+  }
+
+  /* The speech-bubble name tag overlapping a game card's top edge — the
+     flattened bottom-left corner (rounded-tag) is what reads as a speech
+     bubble. */
+  .speech-tag {
+    @apply shadow-card-sm inline-block rounded-tag border-[2px] border-text bg-surface px-3 py-2 font-heading text-[13.5px] font-semibold leading-tight text-text;
+  }
+
+  /* Icon chip — reminder-row category icon, domain-avatar above a chart
+     bar. Flat colored square, no shadow/border (used inline at small sizes
+     where a 2-3px ink outline would read as clutter, not craft). */
+  .icon-chip {
+    @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-chip text-text;
+  }
+
+  /* Bigger white icon tile for a colored reminder row (68px, ink border) —
+     distinct from .icon-chip because it sits ON a flat color row and needs
+     to read as a separate white "sticker" rather than a same-surface chip. */
+  .icon-tile {
+    @apply flex h-[68px] w-[68px] shrink-0 items-center justify-center rounded-nav border-[3px] border-text bg-surface text-text;
+  }
+
+  /* Domain swatch / legend chip — the one-corner-squared motif at its
+     smallest size. */
+  .domain-swatch {
+    @apply inline-block h-[22px] w-[22px] shrink-0 rounded-swatch border-2 border-text;
+  }
+
+  /* Domain-tinted row backgrounds (adaptive log, suggestion cards) — 18%
+     of the domain hue mixed into the surface color, so it reads as a soft
+     wash rather than a full flat card. */
+  .tint-memory {
+    background: color-mix(in srgb, var(--domain-memory) 18%, var(--color-surface));
+  }
+  .tint-attention {
+    background: color-mix(in srgb, var(--domain-attention) 18%, var(--color-surface));
+  }
+  .tint-routine {
+    background: color-mix(in srgb, var(--domain-routine) 18%, var(--color-surface));
+  }
+  .tint-pattern {
+    background: color-mix(in srgb, var(--domain-pattern) 18%, var(--color-surface));
+  }
+  .tint-orientation {
+    background: color-mix(in srgb, var(--domain-orientation) 18%, var(--color-surface));
+  }
+
+  /* Difficulty pip-dots (filled = current level out of 8). An unfilled pip
+     is a hollow ink-bordered ring rather than a low-alpha ink fill: alpha-
+     blended ink reads fine on the light Memory/Attention cards but is
+     nearly invisible on the darker Routine/Pattern/Orientation ones (found
+     via screenshot on the teal card, then confirmed by contrast math on
+     the others too) — a full-strength ink border clears every domain
+     card's background at a comfortable margin instead of needing a
+     per-domain override. */
+  .pip {
+    @apply h-1.5 w-3.5 rounded-full border border-text;
+    background: transparent;
+  }
+  .pip-on {
+    background: var(--color-text);
+    border-color: transparent;
+  }
+
+  /* Big flat-color game card — bold ink outline + hard offset shadow, no
+     soft clay surface anywhere. Domain classes are full literal class
+     names (not built via string interpolation) so Tailwind's content
+     scanner keeps them in the production build — see
+     src/dashboard/domainColors.ts's comment for why that matters here. */
+  .game-card {
+    @apply tap-press shadow-card relative flex min-h-[200px] flex-col justify-end overflow-hidden rounded-card border-[3px] border-text p-4 text-left;
+    transition:
+      transform 160ms ease-out,
+      box-shadow 160ms ease-out;
+  }
+  .game-card-memory {
+    background: var(--domain-memory);
+  }
+  .game-card-attention {
+    background: var(--domain-attention);
+  }
+  .game-card-routine {
+    background: var(--domain-routine);
+    color: var(--color-bg);
+  }
+  .game-card-pattern {
+    background: var(--domain-pattern);
+  }
+  .game-card-orientation {
+    background: var(--domain-orientation);
+  }
+  /* Today's Set hero card — taller, deeper shadow. Renders perfectly
+     straight (no rotate()) since these 3 cards are free, unordered
+     choices, not a sequence — only a straight hover/focus lift, never a
+     tilt. */
+  .game-card-hero {
+    @apply shadow-card-lg min-h-[226px] transition-transform duration-200 hover:-translate-y-1 focus-visible:-translate-y-1;
+  }
+
+  /* Marching dashed rule beside a section heading. */
+  .dash-rule {
+    @apply h-[2px] flex-1 self-center;
+    opacity: 0.35;
+    background-image: repeating-linear-gradient(
+      90deg,
+      var(--color-text) 0 8px,
+      transparent 8px 16px
+    );
+    animation: ssDash 1.6s linear infinite;
+  }
+
+  /* Blob mascot — one consistent character style recolored white-on-card
+     for every game tile, standing in for a per-game icon (see build brief:
+     "keep it to this one consistent style, don't mix in a different
+     mascot style per screen"). Idle breathing + occasional blink give it
+     presence without ever looping anything jarring; reduced-motion turns
+     both off below. */
+  /* mt-[38px] (not a small gap) is load-bearing, not decoration: the
+     speech-tag above is absolutely positioned (out of flow) and both it and
+     this mascot are "positioned" elements with no z-index, so they paint in
+     DOM order — without enough clearance the mascot (later in the DOM)
+     paints over the tag's text whenever a longer game name wraps to two
+     lines. 38px matches the design reference's own spacer for exactly this
+     reason. */
+  .blob-mascot {
+    @apply relative mx-auto mb-1.5 mt-2 h-[78px] w-[82px];
+    animation: ssBreathe 4.6s ease-in-out infinite;
+    transform-origin: 50% 85%;
+  }
+  .blob-mascot-hero {
+    @apply h-[90px] w-[96px];
+  }
+  /* Used wherever a mascot sits inline in a panel/banner rather than atop a
+     game card — drops the card's small top gap. */
+  .blob-mascot-inline {
+    @apply mx-auto mt-0;
+  }
+  .blob-face {
+    @apply relative h-full w-full border-[3px] border-[#100F06];
+    border-radius: 46% 54% 58% 42% / 50% 46% 54% 50%;
+    background: rgba(255, 255, 255, 0.97);
+  }
+  /* Slight per-card personality variation — "vary blob radius/mouth
+     slightly per card, never add more facial detail." Chosen deterministically
+     per game id, not at random, so a card doesn't re-roll its face on
+     re-render. */
+  .blob-v2 .blob-face {
+    border-radius: 54% 46% 44% 56% / 46% 54% 50% 50%;
+  }
+  .blob-v3 .blob-face {
+    border-radius: 50% 50% 40% 60% / 58% 42% 58% 42%;
+  }
+  .blob-v4 .blob-face {
+    border-radius: 42% 58% 54% 46% / 44% 56% 46% 54%;
+  }
+  /* Coach-panel mascot only — every card mascot stays white-on-color, but
+     the coach panel itself is a white surface, so its mascot flips to gold
+     to still read as a distinct character rather than disappearing into
+     the panel. */
+  .blob-face-gold {
+    background: var(--domain-memory);
+  }
+  .blob-eye {
+    @apply absolute rounded-full bg-[#100F06];
+    width: 10px;
+    height: 12px;
+    top: 30px;
+    animation: ssBlink 6.2s ease-in-out infinite;
+  }
+  .blob-eye-l {
+    left: 26px;
+    animation-delay: 0.4s;
+  }
+  .blob-eye-r {
+    left: 46px;
+    animation-delay: 0.4s;
+  }
+  .blob-mascot-hero .blob-eye {
+    top: 35px;
+  }
+  .blob-mascot-hero .blob-eye-l {
+    left: 30px;
+  }
+  .blob-mascot-hero .blob-eye-r {
+    left: 54px;
+  }
+  .blob-blush {
+    @apply absolute rounded-full;
+    width: 13px;
+    height: 8px;
+    top: 47px;
+    background: rgba(244, 117, 117, 0.55);
+  }
+  .blob-blush-l {
+    left: 9px;
+  }
+  .blob-blush-r {
+    left: 60px;
+  }
+  .blob-mascot-hero .blob-blush {
+    top: 55px;
+  }
+  .blob-mascot-hero .blob-blush-r {
+    left: 74px;
+  }
+  .blob-mouth {
+    @apply absolute rounded-b-[10px] border-[3px] border-t-0 border-[#100F06];
+    width: 18px;
+    height: 8px;
+    top: 52px;
+    left: 32px;
+  }
+  .blob-v3 .blob-mouth,
+  .blob-v4 .blob-mouth {
+    width: 14px;
+    left: 34px;
+  }
+  .blob-mascot-hero .blob-mouth {
+    top: 61px;
+    left: 39px;
+  }
+
+  /* Sticky bottom nav bar (caregiver mode — patient mode has nowhere else
+     to navigate to, so it stays on its single home-icon-button pattern). */
+  .nav-bar {
+    @apply sticky bottom-0 z-10 flex w-full justify-center border-t-[3px] border-text bg-bg px-4 pt-2.5;
+    /* viewport-fit=cover (index.html) lets content run under a phone's
+       home-indicator; without this the label row sits in that zone. */
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+  .nav-btn {
+    @apply tap-press relative flex min-h-[68px] flex-1 flex-col items-center justify-center gap-1 rounded-nav border-[3px] border-text bg-surface text-text;
+  }
+  .nav-btn-on {
+    background: var(--domain-memory);
+  }
+  .nav-dot {
+    @apply absolute -bottom-[7px] h-[7px] w-[7px] rounded-full bg-text;
+    animation: ssStamp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+  }
+
+  /* Confetti chip flung out of a matched pair / celebration moment. */
+  .burst-chip {
+    @apply pointer-events-none absolute h-2 w-2 rounded-[2px] border-2 border-text;
+    left: 50%;
+    top: 50%;
+    animation: ssBurst 0.85s ease-out forwards;
+  }
+  .spark-float {
+    @apply pointer-events-none absolute text-[var(--domain-memory)];
+    animation: ssSpark 2.4s ease-in-out infinite;
+  }
+
+  /* Streak flame — a small idle sway, distinct from the pill's one-time
+     pulse (see .pill-pulse-once below), so a flame never looks static once
+     the entrance pulse finishes. */
+  .flame-sway {
+    display: inline-flex;
+    transform-origin: 50% 90%;
+    animation: ssSway 3.6s ease-in-out infinite;
+  }
+
+  /* Scroll-reveal (IntersectionObserver-driven, see useScrollReveal) — a
+     section starts slightly lower + transparent and settles into place the
+     first time it enters the viewport. Content must never be invisible
+     without JS, so the un-observed state is fully visible; only .reveal
+     (added once the observer attaches, before it's seen anything) hides it
+     momentarily. */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  .reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      opacity 0.62s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.62s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+/* ---- New keyframes for the 2026 "hand-set" motion pass ---- */
+
+@keyframes ssDash {
+  to {
+    background-position-x: 16px;
+  }
+}
+
+@keyframes ssBreathe {
+  0%,
+  100% {
+    transform: scale(1) rotate(var(--look, 0deg));
+  }
+  50% {
+    transform: scale(1.03) rotate(var(--look, 0deg));
+  }
+}
+
+@keyframes ssBlink {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+  96% {
+    transform: scaleY(0.12);
+  }
+}
+
+@keyframes ssSway {
+  0%,
+  100% {
+    transform: rotate(-2.5deg);
+  }
+  50% {
+    transform: rotate(2.5deg);
+  }
+}
+
+@keyframes ssStamp {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  65% {
+    transform: scale(1.25);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes ssBannerIn {
+  0% {
+    transform: scale(0.85) translateY(10px);
+    opacity: 0;
+  }
+  65% {
+    transform: scale(1.03) translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes ssBurst {
+  0% {
+    transform: translate(-50%, -50%) translate(0, 0) scale(1);
+    opacity: 1;
+    background: var(--burst-color, var(--color-text));
+  }
+  100% {
+    transform: translate(-50%, -50%) translate(var(--bx, 24px), var(--by, -24px)) scale(0.4);
+    opacity: 0;
+  }
+}
+
+@keyframes ssSpark {
+  0%,
+  100% {
+    transform: translateY(0) scale(0.9);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translateY(-8px) scale(1.15);
+    opacity: 1;
+  }
+}
+
+@keyframes ssDrift {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-4%, 5%) scale(1.08);
+  }
+}
+
+@keyframes ssDriftB {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(5%, -4%) scale(1.1);
   }
 }
 
 /* Splash screen's badge — a slow, gentle breathing motion, never a spinner.
    Calm and predictable matters more than "loading feedback" for this
-   audience (see README's accessibility section); reduced-motion users get
-   a static badge instead. */
+   audience; reduced-motion users get a static badge instead. */
 @keyframes splash-breathe {
   0%,
   100% {
@@ -130,13 +717,271 @@ button {
     transform: scale(1.06);
   }
 }
-
 .splash-badge {
   animation: splash-breathe 2.8s ease-in-out infinite;
 }
 
+/* OfflineBadge's sync dot/checkmark. */
+@keyframes sync-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+@keyframes sync-check-in {
+  0% {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.sync-pulse {
+  animation: sync-pulse 1.1s ease-in-out infinite;
+}
+.sync-check {
+  position: relative;
+  display: inline-flex;
+  animation: sync-check-in 0.3s ease-out;
+}
+/* Tier-2 upgrade: a ring radiates outward from the checkmark once, right as
+   it lands — the app's single best 3-second demo-video moment (see the
+   OfflineBadge comment), so it's worth the one extra pseudo-element even
+   though this component otherwise deliberately stays out of the eager
+   bundle's animation-library usage. */
+@keyframes sync-ring-pulse {
+  from {
+    transform: scale(0.5);
+    opacity: 0.6;
+  }
+  to {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+.sync-check::after {
+  content: '';
+  position: absolute;
+  inset: -7px;
+  border-radius: 9999px;
+  border: 2px solid currentColor;
+  animation: sync-ring-pulse 0.7s ease-out;
+}
+
+/* PatientHome's streak pill: draw the eye once on mount, then hold still —
+   never a continuous loop (that would nag, not inform). */
+@keyframes pill-pulse-once {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+.pill-pulse-once {
+  animation: pill-pulse-once 0.6s ease-in-out 1;
+}
+
+/* RoundFeedback's correct/wrong states. */
+@keyframes feedback-correct-in {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes feedback-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-6px);
+  }
+  40% {
+    transform: translateX(6px);
+  }
+  60% {
+    transform: translateX(-4px);
+  }
+  80% {
+    transform: translateX(4px);
+  }
+}
+.feedback-correct-in {
+  animation: feedback-correct-in 0.4s ease-out;
+  filter: drop-shadow(0 0 6px var(--color-success));
+}
+.feedback-shake {
+  animation: feedback-shake 0.4s ease-in-out;
+}
+
+/* SessionSummary's "getting stronger at this!" badge (level 6+). */
+@keyframes level-up-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.level-up-badge {
+  animation: level-up-in 0.5s ease-out;
+}
+
+/* Success toast (game screen "Well done!") — scale+fade from
+   translateY(10px), 300ms, auto-dismissed by the component after ~1.4s. */
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+.toast-in {
+  animation: toast-in 0.3s ease-out;
+}
+
+/* PatientHome's one-time staggered card reveal on first load (never
+   re-triggered on re-render — see PatientHome's own comment). */
+@keyframes tile-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.stagger-tile {
+  animation: tile-fade-up 0.3s ease-out backwards;
+  animation-delay: calc(var(--stagger-index, 0) * 40ms);
+}
+
+/* Shimmer placeholder for a lazy chunk / first Dexie read, so a slow
+   connection or a cold cache gets a "content is coming" bar instead of a
+   blank white flash. */
+@keyframes skeleton-shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-surface-alt) 25%,
+    var(--color-border) 50%,
+    var(--color-surface-alt) 75%
+  );
+  background-size: 300% 100%;
+  animation: skeleton-shimmer 1.6s ease-in-out infinite;
+}
+
+/* Caregiver domain-balance bars growing in, staggered per bar. */
+@keyframes bar-grow-in {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+.bar-grow-in {
+  transform-origin: bottom;
+  animation: bar-grow-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  animation-delay: calc(var(--bar-index, 0) * 60ms);
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .splash-badge {
+  .stagger-tile,
+  .bar-grow-in,
+  .skeleton,
+  .splash-badge,
+  .sync-pulse,
+  .sync-check,
+  .sync-check::after,
+  .feedback-correct-in,
+  .feedback-shake,
+  .level-up-badge,
+  .pill-pulse-once,
+  .toast-in,
+  .blob-mascot,
+  .blob-eye,
+  .dash-rule,
+  .nav-dot,
+  .burst-chip,
+  .spark-float,
+  .flame-sway {
     animation: none;
+  }
+
+  body {
+    transition: none;
+  }
+  body::before,
+  body::after {
+    animation: none;
+  }
+
+  .tap-press,
+  .game-card,
+  .game-card-hero {
+    transition: none;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+  .reveal-visible {
+    transition: none;
+  }
+}
+
+/*
+  Caregiver dashboard "Print Report". Always prints on white/black
+  regardless of the caregiver's chosen palette or dark mode — a
+  dark-background printout wastes ink and is hard to read on paper, and a
+  doctor's visit is the one context where the on-device accessibility theme
+  doesn't matter. print:hidden (Tailwind's built-in print variant) marks
+  interactive-only chrome that a printed page has no use for.
+*/
+@media print {
+  body,
+  .bg-bg {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .card-elderly {
+    box-shadow: none !important;
+    border: 1px solid #999999 !important;
+    break-inside: avoid;
   }
 }

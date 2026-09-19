@@ -76,11 +76,11 @@ describe('SmritiCardsGame', () => {
     await user.click(stillFaceDown[0]);
 
     // Two cards are flipped — the grid locks until the guess resolves, but
-    // shell chrome (Home button etc.) stays interactive.
+    // shell chrome (the Back button etc.) stays interactive.
     for (const button of cardButtons()) {
       expect(button).toBeDisabled();
     }
-    expect(screen.getByRole('button', { name: 'Home' })).not.toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Back' })).not.toBeDisabled();
 
     await act(async () => {
       vi.advanceTimersByTime(1000);

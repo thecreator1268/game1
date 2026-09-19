@@ -1,23 +1,25 @@
+import type { IconName } from '@/components/IconSprite';
+
 export interface ToolTaskPair {
   id: string;
-  toolEmoji: string;
+  toolIcon: IconName;
   toolLabel: string;
   task: string;
 }
 
 export const TOOL_TASK_PAIRS: ToolTaskPair[] = [
-  { id: 'broom', toolEmoji: '🧹', toolLabel: 'Broom', task: 'Sweeping' },
-  { id: 'kettle', toolEmoji: '🫖', toolLabel: 'Kettle', task: 'Making tea' },
-  { id: 'needle', toolEmoji: '🪡', toolLabel: 'Needle', task: 'Sewing' },
-  { id: 'basket', toolEmoji: '🧺', toolLabel: 'Basket', task: 'Washing clothes' },
-  { id: 'hammer', toolEmoji: '🔨', toolLabel: 'Hammer', task: 'Fixing things' },
-  { id: 'spoon', toolEmoji: '🥄', toolLabel: 'Spoon', task: 'Cooking' },
-  { id: 'sponge', toolEmoji: '🧽', toolLabel: 'Sponge', task: 'Washing dishes' },
-  { id: 'scissors', toolEmoji: '✂️', toolLabel: 'Scissors', task: 'Cutting cloth' },
-  { id: 'bucket', toolEmoji: '🪣', toolLabel: 'Bucket', task: 'Cleaning the floor' },
-  { id: 'bottle', toolEmoji: '🧴', toolLabel: 'Bottle', task: 'Watering plants' },
-  { id: 'flashlight', toolEmoji: '🔦', toolLabel: 'Flashlight', task: 'Finding things in the dark' },
-  { id: 'dustbin', toolEmoji: '🗑️', toolLabel: 'Dustbin', task: 'Throwing rubbish' },
-  { id: 'key', toolEmoji: '🔑', toolLabel: 'Key', task: 'Locking the door' },
-  { id: 'towel', toolEmoji: '🧻', toolLabel: 'Towel', task: 'Wiping the table' },
+  { id: 'broom', toolIcon: 'broom', toolLabel: 'Broom', task: 'Sweeping' },
+  { id: 'kettle', toolIcon: 'kettle', toolLabel: 'Kettle', task: 'Making tea' },
+  { id: 'needle', toolIcon: 'needle', toolLabel: 'Needle', task: 'Sewing' },
+  { id: 'basket', toolIcon: 'basket', toolLabel: 'Basket', task: 'Washing clothes' },
+  { id: 'hammer', toolIcon: 'hammer', toolLabel: 'Hammer', task: 'Fixing things' },
+  { id: 'spoon', toolIcon: 'spoon', toolLabel: 'Spoon', task: 'Cooking' },
+  { id: 'sponge', toolIcon: 'sponge', toolLabel: 'Sponge', task: 'Washing dishes' },
+  { id: 'scissors', toolIcon: 'scissors', toolLabel: 'Scissors', task: 'Cutting cloth' },
+  { id: 'bucket', toolIcon: 'bucket', toolLabel: 'Bucket', task: 'Cleaning the floor' },
+  { id: 'bottle', toolIcon: 'bottle', toolLabel: 'Bottle', task: 'Watering plants' },
+  { id: 'flashlight', toolIcon: 'flashlight', toolLabel: 'Flashlight', task: 'Finding things in the dark' },
+  { id: 'dustbin', toolIcon: 'trash', toolLabel: 'Dustbin', task: 'Throwing rubbish' },
+  { id: 'key', toolIcon: 'key', toolLabel: 'Key', task: 'Locking the door' },
+  { id: 'towel', toolIcon: 'paper-roll', toolLabel: 'Towel', task: 'Wiping the table' },
 ];

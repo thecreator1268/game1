@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { GameShell } from '@/components/GameShell';
+import { Icon } from '@/components/IconSprite';
 import { SessionSummary } from '@/components/SessionSummary';
 import { VoicePrompt } from '@/components/VoicePrompt';
 import { Button } from '@/components/Button';
@@ -141,7 +142,7 @@ export default function BazaarListGame() {
             <div className="flex flex-wrap justify-center gap-4">
               {list.map((item) => (
                 <div key={item.id} className="flex flex-col items-center gap-1">
-                  <span className="text-4xl">{item.emoji}</span>
+                  <Icon name={item.icon} size={36} />
                   <span className="text-sm text-text-muted">{item.label}</span>
                 </div>
               ))}
@@ -177,7 +178,7 @@ export default function BazaarListGame() {
                 selected.has(item.id) ? 'border-accent bg-surface-alt' : 'border-border bg-surface'
               }`}
             >
-              <span className="text-3xl">{item.emoji}</span>
+              <Icon name={item.icon} size={28} />
               <span className="text-xs text-text-muted">{item.label}</span>
             </button>
           ))}

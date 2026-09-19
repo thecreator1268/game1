@@ -56,6 +56,7 @@ export default function Onboarding() {
       caregiverIds: [caregiverId],
       highContrastPalette: 'theme-1',
       textScale: 'normal',
+      colorMode: 'light',
       consentGivenAt: consentGivenAt ?? Date.now(),
       reminderAlertsEnabled: false,
       createdAt: Date.now(),
@@ -153,6 +154,7 @@ export default function Onboarding() {
             <input
               type="password"
               inputMode="numeric"
+              autoComplete="one-time-code"
               maxLength={PIN_LENGTH}
               value={pin}
               onChange={(e) => setPin(e.target.value.replace(/\D/g, ''))}
@@ -163,6 +165,7 @@ export default function Onboarding() {
             <input
               type="password"
               inputMode="numeric"
+              autoComplete="one-time-code"
               maxLength={PIN_LENGTH}
               value={confirmPin}
               onChange={(e) => setConfirmPin(e.target.value.replace(/\D/g, ''))}

@@ -1,14 +1,18 @@
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { IconButton } from '@/components/IconButton';
 import { OfflineBadge } from '@/components/OfflineBadge';
 import { HomeIcon } from '@/components/icons';
+import { Icon, type IconName } from '@/components/IconSprite';
+import { RouteTransition } from '@/components/RouteTransition';
+import { CaregiverPatientSwitcher } from '@/dashboard/CaregiverPatientSwitcher';
 import { useAuthStore } from '@/store/authStore';
 
 export default function CaregiverLayout() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const location = useLocation();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const logout = useAuthStore((s) => s.logout);
 
@@ -18,38 +22,45 @@ export default function CaregiverLayout() {
 
   if (!isAuthenticated) return null;
 
-  const navItems = [
-    { to: '/caregiver', label: t('dashboard.title'), end: true },
-    { to: '/caregiver/reminders', label: t('reminders.manageTitle'), end: false },
-    { to: '/caregiver/family', label: t('familyManager.title'), end: false },
-    { to: '/caregiver/settings', label: t('dashboard.settings'), end: false },
+  // Nav labels are short, dedicated words (nav.*) — distinct from the
+  // fuller page titles (dashboard.title, reminders.manageTitle, ...) used
+  // as each screen's own <h1>, which are too long to sit under a 28px icon
+  // in a 68px-tall nav button four-across on a phone. Each button's
+  // aria-label/title keeps the fuller title for a clearer accessible name.
+  const navItems: { to: string; label: string; fullLabel: string; end: boolean; icon: IconName }[] = [
+    { to: '/caregiver', label: t('nav.home'), fullLabel: t('dashboard.title'), end: true, icon: 'home' },
+    {
+      to: '/caregiver/reminders',
+      label: t('nav.reminders'),
+      fullLabel: t('reminders.manageTitle'),
+      end: false,
+      icon: 'calendar',
+    },
+    {
+      to: '/caregiver/family',
+      label: t('nav.family'),
+      fullLabel: t('familyManager.title'),
+      end: false,
+      icon: 'family',
+    },
+    {
+      to: '/caregiver/settings',
+      label: t('nav.settings'),
+      fullLabel: t('dashboard.settings'),
+      end: false,
+      icon: 'settings',
+    },
   ];
 
   return (
     <div className="min-h-screen bg-bg">
-      <header className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-4 py-3 sm:px-6">
+      <header className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3 print:hidden sm:px-6">
         <div className="flex items-center gap-3">
           <IconButton label={t('common.home')} onClick={() => navigate('/')}>
             <HomeIcon />
           </IconButton>
-          <span className="text-action font-bold text-primary">{t('common.appName')}</span>
+          <span className="font-heading text-action font-bold text-primary">{t('common.appName')}</span>
         </div>
-        <nav className="flex flex-wrap gap-2">
-          {navItems.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              end={item.end}
-              className={({ isActive }) =>
-                `rounded-full px-4 py-2 text-body font-semibold ${
-                  isActive ? 'bg-primary text-primary-text' : 'bg-surface-alt text-text'
-                }`
-              }
-            >
-              {item.label}
-            </NavLink>
-          ))}
-        </nav>
         <div className="flex items-center gap-3">
           <OfflineBadge />
           <button
@@ -63,10 +74,35 @@ export default function CaregiverLayout() {
           </button>
         </div>
       </header>
-      <main className="mx-auto max-w-6xl px-4 py-6 sm:px-6">
-        <Outlet />
+      <CaregiverPatientSwitcher />
+      <main className="mx-auto max-w-6xl px-4 py-6 pb-28 sm:px-6">
+        <RouteTransition routeKey={location.pathname} variant="dynamic">
+          <Outlet />
+        </RouteTransition>
       </main>
-      <p className="px-4 pb-6 text-center text-sm text-text-muted sm:px-6">{t('common.clinicalNote')}</p>
+      <p className="px-4 pb-28 text-center text-sm text-text-muted sm:px-6">{t('common.clinicalNote')}</p>
+      <nav className="nav-bar print:hidden">
+        <div className="mx-auto flex w-full max-w-4xl gap-4">
+          {navItems.map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              end={item.end}
+              aria-label={item.fullLabel}
+              title={item.fullLabel}
+              className={({ isActive }) => `nav-btn ${isActive ? 'nav-btn-on' : ''}`}
+            >
+              {({ isActive }) => (
+                <>
+                  <Icon name={item.icon} size={28} />
+                  <span className="text-[13px] font-semibold leading-none">{item.label}</span>
+                  {isActive && <span className="nav-dot" />}
+                </>
+              )}
+            </NavLink>
+          ))}
+        </div>
+      </nav>
     </div>
   );
 }

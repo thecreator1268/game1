@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { GameShell } from '@/components/GameShell';
+import { Icon, type IconName } from '@/components/IconSprite';
 import { RoundFeedback } from '@/components/RoundFeedback';
 import { SessionSummary } from '@/components/SessionSummary';
 import { VoicePrompt } from '@/components/VoicePrompt';
@@ -15,8 +16,8 @@ import type { ErrorType } from '@/db/types';
 import { distractorsForLevel, OBJECT_POOL, TRIALS_PER_SESSION } from './params';
 
 interface Trial {
-  target: string;
-  options: string[];
+  target: IconName;
+  options: IconName[];
 }
 
 function buildTrial(level: number): Trial {
@@ -29,7 +30,7 @@ function buildTrial(level: number): Trial {
 
 type Phase = 'loading' | 'playing' | 'summary';
 
-// "Shadows" are the same emoji rendered as solid silhouettes (filter:
+// "Shadows" are the same icon rendered as solid silhouettes (filter:
 // brightness(0)) — no illustration assets needed, and it genuinely strips
 // color so the match has to be made on shape alone.
 export default function ChayaKhojGame() {
@@ -93,7 +94,7 @@ export default function ChayaKhojGame() {
     setPhase('summary');
   }
 
-  function handleOptionTap(shadow: string) {
+  function handleOptionTap(shadow: IconName) {
     if (!trial || feedback) return;
     const isCorrect = shadow === trial.target;
     const duration = Date.now() - trialStartRef.current;
@@ -157,8 +158,8 @@ export default function ChayaKhojGame() {
         </p>
 
         <div className="mb-8 flex justify-center">
-          <span className="text-7xl" aria-label="object">
-            {trial.target}
+          <span aria-label="object">
+            <Icon name={trial.target} size={72} />
           </span>
         </div>
 
@@ -168,16 +169,18 @@ export default function ChayaKhojGame() {
               key={`${shadow}-${index}`}
               onClick={() => handleOptionTap(shadow)}
               disabled={Boolean(feedback)}
-              className={`tap-target flex h-20 w-20 items-center justify-center rounded-card border-2 text-4xl transition-colors ${
+              aria-label={shadow.charAt(0).toUpperCase() + shadow.slice(1)}
+              className={`tap-target flex h-20 w-20 items-center justify-center rounded-card border-2 transition-colors ${
                 feedback && shadow === trial.target
                   ? 'border-success bg-surface-alt'
                   : feedback
                     ? 'border-border opacity-50'
                     : 'border-border bg-surface hover:bg-surface-alt'
               }`}
-              style={{ filter: 'brightness(0)' }}
             >
-              {shadow}
+              <span style={{ filter: 'brightness(0)' }}>
+                <Icon name={shadow} size={40} />
+              </span>
             </button>
           ))}
         </div>

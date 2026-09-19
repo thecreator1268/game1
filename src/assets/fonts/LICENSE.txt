@@ -1,0 +1,12 @@
+Unbounded and Space Grotesk are licensed under the SIL Open Font License,
+Version 1.1. Full license text: https://openfontlicense.org
+
+Unbounded — designed by Ilya Ruderman / CSTM Fonts, published via Google
+Fonts (https://fonts.google.com/specimen/Unbounded)
+
+Space Grotesk — designed by Florian Karsten, published via Google Fonts
+(https://fonts.google.com/specimen/Space+Grotesk)
+
+Self-hosted here (rather than loaded from Google's CDN at runtime) so
+SmritiSetu's typography renders correctly fully offline, consistent with the
+rest of this app's offline-first architecture.

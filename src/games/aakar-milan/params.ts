@@ -16,5 +16,12 @@ export function paramsForLevel(level: number) {
   return LEVELS[level] ?? LEVELS[1];
 }
 
-export const SHAPES = ['▲', '●', '■', '◆', '★', '⬟'];
+// Plain geometric glyphs, not pictographic emoji — these render as flat,
+// consistent shapes in any font/OS, unlike emoji, so they don't need the
+// IconSprite treatment. One glyph (a black star, U+2605) sat inside the
+// same Unicode block as decorative emoji and got flagged by the no-emoji
+// check even though it's a plain typographic mark, not a colorful platform
+// pictograph — swapped for a hexagon so all six glyphs live outside that
+// block.
+export const SHAPES = ['▲', '●', '■', '◆', '⬢', '⬟'];
 export const TRIALS_PER_SESSION = 5;

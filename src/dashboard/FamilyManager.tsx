@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { Card } from '@/components/Card';
 import { Button } from '@/components/Button';
+import { Icon } from '@/components/IconSprite';
 import { db } from '@/db/schema';
 import { useCaregiverPatient } from '@/hooks/useCaregiverPatient';
 import { useAudioRecorder } from '@/hooks/useAudioRecorder';
@@ -22,6 +23,22 @@ export default function FamilyManager() {
   const [relation, setRelation] = useState('');
   const [photoUrl, setPhotoUrl] = useState('');
   const recorder = useAudioRecorder();
+
+  // Without this, an in-progress draft (photo/name/voice note already
+  // captured) would silently get attributed to whichever patient the
+  // caregiver switches to next via CaregiverPatientSwitcher — since "Add"
+  // always uses whatever patient.id is current at click time, that's a real
+  // "your work went to the wrong patient" bug, not just stale UI. Reset
+  // during render (see CaregiverHome's identical pattern) rather than in an
+  // effect — setAudioUrl is a bare useState setter, safe to call here.
+  const [lastPatientId, setLastPatientId] = useState(patient?.id);
+  if (patient?.id !== lastPatientId) {
+    setLastPatientId(patient?.id);
+    setName('');
+    setRelation('');
+    setPhotoUrl('');
+    recorder.setAudioUrl(undefined);
+  }
 
   async function handlePhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -60,8 +77,8 @@ export default function FamilyManager() {
             {photoUrl ? (
               <img src={photoUrl} alt="" className="h-24 w-24 rounded-full object-cover" />
             ) : (
-              <div className="flex h-24 w-24 items-center justify-center rounded-full bg-surface-alt text-sm text-text-muted">
-                {t('familyManager.photo')}
+              <div className="flex h-24 w-24 items-center justify-center rounded-full bg-surface-alt text-text-muted">
+                <Icon name="person" size={36} />
               </div>
             )}
             <label className="cursor-pointer text-sm font-semibold text-primary">

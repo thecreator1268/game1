@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Icon } from './IconSprite';
 
 const KEYPAD = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', '⌫'];
 const MAX_ATTEMPTS = 5;
@@ -18,15 +19,18 @@ interface PinPadProps {
   lockedMessage: (secondsLeft: number) => string;
   /** Resolve true on a matching PIN (caller handles login + navigation); false on a miss. */
   onSubmit: (pin: string) => Promise<boolean>;
+  /** True while the sibling "reset your PIN" panel is open — clears and suppresses the stale miss message. */
+  hideError?: boolean;
 }
 
 // Shared by CaregiverLogin and AdminLogin: a 4-digit keypad with a lockout
 // after repeated misses. This is still a lightweight gate, not a real
 // security boundary (see authStore.ts) — the lockout exists to discourage
 // idle keypad-mashing, not to resist a determined attacker.
-export function PinPad({ length = 4, wrongMessage, lockedMessage, onSubmit }: PinPadProps) {
+export function PinPad({ length = 4, wrongMessage, lockedMessage, onSubmit, hideError = false }: PinPadProps) {
   const [pin, setPin] = useState('');
   const [error, setError] = useState(false);
+  if (hideError && error) setError(false);
   const [attempts, setAttempts] = useState(0);
   const [lockedUntil, setLockedUntil] = useState<number | null>(null);
   const [secondsLeft, setSecondsLeft] = useState(0);
@@ -99,9 +103,10 @@ export function PinPad({ length = 4, wrongMessage, lockedMessage, onSubmit }: Pi
               key={idx}
               onClick={() => press(key)}
               disabled={locked}
-              className="tap-target rounded-card border-2 border-border bg-surface text-action font-semibold hover:bg-surface-alt disabled:opacity-40"
+              aria-label={key === '⌫' ? 'Backspace' : undefined}
+              className="tap-press tap-target shadow-card flex items-center justify-center rounded-card bg-surface text-action font-semibold hover:bg-surface-alt disabled:opacity-40"
             >
-              {key}
+              {key === '⌫' ? <Icon name="backspace" size={28} /> : key}
             </button>
           ) : (
             <span key={idx} />

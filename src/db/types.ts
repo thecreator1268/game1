@@ -29,6 +29,9 @@ export interface Patient {
   caregiverIds: string[];
   highContrastPalette: 'theme-1' | 'theme-2';
   textScale: 'normal' | 'large' | 'xl';
+  // Optional: patients created before this field existed fall back to
+  // 'light' at every read site rather than needing a Dexie migration.
+  colorMode?: 'light' | 'dark';
   // Timestamp the setting caregiver accepted the on-device data-storage
   // notice during onboarding (see Onboarding.tsx's "consent" step).
   consentGivenAt: number;

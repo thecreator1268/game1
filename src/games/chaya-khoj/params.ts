@@ -1,3 +1,5 @@
+import type { IconName } from '@/components/IconSprite';
+
 // L1=2 · L2=2 · L3=3 · L4=3 · L5=4 · L6=4 · L7=5 · L8=5 · L9=6 · L10=6 (distractor shadows shown)
 const DISTRACTORS_BY_LEVEL: Record<number, number> = {
   1: 2,
@@ -16,5 +18,18 @@ export function distractorsForLevel(level: number): number {
   return DISTRACTORS_BY_LEVEL[level] ?? DISTRACTORS_BY_LEVEL[1];
 }
 
-export const OBJECT_POOL = ['🐘', '🚲', '☂️', '🪑', '🎸', '🐦', '🏠', '🌳', '🐕', '🚗', '⚽', '🔑'];
+export const OBJECT_POOL: IconName[] = [
+  'elephant',
+  'bicycle',
+  'umbrella',
+  'chair',
+  'guitar',
+  'bird',
+  'home',
+  'tree',
+  'dog',
+  'car',
+  'ball',
+  'key',
+];
 export const TRIALS_PER_SESSION = 5;

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { Card } from '@/components/Card';
@@ -23,6 +23,63 @@ export default function RemindersManager() {
   const [label, setLabel] = useState('');
   const [schedule, setSchedule] = useState('08:00');
   const [notes, setNotes] = useState('');
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [scanning, setScanning] = useState(false);
+  const [scanProgress, setScanProgress] = useState(0);
+  const [scanError, setScanError] = useState<string | null>(null);
+  const [scannedText, setScannedText] = useState('');
+
+  // Same reasoning as FamilyManager's reset: an in-progress draft (or a
+  // scanned label) must not silently get attributed to a different patient
+  // after a switch via CaregiverPatientSwitcher. Reset during render (see
+  // CaregiverHome's identical pattern) rather than in an effect.
+  const [lastPatientId, setLastPatientId] = useState(patient?.id);
+  if (patient?.id !== lastPatientId) {
+    setLastPatientId(patient?.id);
+    setCategory('medicine');
+    setLabel('');
+    setSchedule('08:00');
+    setNotes('');
+    setScanError(null);
+    setScannedText('');
+  }
+
+  // Tracks the *current* patient (unlike lastPatientId, which only updates
+  // on a change) so an in-flight scan can tell, after its await resolves,
+  // whether the caregiver switched patients while it was running —
+  // scanning a label takes seconds, plenty of time to tap the patient
+  // switcher, and applying a stale result would attribute one patient's
+  // medicine label to another patient's reminder. Synced in an effect
+  // (after commit), never written during render.
+  const currentPatientIdRef = useRef(patient?.id);
+  useEffect(() => {
+    currentPatientIdRef.current = patient?.id;
+  }, [patient?.id]);
+
+  async function handleLabelPhoto(file: File) {
+    const scanPatientId = patient?.id;
+    setScanning(true);
+    setScanProgress(0);
+    setScanError(null);
+    setScannedText('');
+    try {
+      // Dynamically imported so the ~100KB tesseract.js glue code (the
+      // wasm engine and language data are separate self-hosted files, see
+      // src/lib/ocr.ts) is never downloaded just for opening Reminders —
+      // only when a caregiver actually taps "Scan Medicine Label".
+      const { recognizeMedicineLabel } = await import('@/lib/ocr');
+      const text = await recognizeMedicineLabel(file, setScanProgress);
+      if (currentPatientIdRef.current !== scanPatientId) return;
+      setScannedText(text);
+      const firstLine = text.split('\n').map((l) => l.trim()).find((l) => l.length > 0);
+      if (firstLine) setLabel(firstLine);
+    } catch {
+      if (currentPatientIdRef.current === scanPatientId) setScanError(t('reminders.scanFailed'));
+    } finally {
+      if (currentPatientIdRef.current === scanPatientId) setScanning(false);
+    }
+  }
 
   async function handleAdd() {
     if (!patient || !label.trim()) return;
@@ -59,6 +116,37 @@ export default function RemindersManager() {
             placeholder={t('reminders.label')}
             className="tap-target rounded-card border-2 border-border bg-surface px-4 text-body"
           />
+          {category === 'medicine' && (
+            <div>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                capture="environment"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  e.target.value = '';
+                  if (file) void handleLabelPhoto(file);
+                }}
+              />
+              <Button
+                variant="secondary"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={scanning}
+              >
+                {scanning
+                  ? t('reminders.scanning', { percent: Math.round(scanProgress * 100) })
+                  : t('reminders.scanLabel')}
+              </Button>
+              {scanError && <p className="mt-2 text-sm text-danger">{scanError}</p>}
+              {!scanning && scannedText && (
+                <p className="mt-2 text-sm text-text-muted">
+                  {t('reminders.scannedText')}: {scannedText.replace(/\n+/g, ' ').slice(0, 200)}
+                </p>
+              )}
+            </div>
+          )}
           <label className="text-sm text-text-muted">{t('reminders.schedule')}</label>
           <input
             type={category === 'appointment' ? 'datetime-local' : 'time'}

@@ -10,7 +10,7 @@ export function IconButton({ label, children, tone = 'default', className = '', 
   const toneClass =
     tone === 'primary'
       ? 'bg-primary text-primary-text hover:bg-primary-hover'
-      : 'bg-surface text-text border-2 border-border hover:bg-surface-alt';
+      : 'bg-surface text-text hover:bg-surface-alt';
   return (
     <button
       aria-label={label}

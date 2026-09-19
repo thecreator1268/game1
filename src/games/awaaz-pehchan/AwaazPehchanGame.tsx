@@ -5,6 +5,7 @@ import { GameShell } from '@/components/GameShell';
 import { SessionSummary } from '@/components/SessionSummary';
 import { VoicePrompt } from '@/components/VoicePrompt';
 import { Button } from '@/components/Button';
+import { SpeakerIcon } from '@/components/icons';
 import { useActivePatient } from '@/hooks/useActivePatient';
 import { useLevelParam } from '@/hooks/useLevelParam';
 import { getCurrentLevel, recordGameSession } from '@/engine/gameSessionService';
@@ -213,7 +214,9 @@ export default function AwaazPehchanGame() {
           {wordIndex + 1} / {sequenceRef.current.length}
         </p>
         <div className="mb-10 flex justify-center">
-          <div className="flex h-32 w-32 items-center justify-center rounded-full bg-surface-alt text-5xl">🔊</div>
+          <div className="flex h-32 w-32 items-center justify-center rounded-full bg-surface-alt text-primary">
+            <SpeakerIcon width={52} height={52} />
+          </div>
         </div>
         <button
           onClick={handleTapButton}

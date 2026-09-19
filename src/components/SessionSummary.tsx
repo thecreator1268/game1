@@ -1,8 +1,10 @@
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { LevelDecision } from '@/engine/adaptiveEngine';
 import { Button } from './Button';
 import { Card } from './Card';
-import { StarIcon } from './icons';
+import { Icon } from './IconSprite';
+import { LevelUpBadge } from './LevelUpBadge';
 
 interface SessionSummaryProps {
   accuracyPct: number;
@@ -24,6 +26,25 @@ export function SessionSummary({
 }: SessionSummaryProps) {
   const { t } = useTranslation();
 
+  // A brief, skippable celebration, never a blocker: the badge itself
+  // auto-dismisses after ~1.2s (never sits there forever), but every button
+  // below stays fully clickable the whole time regardless — "skippable by
+  // next tap" just falls out of the badge being decorative, not gating.
+  // Re-arms on prop change during render (e.g. "Play Again" reusing the same
+  // instance) rather than in an effect — the effect's only job is the
+  // dismiss timer, an actual external-timer side effect.
+  const [lastShowPersonalBest, setLastShowPersonalBest] = useState(showPersonalBest);
+  const [showBadge, setShowBadge] = useState(showPersonalBest);
+  if (showPersonalBest !== lastShowPersonalBest) {
+    setLastShowPersonalBest(showPersonalBest);
+    setShowBadge(showPersonalBest);
+  }
+  useEffect(() => {
+    if (!showBadge) return undefined;
+    const timer = setTimeout(() => setShowBadge(false), 1200);
+    return () => clearTimeout(timer);
+  }, [showBadge]);
+
   return (
     <div className="mx-auto flex max-w-lg flex-col items-center gap-6 py-10 text-center">
       <Card className="w-full">
@@ -32,14 +53,19 @@ export function SessionSummary({
           {t('common.score')}: {Math.round(accuracyPct)}%
         </p>
 
-        {showPersonalBest && (
-          <div className="mt-4 flex items-center justify-center gap-2 rounded-card bg-surface-alt p-4 text-accent">
-            <StarIcon width={24} height={24} />
-            <span className="text-body font-semibold">{t('common.personalBest')}</span>
+        {showBadge && (
+          <div className="mt-4 flex justify-center level-up-badge">
+            <span className="pill-ink px-5 py-3 font-heading text-body">
+              <Icon name="spark" size={18} className="text-[var(--domain-memory)]" />
+              {t('common.personalBest')}
+            </span>
           </div>
         )}
 
-        {levelDecision && levelDecision.changed && (
+        {levelDecision && levelDecision.changed && levelDecision.direction === 'up' && (
+          <LevelUpBadge label={`${t('common.level')} ${levelDecision.newLevel}`} />
+        )}
+        {levelDecision && levelDecision.changed && levelDecision.direction === 'down' && (
           <p className="mt-4 text-body text-text-muted">
             {t('common.level')} {levelDecision.newLevel}
           </p>

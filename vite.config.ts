@@ -49,6 +49,12 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,json,woff2,mp3,webp}'],
+        // The OCR engine files are matched by the .js glob above purely by
+        // extension but are handled by the runtimeCaching rule below
+        // instead — eagerly precaching them would push a multi-MB
+        // caregiver-only download onto every install, and the largest one
+        // exceeds Workbox's default 2MB precache size cap anyway.
+        globIgnores: ['**/tesseract/**'],
         // Runtime caching keeps every game/audio/photo asset available fully offline,
         // which is the core constraint of this app (see README). Patterns are
         // base-relative since a GitHub Pages deploy serves everything under
@@ -63,6 +69,19 @@ export default defineConfig({
             urlPattern: ({ url }: { url: URL }) => url.pathname.startsWith(`${BASE_PATH}images/`),
             handler: 'CacheFirst',
             options: { cacheName: 'image-assets' },
+          },
+          {
+            // Self-hosted Tesseract.js OCR engine + English model for the
+            // medicine-label scanner (RemindersManager). Deliberately NOT in
+            // includeAssets/globPatterns — these are ~7MB and caregiver-only,
+            // so a patient's install never downloads them; they're cached
+            // the first time a caregiver actually opens "Scan Medicine
+            // Label", then fully available offline from then on.
+            urlPattern: ({ url }: { url: URL }) =>
+              url.pathname.startsWith(`${BASE_PATH}tesseract/`) ||
+              url.pathname.startsWith(`${BASE_PATH}tessdata/`),
+            handler: 'CacheFirst',
+            options: { cacheName: 'ocr-assets' },
           },
         ],
       },

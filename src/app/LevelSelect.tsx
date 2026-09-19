@@ -52,7 +52,7 @@ export default function LevelSelect() {
 
   return (
     <div className="min-h-screen bg-bg pb-16">
-      <header className="flex items-center justify-between gap-3 px-4 py-3 sm:px-6">
+      <header className="mx-auto flex max-w-2xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
         <IconButton label={t('common.home')} onClick={() => navigate('/patient')}>
           <HomeIcon />
         </IconButton>

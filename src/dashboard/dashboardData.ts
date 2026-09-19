@@ -161,19 +161,19 @@ export async function getAdherence(
     byDay.get(day)!.add(l.reminderId);
   }
 
-  const expected = dailyReminders.length;
+  // A reminder can only be "expected" on days on/after it was created —
+  // counting today's reminder set against last week's empty days made a
+  // brand-new patient read "missed on 7 days".
   const series = lastNDayKeys(days).map((date) => ({
     date,
     taken: byDay.get(date)?.size ?? 0,
-    expected,
+    expected: dailyReminders.filter((r) => dayKey(r.createdAt) <= date).length,
   }));
 
   let streak = 0;
-  if (expected > 0) {
-    for (let i = series.length - 1; i >= 0; i--) {
-      if (series[i].taken >= expected) streak += 1;
-      else break;
-    }
+  for (let i = series.length - 1; i >= 0; i--) {
+    if (series[i].expected > 0 && series[i].taken >= series[i].expected) streak += 1;
+    else break;
   }
 
   return { series, streak };
@@ -224,8 +224,11 @@ export function buildWeeklySummary(input: WeeklySummaryInput): string {
     parts.push(`${worstDomain} scores dipped a little (${Math.round(worstDelta)}%) — worth a gentle nudge.`);
   }
 
-  const missedDays = adherenceThisWeek.filter((d) => d.expected > 0 && d.taken < d.expected).length;
-  if (adherenceThisWeek.some((d) => d.expected > 0)) {
+  // Today is still in progress, so an unfinished set isn't a "missed" day yet.
+  const today = dayKey(Date.now());
+  const closedDays = adherenceThisWeek.filter((d) => d.date !== today);
+  const missedDays = closedDays.filter((d) => d.expected > 0 && d.taken < d.expected).length;
+  if (closedDays.some((d) => d.expected > 0)) {
     parts.push(
       missedDays === 0
         ? 'All reminders were acknowledged every day this week.'

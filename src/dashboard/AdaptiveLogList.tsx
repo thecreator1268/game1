@@ -1,7 +1,8 @@
 import { useTranslation } from 'react-i18next';
+import { Icon } from '@/components/IconSprite';
+import { getGameMeta } from '@/games/gameList';
 import type { LevelChange } from '@/db/types';
-
-const DIRECTION_LABEL: Record<'up' | 'down', string> = { up: '▲', down: '▼' };
+import { DOMAIN_TINT_CLASS } from './domainColors';
 
 function directionOf(change: LevelChange): 'up' | 'down' {
   return change.toLevel > change.fromLevel ? 'up' : 'down';
@@ -15,20 +16,33 @@ export function AdaptiveLogList({ changes }: { changes: LevelChange[] }) {
   }
 
   return (
-    <ul className="flex flex-col gap-2">
+    <ul className="flex flex-col gap-3">
       {changes.map((change) => {
         const dir = directionOf(change);
+        const domain = getGameMeta(change.gameId).domain;
         const name = t(`games.${change.gameId}.name`);
         const meaning = t(`games.${change.gameId}.meaning`);
         return (
           <li
             key={change.id}
-            className="flex items-start gap-3 rounded-card border border-border bg-surface-alt p-3"
+            className={`flex min-h-[76px] items-center gap-3 rounded-card border-[2.5px] border-text p-3 ${DOMAIN_TINT_CLASS[domain]}`}
           >
-            <span className={`text-lg font-bold ${dir === 'up' ? 'text-success' : 'text-danger'}`}>
-              {DIRECTION_LABEL[dir]}
+            <span
+              aria-hidden
+              className="flex h-[54px] w-[54px] shrink-0 items-center justify-center rounded-full border-[2.5px] border-text bg-surface"
+            >
+              {dir === 'up' ? (
+                <span className="text-success">
+                  <Icon name="trend" size={26} />
+                </span>
+              ) : (
+                <span
+                  className="h-[22px] w-[22px] rounded-full border-2 border-text"
+                  style={{ background: `var(--domain-${domain})` }}
+                />
+              )}
             </span>
-            <div>
+            <div className="min-w-0">
               <p className="text-body font-semibold">
                 {name}
                 {meaning && meaning !== name && (
@@ -36,8 +50,10 @@ export function AdaptiveLogList({ changes }: { changes: LevelChange[] }) {
                 )}
                 : {change.fromLevel} → {change.toLevel}
               </p>
-              <p className="text-sm text-text-muted">{change.reason}</p>
-              <p className="text-xs text-text-muted">{new Date(change.timestamp).toLocaleString()}</p>
+              <p className="text-sm text-text">{change.reason}</p>
+              <p className="text-xs text-text-muted">
+                {new Date(change.timestamp).toLocaleString()} · {t(`domains.${domain}`)}
+              </p>
             </div>
           </li>
         );

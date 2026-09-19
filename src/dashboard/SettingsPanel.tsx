@@ -89,6 +89,25 @@ export default function SettingsPanel() {
       </Card>
 
       <Card>
+        <h2 className="text-action font-bold">{t('dashboard.colorMode')}</h2>
+        <div className="mt-4 flex gap-3">
+          {(['light', 'dark'] as const).map((mode) => (
+            <button
+              key={mode}
+              onClick={() => void db.patients.update(patient.id, { colorMode: mode })}
+              className={`tap-target flex-1 rounded-card border-2 font-semibold ${
+                (patient.colorMode ?? 'light') === mode
+                  ? 'border-primary bg-primary text-primary-text'
+                  : 'border-border bg-surface'
+              }`}
+            >
+              {mode === 'light' ? t('dashboard.colorModeLight') : t('dashboard.colorModeDark')}
+            </button>
+          ))}
+        </div>
+      </Card>
+
+      <Card>
         <h2 className="text-action font-bold">{t('dashboard.reminderAlerts')}</h2>
         <p className="mt-1 text-sm text-text-muted">{t('dashboard.reminderAlertsBody')}</p>
         {!isNotificationSupported() ? (

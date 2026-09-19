@@ -9,7 +9,8 @@ export function useApplyTheme(): void {
     const root = document.documentElement;
     root.dataset.theme = patient?.highContrastPalette ?? 'theme-1';
     root.dataset.textScale = patient?.textScale ?? 'normal';
-  }, [patient?.highContrastPalette, patient?.textScale]);
+    root.dataset.colorMode = patient?.colorMode ?? 'light';
+  }, [patient?.highContrastPalette, patient?.textScale, patient?.colorMode]);
 
   useEffect(() => {
     if (patient?.preferredLanguage && i18n.language !== patient.preferredLanguage) {
