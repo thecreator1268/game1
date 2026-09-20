@@ -1,5 +1,5 @@
-import { useEffect, useState, type ReactNode } from 'react';
-import { motion } from 'motion/react';
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
+import gsap from 'gsap';
 import { DomainBalanceChart } from '@/dashboard/DomainBalanceChart';
 import { LevelUpBadge } from '@/components/LevelUpBadge';
 import { SplashScreen } from './SplashScreen';
@@ -83,19 +83,31 @@ function ShowcaseBeat({ holdMs, onDone, children }: { holdMs: number; onDone: ()
   return <>{children}</>;
 }
 
+// GSAP timeline for the dashboard beat's entrance: heading, summary line and
+// chart card arrive in sequence. Recording-only screen (not reachable by a
+// patient), so the multi-element timeline is in scope; the bars themselves
+// still grow via Motion springs in DomainBalanceChart, started by the card
+// mounting. Reduced motion: no timeline, everything already at its final state.
 function ShowcaseDashboard() {
+  const root = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+    const ctx = gsap.context(() => {
+      gsap
+        .timeline({ defaults: { ease: 'power3.out' } })
+        .from('[data-showcase="heading"]', { opacity: 0, y: 16, duration: 0.4 })
+        .from('[data-showcase="summary"]', { opacity: 0, y: 10, duration: 0.35 }, '-=0.15')
+        .from('[data-showcase="card"]', { opacity: 0, y: 24, duration: 0.5 }, '-=0.1');
+    }, root);
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10">
-      <h1 className="text-heading-lg font-bold">Caregiver Dashboard</h1>
-      <motion.p
-        className="mt-2 text-body text-text-muted"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.3 }}
-      >
-        {DEMO_SUMMARY}
-      </motion.p>
-      <div className="card-elderly mt-6">
+    <div ref={root} className="mx-auto max-w-3xl px-4 py-10">
+      <h1 data-showcase="heading" className="text-heading-lg font-bold">Caregiver Dashboard</h1>
+      <p data-showcase="summary" className="mt-2 text-body text-text-muted">{DEMO_SUMMARY}</p>
+      <div data-showcase="card" className="card-elderly mt-6">
         <h2 className="text-action font-bold">Domain Balance</h2>
         <DomainBalanceChart data={DEMO_BALANCE} />
       </div>

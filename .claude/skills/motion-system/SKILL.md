@@ -150,6 +150,12 @@ loops.
 - Respect `prefers-reduced-motion` (`usePrefersReducedMotion` hook) —
   every new Motion-driven component added in this pass checks it and skips
   straight to the final state when it's set.
+- **GSAP** (`gsap`) is used only for multi-element *timelines* and number tweens in
+  caregiver/recording-only surfaces: the `useCountUp` tween and `ShowcaseMode`'s dashboard
+  entrance timeline. Import it only from lazy chunks (never the eager patient-mode bundle),
+  gate every timeline on `prefers-reduced-motion` by not creating it (final state, no shortened
+  version), and never use it on Patient Mode screens or in-game feedback. Component/state-driven
+  UI animation, the domain-bar spring and route transitions stay on Motion.
 - Use `motion/react` for anything JS-orchestrated, not raw CSS keyframes
   scattered per-component — see the OfflineBadge/skeleton exception above
   for when plain CSS is still the right call (always-eager, purely

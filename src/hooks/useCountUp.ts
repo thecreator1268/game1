@@ -1,10 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
 
-// Ticks 0 -> value over `durationMs` on an ease-out-cubic curve, once, the
-// first time `value` resolves to a real number (a caregiver stat that
-// starts as `undefined` while its live query loads). Defaults to 1 rather
-// than 0 so a real figure never flashes as a literal "0" before the count
-// starts — it only resets to 0 the instant the animation begins.
+// Ticks 0 -> value over `durationMs` on an ease-out curve, once, the first
+// time `value` resolves to a real number (a caregiver stat that starts as
+// `undefined` while its live query loads). Defaults to 1 rather than 0 so a
+// real figure never flashes as a literal "0" before the count starts — it
+// only resets to 0 the instant the animation begins.
+//
+// GSAP tweens a plain proxy object; only the rounded integer goes into React
+// state, so this stays a render-per-integer-step, same as before. gsap is
+// only imported here, and this hook is only used by the lazy caregiver
+// dashboard chunk, so it never lands in the eager patient-mode bundle.
 export function useCountUp(value: number | undefined, durationMs = 950): number {
   // Read once via a lazy initializer (the sanctioned one-time-impure-read
   // pattern elsewhere in this app, e.g. PatientHome's entrance-animation
@@ -18,16 +24,24 @@ export function useCountUp(value: number | undefined, durationMs = 950): number 
     started.current = true;
 
     setDisplay(0);
-    const start = performance.now();
-    let raf = 0;
-    function tick(now: number) {
-      const t = Math.min(1, (now - start) / durationMs);
-      const eased = 1 - Math.pow(1 - t, 3);
-      setDisplay(Math.round(eased * (value ?? 0)));
-      if (t < 1) raf = requestAnimationFrame(tick);
-    }
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
+    const counter = { n: 0 };
+    let finished = false;
+    const tween = gsap.to(counter, {
+      n: value,
+      duration: durationMs / 1000,
+      ease: 'power3.out',
+      onUpdate: () => setDisplay(Math.round(counter.n)),
+      onComplete: () => {
+        finished = true;
+      },
+    });
+    return () => {
+      tween.kill();
+      // An interrupted run (StrictMode's dev remount, or `value` changing
+      // mid-count) must be allowed to start again; only a finished one is
+      // "played once" and stays put.
+      if (!finished) started.current = false;
+    };
   }, [value, durationMs, prefersReducedMotion]);
 
   // Reduced motion: skip the animation and just derive the final number

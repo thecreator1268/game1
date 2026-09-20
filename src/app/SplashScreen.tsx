@@ -22,9 +22,9 @@ interface SplashScreenProps {
    *  already played this tab, since a recording needs it every time. */
   forceReveal?: boolean;
   /** Showcase mode only — fired once the reveal sequence has fully played,
-   *  so a scripted demo sequence knows when to cut to the next beat. Never
-   *  called at all when the reveal is skipped (already played, or reduced
-   *  motion), since there's nothing to wait for in that case. */
+   *  so a scripted demo sequence knows when to cut to the next beat. When
+   *  the reveal is skipped (reduced motion) it still fires, after a short
+   *  hold on the static logo, so the sequence never stalls on this beat. */
   onRevealDone?: () => void;
 }
 
@@ -41,8 +41,8 @@ export function SplashScreen({ forceReveal = false, onRevealDone }: SplashScreen
   // around 0.99s, then the wordmark's own 0.4s fade starting at 0.55s ends
   // around 0.95s — ~1s overall, matching the spec's "~1s" reveal.
   useEffect(() => {
-    if (!playReveal || !onRevealDone) return undefined;
-    const timer = setTimeout(onRevealDone, 1000);
+    if (!onRevealDone) return undefined;
+    const timer = setTimeout(onRevealDone, playReveal ? 1000 : 400);
     return () => clearTimeout(timer);
   }, [playReveal, onRevealDone]);
 
