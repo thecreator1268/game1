@@ -10,7 +10,9 @@ interface CaregiverAuthState {
   viewPatientId: string | null;
   login: (caregiverId: string) => void;
   logout: () => void;
-  setViewPatientId: (patientId: string) => void;
+  // Accepts null so deleting the currently-viewed patient's data can clear
+  // the selection instead of leaving a dangling id pointing at nothing.
+  setViewPatientId: (patientId: string | null) => void;
 }
 
 // Deliberately in-memory only: caregiver login is a lightweight gate (PIN or

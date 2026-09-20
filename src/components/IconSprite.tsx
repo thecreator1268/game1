@@ -118,6 +118,14 @@ export function IconSprite() {
         <symbol id="i-check" viewBox="0 0 24 24">
           <path d="M5 12.5l4.5 4.5L19 7" />
         </symbol>
+        {/* Inline field validation (required-field, invalid-time) and the
+            danger-confirmation modal's icon — a plain circle-exclamation,
+            not a shape borrowed from "check" or "close" repurposed. */}
+        <symbol id="i-alert" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="8.5" />
+          <path d="M12 8v5" />
+          <circle cx="12" cy="16.3" r="0.25" fill="currentColor" stroke="currentColor" />
+        </symbol>
         <symbol id="i-elephant" viewBox="0 0 24 24">
           <path d="M7.3 7.2c-2.9.3-4.7 2.8-4 5.6.5 2 2.4 3.5 4.5 3.3" />
           <path d="M16.7 7.2c2.9.3 4.7 2.8 4 5.6-.5 2-2.4 3.5-4.5 3.3" />
@@ -472,6 +480,7 @@ export type IconName =
   | 'leaf'
   | 'spark'
   | 'check'
+  | 'alert'
   | 'elephant'
   | 'rhino'
   | 'tiger'

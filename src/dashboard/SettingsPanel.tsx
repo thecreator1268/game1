@@ -1,17 +1,62 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
+import { ConfirmDangerModal } from '@/components/ConfirmDangerModal';
+import { Icon } from '@/components/IconSprite';
 import { db } from '@/db/schema';
 import type { SupportedLanguage } from '@/db/types';
-import { useCaregiverPatient } from '@/hooks/useCaregiverPatient';
+import { useCaregiverPatient, useCaregiverPatients } from '@/hooks/useCaregiverPatient';
 import { SUPPORTED_LANGUAGES } from '@/i18n';
+import { deletePatientData } from '@/lib/patientDeletion';
 import { isNotificationSupported, requestNotificationPermission } from '@/reminders/notificationService';
+import { useAuthStore } from '@/store/authStore';
 
 export default function SettingsPanel() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const patient = useCaregiverPatient();
+  const otherPatients = useCaregiverPatients();
+  const setViewPatientId = useAuthStore((s) => s.setViewPatientId);
   const [permissionDenied, setPermissionDenied] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  // Set once the wipe actually completes — kept even after `patient` itself
+  // goes away (it was just deleted), so the confirmation has something to
+  // render instead of the screen just vanishing under the caregiver.
+  const [deletedName, setDeletedName] = useState<string | null>(null);
+
+  if (!patient && !deletedName) return null;
+
+  async function handleDeletePatientData() {
+    if (!patient) return;
+    const patientId = patient.id;
+    await deletePatientData(patientId);
+    setDeleteOpen(false);
+    setDeletedName(patient.name);
+    // The patient just deleted is gone — point the switcher at whichever
+    // other linked patient remains, so the rest of the app (nav, header)
+    // isn't left pointing at a patient id that no longer exists.
+    const remaining = (otherPatients ?? []).filter((p) => p.id !== patientId);
+    setViewPatientId(remaining[0]?.id ?? null);
+  }
+
+  if (deletedName) {
+    return (
+      <div className="flex flex-col gap-6">
+        <h1 className="text-heading-lg font-bold">{t('dashboard.settings')}</h1>
+        <Card>
+          <p className="flex items-center gap-2 text-body font-semibold text-success">
+            <Icon name="check" size={22} />
+            {t('dashboard.deletePatientDataDone', { name: deletedName })}
+          </p>
+          <div className="mt-4">
+            <Button onClick={() => navigate('/caregiver')}>{t('common.home')}</Button>
+          </div>
+        </Card>
+      </div>
+    );
+  }
 
   if (!patient) return null;
 
@@ -123,6 +168,31 @@ export default function SettingsPanel() {
           </div>
         )}
       </Card>
+
+      <Card>
+        <h2 className="text-action font-bold">{t('dashboard.privacyData')}</h2>
+        <p className="mt-1 text-sm text-text-muted">{t('dashboard.privacyDataBody')}</p>
+        <div className="mt-4">
+          <button
+            onClick={() => setDeleteOpen(true)}
+            className="btn-elderly shadow-card-sm border-[3px] border-danger bg-surface text-danger"
+          >
+            <Icon name="trash" size={22} />
+            <span>{t('dashboard.deletePatientData')}</span>
+          </button>
+        </div>
+      </Card>
+
+      {deleteOpen && (
+        <ConfirmDangerModal
+          title={t('dashboard.deletePatientDataTitle', { name: patient.name })}
+          body={t('dashboard.deletePatientDataBody', { name: patient.name })}
+          confirmLabel={t('dashboard.deletePatientDataConfirm')}
+          typeToConfirm="DELETE"
+          onConfirm={() => void handleDeletePatientData()}
+          onClose={() => setDeleteOpen(false)}
+        />
+      )}
     </div>
   );
 }

@@ -50,7 +50,11 @@
     "clinicalNote": "SmritiSetu supports cognitive engagement and helps families track changes over time. It is not a diagnosis. Please consult a doctor for medical advice.",
     "install": "Install App",
     "cardFaceDown": "Face-down card",
-    "tapWhenHeard": "I heard it!"
+    "tapWhenHeard": "I heard it!",
+    "typeToConfirm": "Type {{word}} to confirm",
+    "tapAgainToConfirm": "Tap Again to Confirm",
+    "requiredField": "This is required",
+    "saved": "Saved"
   },
   "splash": {
     "tagline": "A bridge to memory"
@@ -178,7 +182,10 @@
     "category": "Type",
     "withWhom": "With",
     "notes": "Notes",
-    "notificationTitle": "Time for: {{label}}"
+    "notificationTitle": "Time for: {{label}}",
+    "labelRequired": "Enter what this reminder is for",
+    "scheduleRequired": "Choose a time",
+    "reminderAdded": "Reminder added"
   },
   "familyManager": {
     "title": "Family & Faces",
@@ -190,7 +197,15 @@
     "voiceNote": "Voice Note (optional)",
     "recordVoiceNote": "Record Voice Note",
     "reRecord": "Re-record",
-    "noMembers": "No family members added yet."
+    "noMembers": "No family members added yet.",
+    "nameRequired": "Enter their name",
+    "relationRequired": "Enter how they're related",
+    "photoRequired": "Add a photo",
+    "memberAdded": "{{name}} was added",
+    "removeMember": "Remove {{name}}?",
+    "removeMemberBody": "This deletes {{name}}'s photo{{voice}} and removes them from Naam Yaad. This cannot be undone.",
+    "removeMemberVoice": " and voice note",
+    "removeMemberConfirm": "Remove"
   },
   "dashboard": {
     "title": "Caregiver Dashboard",
@@ -241,7 +256,14 @@
     "reminderAlertsEnable": "Turn On Alerts",
     "reminderAlertsOn": "Alerts are on for this device",
     "reminderAlertsDenied": "Permission was blocked. Enable notifications for this site in your browser or device settings to turn this on.",
-    "reminderAlertsUnsupported": "Not supported on this browser."
+    "reminderAlertsUnsupported": "Not supported on this browser.",
+    "privacyData": "Privacy & Data",
+    "privacyDataBody": "Manage what SmritiSetu has stored for this patient.",
+    "deletePatientData": "Delete This Patient's Data",
+    "deletePatientDataTitle": "Delete {{name}}'s data?",
+    "deletePatientDataBody": "This permanently deletes every game session, level, reminder, reminder history, and family member (including photos and voice notes) saved for {{name}}. This cannot be undone.",
+    "deletePatientDataConfirm": "Delete Everything",
+    "deletePatientDataDone": "{{name}}'s data has been deleted."
   },
   "sharedView": {
     "banner": "You're viewing a read-only snapshot a family member shared. It won't update, and this device isn't signed in as a caregiver.",

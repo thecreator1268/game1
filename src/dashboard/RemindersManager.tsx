@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { Card } from '@/components/Card';
 import { Button } from '@/components/Button';
+import { Icon } from '@/components/IconSprite';
 import { db } from '@/db/schema';
 import type { ReminderCategory } from '@/db/types';
 import { useCaregiverPatient } from '@/hooks/useCaregiverPatient';
@@ -23,6 +24,10 @@ export default function RemindersManager() {
   const [label, setLabel] = useState('');
   const [schedule, setSchedule] = useState('08:00');
   const [notes, setNotes] = useState('');
+  // Errors only appear once the caregiver has tried to submit — not on
+  // every keystroke of a still-in-progress form.
+  const [attempted, setAttempted] = useState(false);
+  const [justAdded, setJustAdded] = useState<string | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [scanning, setScanning] = useState(false);
@@ -43,7 +48,19 @@ export default function RemindersManager() {
     setNotes('');
     setScanError(null);
     setScannedText('');
+    setAttempted(false);
+    setJustAdded(null);
   }
+
+  // Same "transient, decorative confirmation" reasoning as FamilyManager's
+  // justAdded — not a countdown the caregiver has to race against; the new
+  // row in the list below stays regardless of whether this banner is still
+  // showing.
+  useEffect(() => {
+    if (!justAdded) return;
+    const timer = setTimeout(() => setJustAdded(null), 5000);
+    return () => clearTimeout(timer);
+  }, [justAdded]);
 
   // Tracks the *current* patient (unlike lastPatientId, which only updates
   // on a change) so an in-flight scan can tell, after its await resolves,
@@ -82,13 +99,19 @@ export default function RemindersManager() {
   }
 
   async function handleAdd() {
-    if (!patient || !label.trim()) return;
+    setAttempted(true);
+    if (!patient || !label.trim() || !schedule) return;
     await addReminder({ patientId: patient.id, category, label: label.trim(), schedule, notes: notes.trim() || undefined });
     setLabel('');
     setNotes('');
+    setAttempted(false);
+    setJustAdded(label.trim());
   }
 
   if (!patient) return null;
+
+  const labelInvalid = attempted && !label.trim();
+  const scheduleInvalid = attempted && !schedule;
 
   return (
     <div className="flex flex-col gap-6">
@@ -110,12 +133,24 @@ export default function RemindersManager() {
               </button>
             ))}
           </div>
-          <input
-            value={label}
-            onChange={(e) => setLabel(e.target.value)}
-            placeholder={t('reminders.label')}
-            className="tap-target rounded-card border-2 border-border bg-surface px-4 text-body"
-          />
+          <div className="flex flex-col gap-1.5">
+            <input
+              value={label}
+              onChange={(e) => setLabel(e.target.value)}
+              placeholder={t('reminders.label')}
+              aria-invalid={labelInvalid}
+              aria-describedby={labelInvalid ? 'label-error' : undefined}
+              className={`tap-target rounded-card border-2 bg-surface px-4 text-body ${
+                labelInvalid ? 'border-danger' : 'border-border'
+              }`}
+            />
+            {labelInvalid && (
+              <p id="label-error" className="flex items-center gap-1.5 text-sm font-semibold text-danger">
+                <Icon name="alert" size={14} />
+                {t('reminders.labelRequired')}
+              </p>
+            )}
+          </div>
           {category === 'medicine' && (
             <div>
               <input
@@ -147,22 +182,38 @@ export default function RemindersManager() {
               )}
             </div>
           )}
-          <label className="text-sm text-text-muted">{t('reminders.schedule')}</label>
-          <input
-            type={category === 'appointment' ? 'datetime-local' : 'time'}
-            value={schedule}
-            onChange={(e) => setSchedule(e.target.value)}
-            className="tap-target rounded-card border-2 border-border bg-surface px-4 text-body"
-          />
+          <div className="flex flex-col gap-1.5">
+            <label className="text-sm text-text-muted">{t('reminders.schedule')}</label>
+            <input
+              type={category === 'appointment' ? 'datetime-local' : 'time'}
+              value={schedule}
+              onChange={(e) => setSchedule(e.target.value)}
+              aria-invalid={scheduleInvalid}
+              aria-describedby={scheduleInvalid ? 'schedule-error' : undefined}
+              className={`tap-target rounded-card border-2 bg-surface px-4 text-body ${
+                scheduleInvalid ? 'border-danger' : 'border-border'
+              }`}
+            />
+            {scheduleInvalid && (
+              <p id="schedule-error" className="flex items-center gap-1.5 text-sm font-semibold text-danger">
+                <Icon name="alert" size={14} />
+                {t('reminders.scheduleRequired')}
+              </p>
+            )}
+          </div>
           <input
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             placeholder={t('reminders.notes')}
             className="tap-target rounded-card border-2 border-border bg-surface px-4 text-body"
           />
-          <Button onClick={() => void handleAdd()} disabled={!label.trim()}>
-            {t('common.add')}
-          </Button>
+          <Button onClick={() => void handleAdd()}>{t('common.add')}</Button>
+          {justAdded && (
+            <p role="status" className="flex items-center gap-1.5 text-body font-semibold text-success">
+              <Icon name="check" size={18} />
+              {t('reminders.reminderAdded')}
+            </p>
+          )}
         </div>
       </Card>
 

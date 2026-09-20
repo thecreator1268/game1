@@ -42,7 +42,11 @@
     "clinicalNote": "स्मृतिसेतु मानसिक जुड़ाव बढ़ाने और समय के साथ बदलाव देखने में मदद करता है। यह कोई निदान नहीं है। चिकित्सीय सलाह के लिए डॉक्टर से मिलें।",
     "install": "ऐप इंस्टॉल करें",
     "cardFaceDown": "उल्टा कार्ड",
-    "tapWhenHeard": "मैंने सुना!"
+    "tapWhenHeard": "मैंने सुना!",
+    "typeToConfirm": "पुष्टि के लिए {{word}} टाइप करें",
+    "tapAgainToConfirm": "पुष्टि के लिए फिर से टैप करें",
+    "requiredField": "यह भरना ज़रूरी है",
+    "saved": "सहेजा गया"
   },
   "splash": {
     "tagline": "स्मृति की ओर एक सेतु"
@@ -164,7 +168,10 @@
     "category": "प्रकार",
     "withWhom": "किसके साथ",
     "notes": "टिप्पणी",
-    "notificationTitle": "समय हो गया: {{label}}"
+    "notificationTitle": "समय हो गया: {{label}}",
+    "labelRequired": "यह रिमाइंडर किस लिए है, यह लिखें",
+    "scheduleRequired": "समय चुनें",
+    "reminderAdded": "रिमाइंडर जोड़ा गया"
   },
   "familyManager": {
     "title": "परिवार व चेहरे",
@@ -176,7 +183,15 @@
     "voiceNote": "आवाज़ संदेश (वैकल्पिक)",
     "recordVoiceNote": "आवाज़ रिकॉर्ड करें",
     "reRecord": "फिर से रिकॉर्ड करें",
-    "noMembers": "अभी तक कोई सदस्य नहीं जोड़ा गया।"
+    "noMembers": "अभी तक कोई सदस्य नहीं जोड़ा गया।",
+    "nameRequired": "उनका नाम लिखें",
+    "relationRequired": "वे कैसे संबंधित हैं, यह लिखें",
+    "photoRequired": "एक फोटो जोड़ें",
+    "memberAdded": "{{name}} को जोड़ा गया",
+    "removeMember": "{{name}} को हटाएं?",
+    "removeMemberBody": "इससे {{name}} की फोटो{{voice}} हट जाएगी और वे नाम याद से हट जाएंगे। यह वापस नहीं किया जा सकता।",
+    "removeMemberVoice": " और आवाज़ संदेश",
+    "removeMemberConfirm": "हटाएं"
   },
   "dashboard": {
     "title": "देखभालकर्ता डैशबोर्ड",
@@ -225,7 +240,14 @@
     "reminderAlertsEnable": "अलर्ट चालू करें",
     "reminderAlertsOn": "इस डिवाइस पर अलर्ट चालू हैं",
     "reminderAlertsDenied": "अनुमति अवरुद्ध कर दी गई थी। इसे चालू करने के लिए अपने ब्राउज़र या डिवाइस सेटिंग्स में इस साइट के लिए सूचनाएं सक्षम करें।",
-    "reminderAlertsUnsupported": "इस ब्राउज़र में समर्थित नहीं है।"
+    "reminderAlertsUnsupported": "इस ब्राउज़र में समर्थित नहीं है।",
+    "privacyData": "गोपनीयता व डेटा",
+    "privacyDataBody": "इस मरीज़ के लिए स्मृतिसेतु में सहेजा गया डेटा प्रबंधित करें।",
+    "deletePatientData": "इस मरीज़ का डेटा हटाएं",
+    "deletePatientDataTitle": "{{name}} का डेटा हटाएं?",
+    "deletePatientDataBody": "इससे {{name}} के लिए सहेजे गए सभी खेल सत्र, स्तर, रिमाइंडर, रिमाइंडर इतिहास, और परिवार के सदस्य (फोटो व आवाज़ संदेश सहित) स्थायी रूप से हट जाएंगे। यह वापस नहीं किया जा सकता।",
+    "deletePatientDataConfirm": "सब कुछ हटाएं",
+    "deletePatientDataDone": "{{name}} का डेटा हटा दिया गया है।"
   },
   "sharedView": {
     "banner": "आप एक परिवार के सदस्य द्वारा साझा की गई रीड-ओनली झलक देख रहे हैं। यह अपडेट नहीं होगी, और यह डिवाइस देखभालकर्ता के रूप में साइन-इन नहीं है।",

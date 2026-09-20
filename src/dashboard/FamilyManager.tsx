@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { Card } from '@/components/Card';
 import { Button } from '@/components/Button';
+import { ConfirmDangerModal } from '@/components/ConfirmDangerModal';
 import { Icon } from '@/components/IconSprite';
 import { db } from '@/db/schema';
+import type { FamilyMember } from '@/db/types';
 import { useCaregiverPatient } from '@/hooks/useCaregiverPatient';
 import { useAudioRecorder } from '@/hooks/useAudioRecorder';
 import { readImageFileAsCompressedDataUrl } from '@/lib/file';
@@ -22,6 +24,11 @@ export default function FamilyManager() {
   const [name, setName] = useState('');
   const [relation, setRelation] = useState('');
   const [photoUrl, setPhotoUrl] = useState('');
+  // Errors only appear once the caregiver has tried to submit — not on
+  // every keystroke of a still-in-progress form, which would just be noise.
+  const [attempted, setAttempted] = useState(false);
+  const [justAdded, setJustAdded] = useState<string | null>(null);
+  const [removeTarget, setRemoveTarget] = useState<FamilyMember | null>(null);
   const recorder = useAudioRecorder();
 
   // Without this, an in-progress draft (photo/name/voice note already
@@ -37,8 +44,21 @@ export default function FamilyManager() {
     setName('');
     setRelation('');
     setPhotoUrl('');
+    setAttempted(false);
+    setJustAdded(null);
+    setRemoveTarget(null);
     recorder.setAudioUrl(undefined);
   }
+
+  // Transient, decorative confirmation only (same idea as the game screens'
+  // "Well done!" toast) — not a countdown the caregiver has to race, and the
+  // banner's text stays behind in the member list regardless (the new card
+  // itself). Cleared on unmount/patient-switch by the effect's own cleanup.
+  useEffect(() => {
+    if (!justAdded) return;
+    const timer = setTimeout(() => setJustAdded(null), 5000);
+    return () => clearTimeout(timer);
+  }, [justAdded]);
 
   async function handlePhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -46,11 +66,17 @@ export default function FamilyManager() {
     setPhotoUrl(await readImageFileAsCompressedDataUrl(file));
   }
 
+  const nameInvalid = attempted && !name.trim();
+  const relationInvalid = attempted && !relation.trim();
+  const photoInvalid = attempted && !photoUrl;
+
   async function handleAdd() {
+    setAttempted(true);
     if (!patient || !name.trim() || !relation.trim() || !photoUrl) return;
+    const addedName = name.trim();
     await addFamilyMember({
       patientId: patient.id,
-      name: name.trim(),
+      name: addedName,
       relation: relation.trim(),
       photoUrl,
       voiceNoteUrl: recorder.audioUrl,
@@ -58,7 +84,15 @@ export default function FamilyManager() {
     setName('');
     setRelation('');
     setPhotoUrl('');
+    setAttempted(false);
     recorder.setAudioUrl(undefined);
+    setJustAdded(addedName);
+  }
+
+  async function handleConfirmRemove() {
+    if (!removeTarget) return;
+    await deleteFamilyMember(removeTarget.id);
+    setRemoveTarget(null);
   }
 
   if (!patient) return null;
@@ -77,29 +111,68 @@ export default function FamilyManager() {
             {photoUrl ? (
               <img src={photoUrl} alt="" className="h-24 w-24 rounded-full object-cover" />
             ) : (
-              <div className="flex h-24 w-24 items-center justify-center rounded-full bg-surface-alt text-text-muted">
+              <div
+                className={`flex h-24 w-24 items-center justify-center rounded-full bg-surface-alt text-text-muted ${
+                  photoInvalid ? 'ring-2 ring-danger' : ''
+                }`}
+              >
                 <Icon name="person" size={36} />
               </div>
             )}
             <label className="cursor-pointer text-sm font-semibold text-primary">
               {t('familyManager.photo')}
-              <input type="file" accept="image/*" className="hidden" onChange={(e) => void handlePhotoChange(e)} />
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => void handlePhotoChange(e)}
+                aria-invalid={photoInvalid}
+                aria-describedby={photoInvalid ? 'photo-error' : undefined}
+              />
             </label>
+            {photoInvalid && (
+              <p id="photo-error" className="flex items-center gap-1 text-sm font-semibold text-danger">
+                <Icon name="alert" size={14} />
+                {t('familyManager.photoRequired')}
+              </p>
+            )}
           </div>
 
           <div className="flex flex-1 flex-col gap-3">
-            <input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder={t('familyManager.name')}
-              className="tap-target rounded-card border-2 border-border bg-surface px-4 text-body"
-            />
-            <input
-              value={relation}
-              onChange={(e) => setRelation(e.target.value)}
-              placeholder={t('familyManager.relation')}
-              className="tap-target rounded-card border-2 border-border bg-surface px-4 text-body"
-            />
+            <div className="flex flex-col gap-1.5">
+              <input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder={t('familyManager.name')}
+                aria-invalid={nameInvalid}
+                aria-describedby={nameInvalid ? 'name-error' : undefined}
+                className={`tap-target rounded-card border-2 bg-surface px-4 text-body ${
+                  nameInvalid ? 'border-danger' : 'border-border'
+                }`}
+              />
+              {nameInvalid && (
+                <p id="name-error" className="text-sm font-semibold text-danger">
+                  {t('familyManager.nameRequired')}
+                </p>
+              )}
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <input
+                value={relation}
+                onChange={(e) => setRelation(e.target.value)}
+                placeholder={t('familyManager.relation')}
+                aria-invalid={relationInvalid}
+                aria-describedby={relationInvalid ? 'relation-error' : undefined}
+                className={`tap-target rounded-card border-2 bg-surface px-4 text-body ${
+                  relationInvalid ? 'border-danger' : 'border-border'
+                }`}
+              />
+              {relationInvalid && (
+                <p id="relation-error" className="text-sm font-semibold text-danger">
+                  {t('familyManager.relationRequired')}
+                </p>
+              )}
+            </div>
             <div className="flex items-center gap-3">
               <Button
                 variant="secondary"
@@ -116,9 +189,13 @@ export default function FamilyManager() {
             {recorder.unsupported && (
               <p className="text-sm text-text-muted">Microphone recording isn't available on this device/browser.</p>
             )}
-            <Button onClick={() => void handleAdd()} disabled={!name.trim() || !relation.trim() || !photoUrl}>
-              {t('common.add')}
-            </Button>
+            <Button onClick={() => void handleAdd()}>{t('common.add')}</Button>
+            {justAdded && (
+              <p role="status" className="flex items-center gap-1.5 text-body font-semibold text-success">
+                <Icon name="check" size={18} />
+                {t('familyManager.memberAdded', { name: justAdded })}
+              </p>
+            )}
           </div>
         </div>
       </Card>
@@ -132,8 +209,8 @@ export default function FamilyManager() {
               <p className="text-sm text-text-muted">{m.relation}</p>
               {m.voiceNoteUrl && <audio controls src={m.voiceNoteUrl} className="h-8 w-full" />}
               <button
-                onClick={() => void deleteFamilyMember(m.id)}
-                className="mt-2 text-sm font-semibold text-danger"
+                onClick={() => setRemoveTarget(m)}
+                className="tap-target mt-2 text-sm font-semibold text-danger"
               >
                 {t('common.delete')}
               </button>
@@ -143,6 +220,19 @@ export default function FamilyManager() {
           <p className="col-span-full text-body text-text-muted">{t('familyManager.noMembers')}</p>
         )}
       </div>
+
+      {removeTarget && (
+        <ConfirmDangerModal
+          title={t('familyManager.removeMember', { name: removeTarget.name })}
+          body={t('familyManager.removeMemberBody', {
+            name: removeTarget.name,
+            voice: removeTarget.voiceNoteUrl ? t('familyManager.removeMemberVoice') : '',
+          })}
+          confirmLabel={t('familyManager.removeMemberConfirm')}
+          onConfirm={() => void handleConfirmRemove()}
+          onClose={() => setRemoveTarget(null)}
+        />
+      )}
     </div>
   );
 }
