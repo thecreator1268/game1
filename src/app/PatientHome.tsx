@@ -11,13 +11,12 @@ import { Icon } from '@/components/IconSprite';
 import { Reveal } from '@/components/Reveal';
 import { GAME_LIST, getGameMeta, type GameMeta } from '@/games/gameList';
 import { DOMAIN_CARD_CLASS } from '@/dashboard/domainColors';
+import { MAX_LEVEL } from '@/engine/adaptiveEngine';
 import { getCurrentLevel } from '@/engine/gameSessionService';
 import { useTodaysSet } from './useTodaysSet';
 import { useStreak } from './useStreak';
 import { TodayReminders } from './TodayReminders';
 import type { GameId, Domain } from '@/db/types';
-
-const MAX_LEVEL = 8;
 
 // One consistent mascot shape, "vary blob radius/mouth slightly per card
 // for character" — picked deterministically from the game id so a card

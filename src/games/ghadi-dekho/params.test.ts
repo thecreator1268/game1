@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buildClockTrial, formatClockTime, paramsForLevel } from './params';
+import { buildClockTrial, formatClockTime, MINUTES_IN_12H, paramsForLevel } from './params';
 
 describe('formatClockTime', () => {
   it('formats midnight/noon (0 minutes) as 12:00', () => {
@@ -57,5 +57,28 @@ describe('buildClockTrial', () => {
     const trial = buildClockTrial(5);
     expect(trial.totalMinutes).toBeGreaterThanOrEqual(0);
     expect(trial.totalMinutes).toBeLessThan(12 * 60);
+  });
+});
+
+describe('legibility floor', () => {
+  // The clock face draws hour ticks only, so a 1-minute difference (~6 degrees of
+  // hand angle) can't be read by a low-vision user — it would test eyesight, not memory.
+  it('never uses a granularity finer than 5 minutes at any level', () => {
+    for (let level = 1; level <= 10; level++) {
+      expect(paramsForLevel(level).granularityMinutes).toBeGreaterThanOrEqual(5);
+    }
+  });
+
+  it('keeps every wrong option at least 5 minutes from the right one', () => {
+    for (let level = 1; level <= 10; level++) {
+      for (let run = 0; run < 25; run++) {
+        const trial = buildClockTrial(level);
+        for (const option of trial.optionsMinutes) {
+          if (option === trial.totalMinutes) continue;
+          const gap = Math.abs(option - trial.totalMinutes);
+          expect(Math.min(gap, MINUTES_IN_12H - gap)).toBeGreaterThanOrEqual(5);
+        }
+      }
+    }
   });
 });

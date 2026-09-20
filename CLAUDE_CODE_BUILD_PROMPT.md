@@ -35,7 +35,7 @@ Optimize for: (1) a judge being able to click through a realistic, working demo 
 
 ## Clinical grounding — map every game to a real assessment domain
 
-Don't invent domains. Base every game on the four domains named in the problem statement, plus one bonus domain (orientation) that MoCA also screens for and that is unusually well-suited to a daily digital check-in. Build **12 core games + 1 bonus-domain game = 13 total**, so each domain has enough variety that a week of daily play doesn't feel repetitive.
+Don't invent domains. Base every game on the four domains named in the problem statement, plus one bonus domain (orientation) that MoCA also screens for and that is unusually well-suited to a daily digital check-in. Build **12 core games + 2 bonus-domain games = 14 total**, so each domain has enough variety that a week of daily play doesn't feel repetitive.
 
 ### Domain 1 — Memory improvement
 *MoCA: delayed recall · ADAS-Cog: word recall & recognition*
@@ -79,6 +79,7 @@ Don't invent domains. Base every game on the four domains named in the problem s
 | Game | Mechanic |
 |---|---|
 | **Aaj Ka Din** ("today's day") | A once-daily gentle check-in: "What day is it? What season? Where are you right now?" with large picture/word options (not open text entry) — one of the simplest, most clinically direct exercises to build, and pairs naturally with the morning reminder flow |
+| **Ghadi Dekho** ("look at the clock") | Read an analog clock face and tap the matching digital time from multiple choices — a close analogue of the Clock Drawing Test, one of the most widely used dementia-screening tasks. Unlike Aaj Ka Din it uses the adaptive engine, so the orientation domain has one leveled, repeatable game. |
 
 Each game must log a **per-session score, response latency, and error type** to the local DB — these three numbers are what the adaptive-difficulty engine and the caregiver dashboard both consume. Every game screen carries an "About this game" info icon stating its clinical mapping from the tables above — your answer to the inevitable "is this clinically valid" question.
 
@@ -86,10 +87,10 @@ Each game must log a **per-session score, response latency, and error type** to 
 
 ## Adaptive difficulty algorithm (implement for real, not just a stub)
 
-Implement a simple, explainable **staircase adaptive algorithm**, per game, with **8 discrete difficulty levels** (not 4 — enough resolution that progress feels gradual and visible rather than a couple of big jumps):
+Implement a simple, explainable **staircase adaptive algorithm**, per game, with **10 discrete difficulty levels** (not 4 — enough resolution that progress feels gradual and visible rather than a couple of big jumps):
 
 1. Track a rolling window of the last **N = 5** attempts at the current level, per game.
-2. Rule: if accuracy ≥ 80% and median response time is trending down over the window → level up (max level 8). If accuracy < 40% over the window, or 2 consecutive sessions show rising error rate → level down (min level 1). Otherwise hold.
+2. Rule: if accuracy ≥ 80% and median response time is trending down over the window → level up (max level 10). If accuracy < 40% over the window, or 2 consecutive sessions show rising error rate → level down (min level 1). Otherwise hold.
 3. Store every level-change event with a timestamp and reason string ("leveled up: 4/5 correct, avg 3.2s") — surfaced in the caregiver dashboard's "Adaptive engine log" so the AI/ML claim is auditable, not a black box.
 4. On reaching level 6+ in a game, show the patient a small, non-competitive "getting stronger at this!" acknowledgment — a private personal-best moment, never a leaderboard or score comparison against other patients.
 5. Leave a clearly marked extension point (`/src/engine/adaptiveEngine.ts`) with a comment showing where a real ML model (e.g., a small logistic-regression or Bayesian knowledge-tracing model trained on aggregated, anonymized session data across the deployed base) would plug in later.
@@ -97,43 +98,46 @@ Implement a simple, explainable **staircase adaptive algorithm**, per game, with
 ### Level-parameter tables (implement close to these; tune numbers as needed for playtesting)
 
 **Smriti Cards** (pairs shown):
-`L1=3 · L2=4 · L3=5 · L4=6 · L5=8 · L6=9 · L7=10 · L8=12`
+`L1=3 · L2=4 · L3=5 · L4=6 · L5=8 · L6=9 · L7=10 · L8=12 · L9=14 · L10=16`
 
 **Smriti Katha** (story length in sentences / recall questions asked):
-`L1=2/1 · L2=2/2 · L3=3/2 · L4=3/3 · L5=4/3 · L6=4/4 · L7=5/4 · L8=5/5`
+`L1=2/1 · L2=2/2 · L3=3/2 · L4=3/3 · L5=4/3 · L6=4/4 · L7=5/4 · L8=5/5 · L9=6/5 · L10=6/6`
 
 **Naam Yaad** (family members shown per round / answer options per question):
-`L1=2/2 · L2=3/2 · L3=3/3 · L4=4/3 · L5=4/4 · L6=5/4 · L7=5/5 · L8=6/5`
+`L1=2/2 · L2=3/2 · L3=3/3 · L4=4/3 · L5=4/4 · L6=5/4 · L7=5/5 · L8=6/5 · L9=6/6 · L10=7/6`
 
 **Dhyan Dhaam** (grid size / distractor density %):
-`L1=10/20 · L2=12/25 · L3=16/30 · L4=20/35 · L5=24/40 · L6=28/45 · L7=32/50 · L8=36/55`
+`L1=10/20 · L2=12/25 · L3=16/30 · L4=20/35 · L5=24/40 · L6=28/45 · L7=32/50 · L8=36/55 · L9=40/60 · L10=44/65`
 
 **Ginti Dhyan** (sequence length / step size):
-`L1=5,by1 · L2=6,by1 · L3=7,by1 · L4=8,by1 · L5=8,by2 · L6=10,by2 · L7=12,by2 · L8=12,by3`
+`L1=5,by1 · L2=6,by1 · L3=7,by1 · L4=8,by1 · L5=8,by2 · L6=10,by2 · L7=12,by2 · L8=12,by3 · L9=14,by3 · L10=15,by4`
 
 **Awaaz Pehchan** (sequence length / target frequency %):
-`L1=8/40 · L2=10/35 · L3=12/30 · L4=14/28 · L5=16/25 · L6=18/22 · L7=20/20 · L8=24/18`
+`L1=8/40 · L2=10/35 · L3=12/30 · L4=14/28 · L5=16/25 · L6=18/22 · L7=20/20 · L8=24/18 · L9=26/16 · L10=28/15`
 
 **Dinacharya Sequence** (cards to order):
-`L1=3 · L2=4 · L3=5 · L4=6 · L5=7 · L6=8 · L7=9 · L8=10`
+`L1=3 · L2=4 · L3=5 · L4=6 · L5=7 · L6=8 · L7=9 · L8=10 · L9=11 · L10=12`
 
 **Bazaar List** (list length / grid size):
-`L1=2/8 · L2=3/8 · L3=3/12 · L4=4/12 · L5=4/16 · L6=5/16 · L7=5/20 · L8=6/20`
+`L1=2/8 · L2=3/8 · L3=3/12 · L4=4/12 · L5=4/16 · L6=5/16 · L7=5/20 · L8=6/20 · L9=7/24 · L10=8/24`
 
 **Ghar ka Kaam** (pairs to match / distractor tools):
-`L1=3/1 · L2=3/2 · L3=4/2 · L4=4/3 · L5=5/3 · L6=5/4 · L7=6/4 · L8=6/5`
+`L1=3/1 · L2=3/2 · L3=4/2 · L4=4/3 · L5=5/3 · L6=5/4 · L7=6/4 · L8=6/5 · L9=7/5 · L10=7/6`
 
 **Aakar Milan** (pattern grid size / option count):
-`L1=2x2/3 · L2=2x2/4 · L3=3x3/3 · L4=3x3/4 · L5=3x3/5 · L6=4x4/4 · L7=4x4/5 · L8=4x4/6`
+`L1=2x2/3 · L2=2x2/4 · L3=3x3/3 · L4=3x3/4 · L5=3x3/5 · L6=4x4/4 · L7=4x4/5 · L8=4x4/6 · L9=5x5/6 · L10=5x5/6`
 
 **Chaya Khoj** (distractor shadows shown):
-`L1=2 · L2=2 · L3=3 · L4=3 · L5=4 · L6=4 · L7=5 · L8=5`
+`L1=2 · L2=2 · L3=3 · L4=3 · L5=4 · L6=4 · L7=5 · L8=5 · L9=6 · L10=6`
 
 **Naksha Jodo** (pieces in the assembly):
-`L1=4 · L2=6 · L3=8 · L4=10 · L5=12 · L6=15 · L7=18 · L8=21`
+`L1=4 · L2=6 · L3=8 · L4=10 · L5=12 · L6=15 · L7=18 · L8=21 · L9=24 · L10=28`
+
+**Ghadi Dekho** (time granularity in minutes / answer options / decoy spread in minutes — granularity never goes below 5, since the face draws hour ticks only and finer differences test eyesight, not cognition):
+`L1=60/3/180 · L2=60/3/120 · L3=30/3/90 · L4=30/4/60 · L5=15/4/45 · L6=15/4/30 · L7=5/5/20 · L8=5/5/15 · L9=5/5/10 · L10=5/6/15`
 
 **Aaj Ka Din** (questions per check-in / options per question — this game intentionally stays low-difficulty-range since it's a daily orientation check, not a challenge exercise):
-`L1-L8 constant: 3 questions / 3 options` — this game does not use the staircase algorithm; log correct/incorrect only, no level changes.
+`L1-L10 constant: 3 questions / 3 options` — this game does not use the staircase algorithm; log correct/incorrect only, no level changes.
 
 ## Session composition — avoid daily monotony
 
@@ -234,20 +238,20 @@ smriti-setu/
 
 ## Non-functional requirements
 
-- Must run smoothly on a low/mid-range Android tablet (assume 2GB RAM, older Chrome/WebView) — avoid heavy animation libraries; keep bundle size lean; lazy-load each game independently (13 games means lazy-loading matters even more than before).
+- Must run smoothly on a low/mid-range Android tablet (assume 2GB RAM, older Chrome/WebView) — avoid heavy animation libraries; keep bundle size lean; lazy-load each game independently (14 games means lazy-loading matters even more than before).
 - Every user-facing string goes through i18n — no hardcoded English in components.
-- Write basic unit tests for `adaptiveEngine.ts` (the level-up/level-down rules across the 8-level range) and for `sessionComposer.ts` (the daily rotation logic) — these are the two pieces judges are most likely to probe with "what if" questions.
+- Write basic unit tests for `adaptiveEngine.ts` (the level-up/level-down rules across the 10-level range) and for `sessionComposer.ts` (the daily rotation logic) — these are the two pieces judges are most likely to probe with "what if" questions.
 
 ## What to build first (order of operations)
 
 1. Scaffold the Vite+React+TS+Tailwind app, Dexie schema, i18n setup, and the shared "elderly" component kit (Button, Card, VoicePrompt) — get the accessibility baseline right before any game logic.
-2. Build **Smriti Cards** end-to-end (game → session logging → 8-level adaptive engine → dashboard line for that one domain) as the vertical slice that proves the whole architecture.
+2. Build **Smriti Cards** end-to-end (game → session logging → 10-level adaptive engine → dashboard line for that one domain) as the vertical slice that proves the whole architecture.
 3. Build one more game per domain (Dhyan Dhaam, Dinacharya Sequence, Aakar Milan, Aaj Ka Din) reusing the same session/adaptive/dashboard plumbing — this gets you full 5-domain coverage fastest.
 4. Build the remaining games (Smriti Katha, Naam Yaad, Ginti Dhyan, Awaaz Pehchan, Bazaar List, Ghar ka Kaam, Chaya Khoj, Naksha Jodo) — these round out variety but matter less than having all 5 domains covered if time is short.
 5. Build the reminders module, the family-member manager, and the caregiver dashboard (including the domain-balance view).
 6. Build the "Today's Set" session composer.
 7. Wire up the offline/sync demo panel.
-8. Write the README with the architecture diagram, full clinical grounding table (all 13 games), known limitations, and roadmap — judges trust teams more when they name their own gaps first.
+8. Write the README with the architecture diagram, full clinical grounding table (all 14 games), known limitations, and roadmap — judges trust teams more when they name their own gaps first.
 
 If you're short on hackathon time, steps 1-3 alone (5 games, one per domain, full plumbing) already satisfy every bullet in the official problem statement — treat steps 4 onward as the "we built more than asked" differentiator, not a blocker to a working demo.
 

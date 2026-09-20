@@ -1,9 +1,13 @@
 // Difficulty scales two independent ways, both grounded in how the Clock
 // Drawing Test itself gets harder: how fine-grained the target time can be
-// (L1 = whole hours only; L10 = any minute) and how visually close the
+// (L1 = whole hours only; L7+ = five-minute steps) and how visually close the
 // wrong-answer times are to the right one (a clock reading of 3:05 vs 3:10
 // is a much harder discrimination than 3:00 vs 9:00).
-// L1=60min/3opt/180spread ... L10=1min/5opt/5spread
+// L1=60min/3opt/180spread ... L10=5min/6opt/15spread
+//
+// Granularity never goes below 5 minutes: the face draws hour ticks only, and a
+// 1-minute difference is a ~6 degree hand angle, which tests eyesight, not cognition.
+// Late levels get harder by shrinking the spread and adding options instead.
 interface GhadiDekhoParams {
   granularityMinutes: number;
   optionCount: number;
@@ -19,8 +23,8 @@ const LEVELS: Record<number, GhadiDekhoParams> = {
   6: { granularityMinutes: 15, optionCount: 4, spreadMinutes: 30 },
   7: { granularityMinutes: 5, optionCount: 5, spreadMinutes: 20 },
   8: { granularityMinutes: 5, optionCount: 5, spreadMinutes: 15 },
-  9: { granularityMinutes: 1, optionCount: 5, spreadMinutes: 10 },
-  10: { granularityMinutes: 1, optionCount: 5, spreadMinutes: 5 },
+  9: { granularityMinutes: 5, optionCount: 5, spreadMinutes: 10 },
+  10: { granularityMinutes: 5, optionCount: 6, spreadMinutes: 15 },
 };
 
 export function paramsForLevel(level: number): GhadiDekhoParams {
