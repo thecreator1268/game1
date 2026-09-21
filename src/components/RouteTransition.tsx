@@ -1,5 +1,5 @@
 import { AnimatePresence, motion, type Transition } from 'motion/react';
-import type { ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import { useNavigationType } from 'react-router-dom';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 
@@ -32,6 +32,18 @@ export function RouteTransition({ children, routeKey, variant = 'plain' }: Route
   // only signal React Router gives us for "this was a back navigation."
   const direction = navigationType === 'POP' ? -1 : 1;
 
+  // Suppress the wrapper's entrance only until this instance's routeKey has
+  // changed once (the app / layout just loaded, so first paint isn't a
+  // slide-in); every later route change animates. Adjusting state during
+  // render on a prop change is React's documented pattern for this.
+  const [prevKey, setPrevKey] = useState(routeKey);
+  const [hasNavigated, setHasNavigated] = useState(false);
+  if (routeKey !== prevKey) {
+    setPrevKey(routeKey);
+    setHasNavigated(true);
+  }
+  const suppressFirstEntrance = !hasNavigated;
+
   if (prefersReducedMotion) return <>{children}</>;
 
   const transition: Transition =
@@ -49,8 +61,18 @@ export function RouteTransition({ children, routeKey, variant = 'plain' }: Route
     // entering screen sits in normal flow immediately and never collides
     // with a sticky nav bar or anything else below it during the ~220ms
     // both are briefly mounted together.
-    <AnimatePresence mode="popLayout" initial={false}>
-      <motion.div key={routeKey} initial={initial} animate={animate} exit={exit} transition={transition}>
+    // No `initial={false}` on AnimatePresence itself: it reaches every
+    // descendant `motion.*` through PresenceContext and blocks *their* mount
+    // animations too (bars, level-up badge, ...) on any directly-loaded
+    // route. Suppress only this wrapper's own first entrance instead.
+    <AnimatePresence mode="popLayout">
+      <motion.div
+        key={routeKey}
+        initial={suppressFirstEntrance ? false : initial}
+        animate={animate}
+        exit={exit}
+        transition={transition}
+      >
         {children}
       </motion.div>
     </AnimatePresence>
