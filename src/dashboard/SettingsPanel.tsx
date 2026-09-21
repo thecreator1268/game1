@@ -21,6 +21,7 @@ export default function SettingsPanel() {
   const setViewPatientId = useAuthStore((s) => s.setViewPatientId);
   const [permissionDenied, setPermissionDenied] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const [introQueued, setIntroQueued] = useState(false);
   // Set once the wipe actually completes — kept even after `patient` itself
   // goes away (it was just deleted), so the confirmation has something to
   // render instead of the screen just vanishing under the caregiver.
@@ -167,6 +168,30 @@ export default function SettingsPanel() {
             )}
           </div>
         )}
+      </Card>
+
+      <Card>
+        <h2 className="text-action font-bold">{t('dashboard.introTitle')}</h2>
+        <p className="mt-1 text-sm text-text-muted">{t('dashboard.introBody')}</p>
+        <div className="mt-4">
+          <Button
+            variant="secondary"
+            onClick={() => {
+              // Clearing the flag makes the 3-screen intro play the next time
+              // this patient opens the app (PatientHome checks it on load).
+              void db.patients.update(patient.id, { introSeenAt: undefined });
+              setIntroQueued(true);
+            }}
+          >
+            {t('dashboard.introReplay')}
+          </Button>
+          {introQueued && (
+            <p className="mt-2 flex items-center gap-2 text-body font-semibold text-success">
+              <Icon name="check" size={20} />
+              {t('dashboard.introQueued', { name: patient.name })}
+            </p>
+          )}
+        </div>
       </Card>
 
       <Card>

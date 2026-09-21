@@ -134,7 +134,7 @@ export default function GhadiDekhoGame() {
     <GameShell gameId="ghadi-dekho" level={level} score={correctCount}>
       <div className="mx-auto max-w-md text-center">
         <div className="mb-4 flex items-center justify-center gap-3">
-          <VoicePrompt text={t('games.ghadi-dekho.instructions')} label={t('common.listen')} />
+          <VoicePrompt text={t('games.ghadi-dekho.instructions')} repeatOnInactivity label={t('common.listen')} />
           <p className="text-body text-text-muted">{t('games.ghadi-dekho.instructions')}</p>
         </div>
         <p className="mb-4 text-sm text-text-muted">

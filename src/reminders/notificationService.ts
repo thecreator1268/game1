@@ -1,5 +1,6 @@
 import i18n from '@/i18n';
-import { getTodaysReminders, type TodayReminderView } from './reminderService';
+import { dueAtMs } from './dueTime';
+import { getTodaysReminders } from './reminderService';
 
 // Local (not push) notifications: fires only while this tab/PWA is alive on
 // this device, which matches the real usage pattern (a tablet propped up at
@@ -21,17 +22,6 @@ export function isNotificationSupported(): boolean {
 export async function requestNotificationPermission(): Promise<NotificationPermission> {
   if (!isNotificationSupported()) return 'denied';
   return Notification.requestPermission();
-}
-
-function dueAtMs(reminder: TodayReminderView): number | null {
-  if (reminder.category === 'appointment') {
-    const parsed = Date.parse(reminder.schedule);
-    return Number.isNaN(parsed) ? null : parsed;
-  }
-  const [hours, minutes] = reminder.schedule.split(':').map(Number);
-  if (Number.isNaN(hours) || Number.isNaN(minutes)) return null;
-  const now = new Date();
-  return new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, 0, 0).getTime();
 }
 
 export async function checkDueReminders(patientId: string): Promise<void> {

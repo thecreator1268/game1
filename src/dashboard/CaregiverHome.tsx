@@ -7,6 +7,7 @@ import { Icon } from '@/components/IconSprite';
 import { db } from '@/db/schema';
 import { useCaregiverPatient } from '@/hooks/useCaregiverPatient';
 import { useCountUp } from '@/hooks/useCountUp';
+import { CaregiverChecklist } from './CaregiverChecklist';
 import { useTypewriter } from '@/hooks/useTypewriter';
 import {
   buildWeeklySummary,
@@ -194,6 +195,8 @@ export default function CaregiverHome() {
           </Button>
         </div>
       </div>
+
+      <CaregiverChecklist />
 
       {familyShareLink && (
         <Card className="print:hidden">

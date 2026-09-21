@@ -174,7 +174,7 @@ export default function GharKaKaamGame() {
     <GameShell gameId="ghar-ka-kaam" level={level} score={matchedTasks.size}>
       <div className="mx-auto max-w-3xl">
         <div className="mb-6 flex items-center gap-3">
-          <VoicePrompt text={t('games.ghar-ka-kaam.instructions')} label={t('common.listen')} />
+          <VoicePrompt text={t('games.ghar-ka-kaam.instructions')} repeatOnInactivity label={t('common.listen')} />
           <p className="text-body text-text-muted">{t('games.ghar-ka-kaam.instructions')}</p>
         </div>
 

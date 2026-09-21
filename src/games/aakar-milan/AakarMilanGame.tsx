@@ -162,7 +162,7 @@ export default function AakarMilanGame() {
     <GameShell gameId="aakar-milan" level={level} score={correctCount}>
       <div className="mx-auto max-w-md text-center">
         <div className="mb-4 flex items-center justify-center gap-3">
-          <VoicePrompt text={t('games.aakar-milan.instructions')} label={t('common.listen')} />
+          <VoicePrompt text={t('games.aakar-milan.instructions')} repeatOnInactivity label={t('common.listen')} />
           <p className="text-body text-text-muted">{t('games.aakar-milan.instructions')}</p>
         </div>
         <p className="mb-4 text-sm text-text-muted">

@@ -54,6 +54,17 @@ export function speakText(text: string, lang: SupportedLanguage): boolean {
   }
 }
 
+// True while an utterance is playing — callers that *offer* speech again
+// (inactivity repeat, reminder cue) check this so they never talk over
+// themselves or cut off a manual replay.
+export function isSpeaking(): boolean {
+  try {
+    return isSpeechSynthesisSupported() && window.speechSynthesis.speaking;
+  } catch {
+    return false;
+  }
+}
+
 export function stopSpeaking(): void {
   if (isSpeechSynthesisSupported()) {
     try {

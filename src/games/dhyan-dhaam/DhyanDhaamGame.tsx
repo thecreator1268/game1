@@ -171,7 +171,7 @@ export default function DhyanDhaamGame() {
     <GameShell gameId="dhyan-dhaam" level={level} score={foundCount}>
       <div className="mx-auto max-w-3xl">
         <div className="mb-4 flex items-center gap-3">
-          <VoicePrompt text={t('games.dhyan-dhaam.instructions')} label={t('common.listen')} />
+          <VoicePrompt text={t('games.dhyan-dhaam.instructions')} repeatOnInactivity label={t('common.listen')} />
           <p className="text-body text-text-muted">{t('games.dhyan-dhaam.instructions')}</p>
         </div>
 

@@ -32,6 +32,11 @@ export interface Patient {
   // Optional: patients created before this field existed fall back to
   // 'light' at every read site rather than needing a Dexie migration.
   colorMode?: 'light' | 'dark';
+  // When the patient finished or skipped the 3-screen first-launch intro
+  // (PatientIntro). Absent = not yet shown; absent again after a caregiver
+  // taps "Show the intro again" in Settings. Optional so existing patients
+  // need no Dexie migration (they simply see the intro once).
+  introSeenAt?: number;
   // Timestamp the setting caregiver accepted the on-device data-storage
   // notice during onboarding (see Onboarding.tsx's "consent" step).
   consentGivenAt: number;
@@ -121,5 +126,8 @@ export interface Caregiver {
   pinSalt: string;
   patientIds: string[];
   role: CaregiverRole;
+  // When this caregiver dismissed (or used) the first-login "Getting started"
+  // checklist on the dashboard. Absent = still to show.
+  checklistSeenAt?: number;
   createdAt: number;
 }

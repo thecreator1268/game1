@@ -164,7 +164,7 @@ export default function GintiDhyanGame() {
     <GameShell gameId="ginti-dhyan" level={level} score={nextIndex}>
       <div className="mx-auto max-w-2xl">
         <div className="mb-6 flex items-center gap-3">
-          <VoicePrompt text={t('games.ginti-dhyan.instructions')} label={t('common.listen')} />
+          <VoicePrompt text={t('games.ginti-dhyan.instructions')} repeatOnInactivity label={t('common.listen')} />
           <p className="text-body text-text-muted">{t('games.ginti-dhyan.instructions')}</p>
         </div>
 

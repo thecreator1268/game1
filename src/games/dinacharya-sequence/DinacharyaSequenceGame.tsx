@@ -140,7 +140,7 @@ export default function DinacharyaSequenceGame() {
     <GameShell gameId="dinacharya-sequence" level={level}>
       <div className="mx-auto max-w-3xl">
         <div className="mb-6 flex items-center gap-3">
-          <VoicePrompt text={t('games.dinacharya-sequence.instructions')} label={t('common.listen')} />
+          <VoicePrompt text={t('games.dinacharya-sequence.instructions')} repeatOnInactivity label={t('common.listen')} />
           <p className="text-body text-text-muted">{t('games.dinacharya-sequence.instructions')}</p>
         </div>
 

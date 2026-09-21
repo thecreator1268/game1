@@ -150,7 +150,7 @@ export default function ChayaKhojGame() {
     <GameShell gameId="chaya-khoj" level={level} score={correctCount}>
       <div className="mx-auto max-w-md text-center">
         <div className="mb-4 flex items-center justify-center gap-3">
-          <VoicePrompt text={t('games.chaya-khoj.instructions')} label={t('common.listen')} />
+          <VoicePrompt text={t('games.chaya-khoj.instructions')} repeatOnInactivity label={t('common.listen')} />
           <p className="text-body text-text-muted">{t('games.chaya-khoj.instructions')}</p>
         </div>
         <p className="mb-4 text-sm text-text-muted">

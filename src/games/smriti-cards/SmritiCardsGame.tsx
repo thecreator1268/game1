@@ -241,7 +241,7 @@ export default function SmritiCardsGame() {
     <GameShell gameId="smriti-cards" level={level}>
       <div className="mx-auto max-w-3xl">
         <div className="mb-4 flex items-center gap-3">
-          <VoicePrompt text={t('games.smriti-cards.instructions')} label={t('common.listen')} />
+          <VoicePrompt text={t('games.smriti-cards.instructions')} repeatOnInactivity label={t('common.listen')} />
           <p className="text-body text-text-muted">{t('games.smriti-cards.instructions')}</p>
         </div>
 

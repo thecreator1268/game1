@@ -194,6 +194,7 @@ export default function SmritiKathaGame() {
           <VoicePrompt
             text={`${q.prompt} ${q.options.map((o, i) => `Option ${i + 1}: ${o}.`).join(' ')}`}
             label={t('common.listen')}
+            repeatOnInactivity
           />
           <h2 className="text-heading font-bold">{q.prompt}</h2>
         </div>

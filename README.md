@@ -267,6 +267,40 @@ since it's a check-in, not part of the rotation.
   keep playing, a gentle "take a break?" prompt appears (`BreakPromptWatcher` +
   `fatigueStore`) — this is patient-fatigue protection, not an engagement metric, and
   is never reported to the caregiver dashboard as a KPI.
+- Instructions can be re-offered, not just available once: every game's spoken instruction
+  is offered again after ~22 seconds with no input (`useInactivityRepeat`), at most three
+  times per idle stretch, never over other speech, and any tap restarts the window. A due
+  reminder is spoken once and replayed once, 10 minutes later, if still unacknowledged
+  (`reminderVoice.ts`). Same voice and pace as a manual tap. **This automatic speech is
+  built and tested but currently switched off** (`AUTO_SPEAK_ENABLED` in
+  `src/lib/voiceConfig.ts`); the speaker button next to every instruction always works.
+- A three-screen intro (read aloud when automatic speech is on; the speaker button always works) for the patient on first launch (one sentence and one
+  picture per screen; Skip is as large as Next; a caregiver can replay it from Settings),
+  and a four-point, text-only "Getting started" checklist for the caregiver's first login.
+
+### Evidence base for the dementia-specific UX
+
+These choices follow published findings rather than preference. The full references also
+live in `src/lib/evidence.ts`, which code comments point to.
+
+- **Limited information, repeated instructions, one simple step at a time.** Engelsma T,
+  Jaspers MWM, Peute LW. *Considerate mHealth design for older adults with Alzheimer's
+  disease and related dementias (ADRD): a scoping review on usability barriers and design
+  suggestions.* Int J Med Inform. 2021;152:104494.
+  [sciencedirect.com/science/article/pii/S1386505621001209](https://www.sciencedirect.com/science/article/pii/S1386505621001209).
+  The review lists these among its design suggestions; they shaped the inactivity repeat,
+  the reminder replay, the three-screen intro, and the short caregiver checklist.
+- **Participatory, staged development with clinicians, caregivers and people living with
+  dementia.** Brown EL, Ruggiano N, Allala SC, Clarke PJ, Davis D, Roberts L, Framil CV,
+  Muñoz MTH, Hough MS, Bourgeois MS. *Developing a Memory and Communication App for Persons
+  Living With Dementia: An 8-Step Process.* JMIR Aging. 2023;6:e44007.
+  [doi:10.2196/44007](https://aging.jmir.org/2023/1/e44007/). In that paper, clinical experts
+  review the prototype, including whether its icons are appropriate for people living with
+  dementia (step 4), before a user study with a person living with dementia and a caregiver
+  (step 5). This is our target process for the validation described in the Roadmap.
+
+These sources inform the design; SmritiSetu has not itself been clinically validated, and
+nothing here is a diagnosis or a treatment claim.
 
 ## Multilingual & voice support
 
@@ -445,3 +479,4 @@ settings need somewhere to live).
 6. A real clinical pilot with a geriatric psychiatrist partner to validate the
    domain mappings and adaptive thresholds against MoCA/ADAS-Cog scores over time —
    the dashboard's trend data is designed for exactly this conversation.
+7. **Field validation, following a participatory-design process.** Planned field-testing with a clinician and a small cohort of patients and caregivers, following a participatory-design process similar to Brown et al. 2023 ([JMIR Aging 6:e44007](https://aging.jmir.org/2023/1/e44007/)), including validating icon/mascot appropriateness directly with people living with dementia before wider rollout. Until then, the voice-repeat timing, intro copy and mascots are informed by the literature above, not yet tested with patients.

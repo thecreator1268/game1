@@ -208,7 +208,7 @@ export default function NaamYaadGame() {
               <SpeakerIcon />
             </IconButton>
           ) : (
-            <VoicePrompt text={t('games.naam-yaad.instructions')} label={t('common.listen')} />
+            <VoicePrompt text={t('games.naam-yaad.instructions')} repeatOnInactivity label={t('common.listen')} />
           )}
           <h2 className="text-heading font-bold">{t('games.naam-yaad.instructions')}</h2>
         </div>

@@ -140,7 +140,7 @@ export default function NakshaJodoGame() {
     <GameShell gameId="naksha-jodo" level={level}>
       <div className="mx-auto max-w-2xl">
         <div className="mb-6 flex items-center gap-3">
-          <VoicePrompt text={t('games.naksha-jodo.instructions')} label={t('common.listen')} />
+          <VoicePrompt text={t('games.naksha-jodo.instructions')} repeatOnInactivity label={t('common.listen')} />
           <p className="text-body text-text-muted">{t('games.naksha-jodo.instructions')}</p>
         </div>
 

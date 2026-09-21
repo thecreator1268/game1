@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import { Card } from '@/components/Card';
 import { Icon, type IconName } from '@/components/IconSprite';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
+import { useReminderVoice } from '@/hooks/useReminderVoice';
 import { getTodaysReminders, markReminderTaken } from '@/reminders/reminderService';
 
 const CATEGORY_ICON: Record<string, IconName> = {
@@ -32,6 +33,7 @@ export function TodayReminders({ patientId }: { patientId: string }) {
   const { t } = useTranslation();
   const reminders = useLiveQuery(() => getTodaysReminders(patientId), [patientId], []);
   const prefersReducedMotion = usePrefersReducedMotion();
+  useReminderVoice(reminders);
 
   if (!reminders || reminders.length === 0) {
     return (

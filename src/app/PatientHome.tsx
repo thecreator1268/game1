@@ -4,6 +4,7 @@ import { useEffect, useState, type CSSProperties } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useActivePatient } from '@/hooks/useActivePatient';
 import { usePatientStore } from '@/store/patientStore';
+import { BlobMascot } from '@/components/BlobMascot';
 import { IconButton } from '@/components/IconButton';
 import { OfflineBadge } from '@/components/OfflineBadge';
 import { HomeIcon } from '@/components/icons';
@@ -13,20 +14,12 @@ import { GAME_LIST, getGameMeta, type GameMeta } from '@/games/gameList';
 import { DOMAIN_CARD_CLASS } from '@/dashboard/domainColors';
 import { MAX_LEVEL } from '@/engine/adaptiveEngine';
 import { getCurrentLevel } from '@/engine/gameSessionService';
+import { db } from '@/db/schema';
+import { PatientIntro } from './PatientIntro';
 import { useTodaysSet } from './useTodaysSet';
 import { useStreak } from './useStreak';
 import { TodayReminders } from './TodayReminders';
 import type { GameId, Domain } from '@/db/types';
-
-// One consistent mascot shape, "vary blob radius/mouth slightly per card
-// for character" — picked deterministically from the game id so a card
-// never re-rolls its own face between renders.
-const BLOB_VARIANTS = ['', 'blob-v2', 'blob-v3', 'blob-v4'];
-function blobVariant(gameId: string): string {
-  let hash = 0;
-  for (let i = 0; i < gameId.length; i++) hash = (hash * 31 + gameId.charCodeAt(i)) >>> 0;
-  return BLOB_VARIANTS[hash % BLOB_VARIANTS.length];
-}
 
 // Plays the card stagger once per app session (module-level, survives
 // PatientHome unmounting when a patient goes to play a game and mounting
@@ -34,20 +27,6 @@ function blobVariant(gameId: string): string {
 // re-appears is exactly the "looks AI-scaffolded" tell this pass is meant
 // to remove, not a polish win.
 let hasPlayedHomeEntrance = false;
-
-function BlobMascot({ gameId, hero = false }: { gameId: string; hero?: boolean }) {
-  return (
-    <div className={`blob-mascot ${blobVariant(gameId)} ${hero ? 'blob-mascot-hero' : ''}`} aria-hidden>
-      <div className="blob-face">
-        <div className="blob-eye blob-eye-l" />
-        <div className="blob-eye blob-eye-r" />
-        <div className="blob-blush blob-blush-l" />
-        <div className="blob-blush blob-blush-r" />
-        <div className="blob-mouth" />
-      </div>
-    </div>
-  );
-}
 
 function GameCard({
   gameId,
@@ -156,6 +135,18 @@ export default function PatientHome() {
     // Either the live query hasn't resolved yet, or there's no active
     // patient at all — the effect above handles redirecting for the latter.
     return null;
+  }
+
+  // First launch for this patient: the 3-screen intro replaces the home
+  // screen until it is finished or skipped, then never returns on its own
+  // (a caregiver can replay it from Settings).
+  if (patient.introSeenAt === undefined) {
+    return (
+      <PatientIntro
+        language={patient.preferredLanguage}
+        onFinish={() => void db.patients.update(patient.id, { introSeenAt: Date.now() })}
+      />
+    );
   }
 
   const featured = todaysSet ?? [];

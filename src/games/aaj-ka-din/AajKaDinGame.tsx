@@ -174,7 +174,7 @@ export default function AajKaDinGame() {
           {qIndex + 1} / {questions.length}
         </p>
         <div className="mb-6 flex items-center justify-center gap-3">
-          <VoicePrompt text={t(`orientationCheckin.${question.promptKey}`)} label={t('common.listen')} />
+          <VoicePrompt text={t(`orientationCheckin.${question.promptKey}`)} label={t('common.listen')} repeatOnInactivity />
           <h2 className="text-heading font-bold">{t(`orientationCheckin.${question.promptKey}`)}</h2>
         </div>
 

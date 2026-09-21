@@ -185,7 +185,30 @@
     "notificationTitle": "Time for: {{label}}",
     "labelRequired": "Enter what this reminder is for",
     "scheduleRequired": "Choose a time",
-    "reminderAdded": "Reminder added"
+    "reminderAdded": "Reminder added",
+    "voiceReplay": "A gentle reminder: {{label}}"
+  },
+  "intro": {
+    "progress": "{{current}} of {{total}}",
+    "step1": "Tap a card to play a game.",
+    "step2": "This is Today. Your reminders are here.",
+    "step3": "This home button always brings you back here.",
+    "next": "Next",
+    "skip": "Skip",
+    "start": "Let's begin"
+  },
+  "checklist": {
+    "title": "Getting started",
+    "intro": "Four things worth knowing.",
+    "remindersTitle": "Reminders",
+    "remindersBody": "Add medicine, water and appointments. They appear on the patient's Today list.",
+    "familyTitle": "Family & Faces",
+    "familyBody": "Add a family member's photo and name so Naam Yaad uses real faces.",
+    "privacyTitle": "Privacy & Data",
+    "privacyBody": "In Settings you can turn on alerts and delete a patient's data at any time.",
+    "engineLogTitle": "Adaptive Engine Log",
+    "engineLogBody": "At the bottom of this dashboard, every level change is listed with its reason.",
+    "gotIt": "Got it"
   },
   "familyManager": {
     "title": "Family & Faces",
@@ -266,7 +289,11 @@
     "deletePatientDataDone": "{{name}}'s data has been deleted.",
     "masteryEstimate": "{{pct}}% mastery estimate",
     "masteryNone": "No attempts yet",
-    "masteryNote": "Mastery estimate: a probability from a Bayesian Knowledge Tracing model, using standard starting values rather than values fitted to this patient. It covers all of the patient's sessions, not just the range selected above, is shared by the games in each area, guides level changes, and is not a clinical score."
+    "masteryNote": "Mastery estimate: a probability from a Bayesian Knowledge Tracing model, using standard starting values rather than values fitted to this patient. It covers all of the patient's sessions, not just the range selected above, is shared by the games in each area, guides level changes, and is not a clinical score.",
+    "introTitle": "Introduction",
+    "introBody": "The 3-screen welcome the patient sees on first launch. Show it again to go through it together.",
+    "introReplay": "Show the intro again",
+    "introQueued": "The intro will play the next time {{name}} opens the app."
   },
   "sharedView": {
     "banner": "You're viewing a read-only snapshot a family member shared. It won't update, and this device isn't signed in as a caregiver.",

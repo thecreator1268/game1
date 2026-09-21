@@ -192,7 +192,7 @@ export default function AwaazPehchanGame() {
       <GameShell gameId="awaaz-pehchan" level={level}>
         <div className="mx-auto max-w-md py-10 text-center">
           <div className="mb-6 flex items-center justify-center gap-3">
-            <VoicePrompt text={t('games.awaaz-pehchan.instructions')} label={t('common.listen')} />
+            <VoicePrompt text={t('games.awaaz-pehchan.instructions')} repeatOnInactivity label={t('common.listen')} />
             <p className="text-body text-text-muted">{t('games.awaaz-pehchan.instructions')}</p>
           </div>
           <div className="card-elderly">
