@@ -79,12 +79,21 @@ export default function AdminOverview() {
   async function exportAllData() {
     setExporting(true);
     try {
-      const [allPatients, allCaregivers, allSessions, allLevelChanges, allReminders, allReminderLogs, allFamily] =
-        await Promise.all([
+      const [
+        allPatients,
+        allCaregivers,
+        allSessions,
+        allLevelChanges,
+        allMastery,
+        allReminders,
+        allReminderLogs,
+        allFamily,
+      ] = await Promise.all([
           db.patients.toArray(),
           db.caregivers.toArray(),
           db.sessions.toArray(),
           db.levelChanges.toArray(),
+          db.masteryEstimates.toArray(),
           db.reminders.toArray(),
           db.reminderLogs.toArray(),
           db.familyMembers.toArray(),
@@ -97,6 +106,7 @@ export default function AdminOverview() {
         caregivers: allCaregivers.map(({ pinHash: _pinHash, pinSalt: _pinSalt, ...rest }) => rest),
         sessions: allSessions,
         levelChanges: allLevelChanges,
+        masteryEstimates: allMastery,
         reminders: allReminders,
         reminderLogs: allReminderLogs,
         familyMembers: allFamily,
@@ -117,13 +127,23 @@ export default function AdminOverview() {
     if (confirmText !== RESET_CONFIRM_WORD) return;
     await db.transaction(
       'rw',
-      [db.patients, db.caregivers, db.sessions, db.levelChanges, db.reminders, db.reminderLogs, db.familyMembers],
+      [
+        db.patients,
+        db.caregivers,
+        db.sessions,
+        db.levelChanges,
+        db.masteryEstimates,
+        db.reminders,
+        db.reminderLogs,
+        db.familyMembers,
+      ],
       async () => {
         await Promise.all([
           db.patients.clear(),
           db.caregivers.clear(),
           db.sessions.clear(),
           db.levelChanges.clear(),
+          db.masteryEstimates.clear(),
           db.reminders.clear(),
           db.reminderLogs.clear(),
           db.familyMembers.clear(),

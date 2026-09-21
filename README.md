@@ -34,7 +34,7 @@ Every component the official problem statement asks for is implemented, not aspi
 | Required (from the SIH26003 problem statement) | Implemented as |
 |---|---|
 | Interactive cognitive games: memory, attention, daily routine recall, pattern recognition | 14 games across exactly those 4 domains + a bonus orientation domain — see the clinical grounding table below |
-| AI/ML algorithms adjusting difficulty based on patient performance | `engine/adaptiveEngine.ts` — explainable rule-based staircase, 10 levels |
+| AI/ML algorithms adjusting difficulty based on patient performance | `engine/adaptiveEngine.ts` + `engine/bkt.ts` — explainable staircase fed by a Bayesian Knowledge Tracing mastery estimate, 10 levels |
 | Cognitive performance analytics | `engine/trendAnalysis.ts` — linear-regression trend + z-score anomaly detection, on-device (see below) |
 | Multilingual voice-assisted interaction, regional language support, culturally familiar themes | 9 languages (`src/i18n/`) incl. 6 NER-region languages (Manipuri, Khasi, Mizo, Nagamese, Kokborok, Nepali) covering 7 of the 8 official NER states; Web Speech API TTS in `src/lib/speech.ts` — automatically follows whichever language the patient profile is set to; game names rooted in Hindi/Sanskrit with real-language subtitles |
 | Medication, hydration, activity, and appointment reminders | `src/reminders/` + the "Today" card on the patient home screen; opt-in local alerts (`notificationService.ts`) fire via the Notification API while the app is open |
@@ -60,7 +60,7 @@ flowchart TB
         UI["React UI<br/>Patient Mode · Caregiver Dashboard"]
         Zustand["Zustand stores<br/>active patient · caregiver auth · sync state · fatigue"]
         Engine["Adaptive Engine + Session Composer<br/>src/engine/*"]
-        Dexie["Dexie (IndexedDB)<br/>patients · sessions · levelChanges · reminders · familyMembers"]
+        Dexie["Dexie (IndexedDB)<br/>patients · sessions · levelChanges · masteryEstimates · reminders · familyMembers"]
         SW["Service Worker<br/>precached app shell + game/audio/photo assets"]
         SyncQ["Sync Queue<br/>src/sync/queue.ts"]
     end
@@ -76,10 +76,11 @@ flowchart TB
 ```
 
 Every game session writes a `GameSession` row (score, accuracy, response latency, error
-types) straight to Dexie. The adaptive engine reads the last 5 attempts at the
-patient's current level and decides the next level, logging a human-readable reason to
-`levelChanges` — that log is what the caregiver dashboard's "Adaptive Engine Log" shows,
-so the level-up/down behavior is auditable rather than a black box.
+types) straight to Dexie and updates that domain's BKT mastery estimate
+(`masteryEstimates`). The adaptive engine reads the last 5 attempts at the patient's
+current level plus that estimate and decides the next level, logging a human-readable
+reason to `levelChanges` — that log is what the caregiver dashboard's "Adaptive Engine
+Log" shows, so the level-up/down behavior is auditable rather than a black box.
 
 ## Tech stack
 
@@ -148,29 +149,64 @@ for that game.
 | **Aaj Ka Din** | Once-daily check-in: what day, what time of day, what season | Temporal orientation. **Does not use the adaptive engine** — it logs correct/incorrect only, since it's a daily check-in, not a difficulty drill |
 | **Ghadi Dekho** | Read an analog clock, tap the matching digital time from multiple choices | Visuospatial + temporal orientation — a close analogue of the Clock Drawing Test, one of the most widely used dementia-screening tasks. **Does use the adaptive engine** — the domain's only leveled, repeatable game |
 
-## Adaptive difficulty engine (`src/engine/adaptiveEngine.ts`)
+## Adaptive difficulty engine (`src/engine/adaptiveEngine.ts`, `src/engine/bkt.ts`)
 
-An explainable staircase algorithm, **10 discrete levels** per game:
+An explainable staircase algorithm, **10 discrete levels** per game. What feeds its
+level-up / level-down thresholds is a **Bayesian Knowledge Tracing (BKT)** mastery
+estimate, a real probabilistic model that needs no training data.
 
-- Tracks a rolling window of the last **5 attempts** at the patient's current level.
-- **Level up** when accuracy ≥ 80% over the window *and* response time is trending
-  down (median of the later half of the window ≤ median of the earlier half).
-- **Level down** when accuracy < 40% over the window, **or** immediately if error rate
-  rose for 2 consecutive sessions (doesn't wait for a full window — a struggling
-  patient isn't left failing repeatedly while data accumulates).
-- Otherwise holds. Every change is logged with a reason string, e.g. *"leveled up:
-  4/5 correct, avg 3.2s"*.
+- **Mastery estimate (`bkt.ts`).** One probability of mastery, pL, per patient per domain
+  (Memory, Attention, Routine, Pattern, Orientation), stored in Dexie
+  (`masteryEstimates`: patientId, domain, pL, updatedAt). After every finished game it is
+  updated with the standard BKT equations, from a prior pL0 = 0.3, with learning
+  pT = 0.1, slip pS = 0.1 and guess pG = 0.2
+  (Corbett & Anderson, [*Knowledge tracing: Modeling the acquisition of procedural
+  knowledge*](https://link.springer.com/article/10.1007/BF01099821), User Modeling and
+  User-Adapted Interaction 4(4):253–278, 1995).
+- **Parameters are priors, not fitted values.** BKT parameters are currently set to
+  literature-typical defaults (Corbett & Anderson-style priors); calibrating per-domain
+  parameters from real patient data is a named next step once a deployed cohort exists.
+  They are conventional starting values and were not learned from this population.
+- **Rules around it.** A rolling window of the last **5 attempts** at the patient's
+  current level. **Level up** only when all three hold: the domain's mastery estimate is
+  ≥ 0.80, *this game's own* last 5 sessions average ≥ 80%, and response time is trending
+  down (median of the later half of the window ≤ median of the earlier half). **Level down** when the estimate is < 0.40, **or** immediately if error rate rose
+  for 2 consecutive sessions (doesn't wait for a full window, so a struggling patient
+  isn't left failing repeatedly while data accumulates). Otherwise holds.
+- **Every change is logged in plain language**, e.g. *"leveled up: domain mastery
+  estimate 0.91 (at least 0.80) and this game's own last 5 sessions averaged 84% (at
+  least 80%); avg 3.2s"*, and shown in the caregiver
+  dashboard's Adaptive Engine Log, so the decision is auditable rather than a black box.
+- **One observation per session, weighted by its accuracy.** Games report a session
+  accuracy, not per-round right/wrong, so the update mixes the "correct" and "incorrect"
+  posteriors by that accuracy. At 0% or 100% this is exactly the standard update. We
+  compared it with a hard right/wrong cut-off against the previous accuracy-average
+  rule: a 50% cut-off would level up a patient steady at 55%, and an 80% cut-off would
+  level down one steady at 70%; the accuracy-weighted form keeps the same three bands
+  (tests in `bkt.test.ts` and `adaptiveEngine.test.ts` pin this).
+- **Honest limits.** There is one estimate per domain, shared by that domain's games and
+  levels (it is not game- or level-specific). That means strong results in one game can
+  raise the estimate that another game in the same domain is judged by: in a simulation,
+  alternating an easy game at 100% with a harder one at 45% lifts the shared estimate
+  above 0.80 within a few rounds. For **level-ups** this is guarded: the game's own last 5
+  sessions must also average ≥ 80% (pinned by a test on exactly that scenario), so the
+  harder game holds. The **level-down** side has no such guard, and the estimate is still
+  shared, so a weak game can pull down the estimate another game is judged by (a demotion
+  needs the estimate below 0.40, which takes a long run of low results). Known, not
+  hidden; a per-game estimate would remove it. Also, because a learning probability above zero
+  is part of the model, a long run of wrong answers levels off near 0.11 rather than
+  reaching 0.
+- **Shown to caregivers** as "NN% mastery estimate" under each domain in the Domain
+  Balance view, with a note that it is a model estimate on standard starting values, not
+  a clinical score. A domain with no attempts yet shows "No attempts yet" instead of the
+  prior.
 - Reaching level 6+ shows a private "you're getting stronger at this!" acknowledgment
   — never a leaderboard or a comparison against other patients.
-- **Extension point:** the module's header comment marks where a per-patient Bayesian
-  Knowledge Tracing or logistic-regression model — trained on aggregated, anonymized
-  session data across a deployed patient base — could replace the rule-based decision
-  without changing anything upstream (session logging, dashboard, UI all call the
-  same `decideNextLevel(level, history)` shape).
 
-Unit-tested in `src/engine/adaptiveEngine.test.ts` (13 cases across the level range)
+Unit-tested: `src/engine/bkt.test.ts` (25 cases: hand-checked equations, direction of
+change, convergence, bounds), `src/engine/adaptiveEngine.test.ts` (24 cases),
+`src/engine/masteryService.test.ts` (14 cases: persistence, replay, the full session path)
 and `src/engine/sessionComposer.test.ts` (6 cases for the "Today's Set" rotation).
-
 ## Cognitive analytics (`src/engine/trendAnalysis.ts`)
 
 The adaptive engine above decides *in-game* difficulty. This is a separate, real
@@ -368,12 +404,24 @@ settings need somewhere to live).
 - **TTS voice coverage depends entirely on the device.** Hindi and English are
   reliable on most Android/Chrome devices; Assamese support is inconsistent; the four
   North Eastern Region languages fall back to English audio (flagged, not hidden).
-- **The in-game adaptive engine is a rule-based staircase, deliberately** — it needs
-  zero training data and runs fully on-device, which matters for an offline-first app.
-  The extension point for a learned model is real (see above), not aspirational
-  filler. The separate cognitive-analytics layer (`trendAnalysis.ts`) *is* genuine
-  statistical learning (linear regression + anomaly detection) — the two are
-  complementary, not the same thing wearing different names.
+- **The in-game adaptive engine uses Bayesian Knowledge Tracing with uncalibrated
+  priors.** BKT is real Bayesian inference and needs no training data, which is why it
+  fits an offline, on-device app with no patient cohort yet. Its four parameters are
+  literature-typical starting values, not fitted to this population, and there is one
+  estimate per domain rather than per game or level (details above). No neural network
+  or trained model is claimed anywhere. The separate cognitive-analytics layer
+  (`trendAnalysis.ts`) is genuine statistical learning (linear regression + anomaly
+  detection) — the two are complementary, not the same thing wearing different names.
+- **Open items to close in a final pre-submission pass:**
+  - *Not yet played through the real UI.* The BKT path is covered by tests on a real
+    Dexie (fake-indexeddb) and by a browser check that the v1→v2 database upgrade keeps
+    existing sessions, but a game has not been played to completion in the browser to see
+    a level change and its log line end to end. Do this at least once before the demo.
+  - *Aaj Ka Din feeds Ghadi Dekho's estimate.* Aaj Ka Din is not adaptive, yet its
+    results update the Orientation estimate that Ghadi Dekho is judged by (the same
+    shared-estimate cause as above; level-ups are guarded, level-downs are not).
+  - *Long zero-accuracy runs.* After roughly 30 straight zero-accuracy sessions in one
+    domain the estimate reaches a numeric edge; low-impact, left unfixed for now.
 
 ## Roadmap
 
@@ -390,8 +438,10 @@ settings need somewhere to live).
    Notification API while the app/tab is open, including backgrounded, but can't wake
    a fully closed browser. True background push (via a real `/sync` backend) is the
    remaining step for a reminder to arrive even after the tablet's browser was closed.
-5. A small aggregated, anonymized cross-patient dataset (with consent) to prototype
-   the Bayesian Knowledge Tracing extension point in `adaptiveEngine.ts`.
+5. **Calibrate the BKT parameters.** BKT is live in `bkt.ts` on literature-typical
+   defaults; once a deployed cohort exists, fit pL0/pT/pS/pG per domain from a small
+   aggregated, anonymized cross-patient dataset (with consent), and consider per-game or
+   per-level estimates and per-round evidence from the games.
 6. A real clinical pilot with a geriatric psychiatrist partner to validate the
    domain mappings and adaptive thresholds against MoCA/ADAS-Cog scores over time —
    the dashboard's trend data is designed for exactly this conversation.

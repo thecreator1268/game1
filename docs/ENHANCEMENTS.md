@@ -50,9 +50,10 @@ from based on remaining time, not a required checklist)
   video-call link with a partnered clinic network.
 - Wearable integration (heart rate / activity) to enrich the attention and
   fatigue signals the adaptive engine already uses.
-- A full trained statistical adaptive-difficulty model (the extension point
-  already exists in `adaptiveEngine.ts`) once real, anonymised session data
-  exists across a deployed patient base.
+- Calibrating the Bayesian Knowledge Tracing parameters (`src/engine/bkt.ts`
+  currently uses literature-typical defaults) per domain, and moving to per-game
+  or per-level estimates, once real, anonymised session data exists across a
+  deployed patient base.
 
 For anything you build from the Quick wins or Medium lift sections, follow
 the same rules as the rest of this project: offline-first, elderly-safe

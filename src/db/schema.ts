@@ -1,9 +1,10 @@
-import Dexie, { type EntityTable } from 'dexie';
+import Dexie, { type EntityTable, type Table } from 'dexie';
 import type {
   Caregiver,
   FamilyMember,
   GameSession,
   LevelChange,
+  MasteryEstimate,
   Patient,
   Reminder,
   ReminderLog,
@@ -17,6 +18,8 @@ export class SmritiSetuDB extends Dexie {
   reminders!: EntityTable<Reminder, 'id'>;
   reminderLogs!: EntityTable<ReminderLog, 'id'>;
   caregivers!: EntityTable<Caregiver, 'id'>;
+  // Compound primary key [patientId, domain].
+  masteryEstimates!: Table<MasteryEstimate, [string, string]>;
 
   constructor() {
     super('smriti-setu');
@@ -28,6 +31,12 @@ export class SmritiSetuDB extends Dexie {
       reminders: 'id, patientId, category, active',
       reminderLogs: 'id, reminderId, patientId, acknowledgedAt, synced',
       caregivers: 'id',
+    });
+    // v2 adds the BKT mastery table only; existing tables and rows are
+    // untouched. Patients with history but no row yet are bootstrapped by
+    // replaying their sessions on first use (engine/masteryService.ts).
+    this.version(2).stores({
+      masteryEstimates: '[patientId+domain], patientId',
     });
   }
 }

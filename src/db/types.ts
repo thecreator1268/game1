@@ -67,6 +67,16 @@ export interface GameSession {
   synced: boolean;
 }
 
+// Current BKT mastery estimate for one patient in one domain (see
+// engine/bkt.ts). One row per (patientId, domain); derived data — it can always
+// be rebuilt by replaying the patient's sessions, so it is not synced.
+export interface MasteryEstimate {
+  patientId: string;
+  domain: Domain;
+  pL: number; // probability of mastery, 0-1
+  updatedAt: number;
+}
+
 export interface LevelChange {
   id: string;
   patientId: string;

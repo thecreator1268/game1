@@ -82,8 +82,10 @@ function makeDomainAvatar(chartData: (DomainBalanceEntry & { label: string })[])
 export function DomainBalanceChart({ data }: { data: DomainBalanceEntry[] }) {
   const { t } = useTranslation();
   const chartData = data.map((d) => ({ ...d, label: t(`domains.${d.domain}`) }));
+  const showMastery = data.some((d) => d.masteryPct !== undefined);
 
   return (
+    <>
     <div className="h-72 w-full">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={chartData} margin={{ top: 28, right: 16, bottom: 8, left: -16 }}>
@@ -104,5 +106,32 @@ export function DomainBalanceChart({ data }: { data: DomainBalanceEntry[] }) {
         </BarChart>
       </ResponsiveContainer>
     </div>
+    {showMastery && (
+      // One small label per domain, in the same order and colours as the bars.
+      // A wrapping list under the chart rather than a longer x-axis tick, so
+      // "74% mastery estimate" never collides at phone widths.
+      <div className="mt-3">
+        <ul className="grid grid-cols-2 gap-x-4 gap-y-2 sm:grid-cols-5">
+          {chartData.map((entry) => (
+            <li key={entry.domain} className="flex items-start gap-2 text-sm text-text-muted">
+              <span
+                aria-hidden
+                className="mt-1 h-3 w-3 shrink-0 rounded-[3px] border-2 border-text"
+                style={{ background: DOMAIN_COLOR[entry.domain] }}
+              />
+              <span>
+                <span className="font-semibold text-text">{entry.label}</span>
+                <br />
+                {typeof entry.masteryPct === 'number'
+                  ? t('dashboard.masteryEstimate', { pct: entry.masteryPct })
+                  : t('dashboard.masteryNone')}
+              </span>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-2 text-sm text-text-muted">{t('dashboard.masteryNote')}</p>
+      </div>
+    )}
+    </>
   );
 }

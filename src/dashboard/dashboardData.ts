@@ -1,6 +1,7 @@
 import { db } from '@/db/schema';
 import type { Domain, GameSession, LevelChange, Reminder, ReminderLog } from '@/db/types';
 import { DOMAINS } from '@/games/gameList';
+import { getDomainMastery } from '@/engine/masteryService';
 import {
   computeDomainTrend,
   detectAnomalies,
@@ -88,6 +89,13 @@ export async function getDomainAveragesForRange(
 export interface DomainBalanceEntry {
   domain: Domain;
   sessionCount: number;
+  /**
+   * BKT mastery estimate as a whole percent (see engine/bkt.ts). Unlike
+   * `sessionCount` it is not limited to the selected date range: it is the
+   * patient's current estimate. `null` = no attempts in this domain yet;
+   * `undefined` = the caller has no estimate to show (label hidden).
+   */
+  masteryPct?: number | null;
 }
 
 export async function getDomainBalance(patientId: string, days: number): Promise<DomainBalanceEntry[]> {
@@ -97,7 +105,16 @@ export async function getDomainBalance(patientId: string, days: number): Promise
   const counts = new Map<Domain, number>();
   for (const domain of DOMAINS) counts.set(domain, 0);
   for (const s of recent) counts.set(s.domain, (counts.get(s.domain) ?? 0) + 1);
-  return DOMAINS.map((domain) => ({ domain, sessionCount: counts.get(domain) ?? 0 }));
+
+  const mastery = new Map((await getDomainMastery(patientId)).map((m) => [m.domain, m.pL]));
+  return DOMAINS.map((domain) => {
+    const pL = mastery.get(domain);
+    return {
+      domain,
+      sessionCount: counts.get(domain) ?? 0,
+      masteryPct: pL === null || pL === undefined ? null : Math.round(pL * 100),
+    };
+  });
 }
 
 export interface DomainInsight {

@@ -100,8 +100,9 @@ dementia-assessment clinical scales, not generic gamification.
   Android/Chrome tablet, no app-store dependency
 - **Voice:** Web Speech API (TTS + optional speech recognition) — no paid API, no
   network dependency
-- **Adaptive engine:** rule-based staircase algorithm — explainable AI, zero training
-  data required
+- **Adaptive engine:** explainable staircase driven by a Bayesian Knowledge Tracing
+  mastery estimate — real probabilistic inference, zero training data required (starting
+  parameters are literature-typical priors; calibration on real patient data is the next step)
 - **Analytics engine:** on-device linear regression + z-score anomaly detection —
   genuine statistical learning, zero training data, zero cloud
 - **Dashboard/export:** Recharts for visualization, jsPDF/CSV export for doctor visits

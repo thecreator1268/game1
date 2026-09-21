@@ -4,6 +4,7 @@ import { newId } from '@/lib/id';
 import { syncPendingData } from '@/sync/queue';
 import { getGameMeta } from '@/games/gameList';
 import { decideNextLevel, WINDOW_SIZE, type AttemptResult, type LevelDecision } from './adaptiveEngine';
+import { updateDomainMastery } from './masteryService';
 
 export async function getCurrentLevel(patientId: string, gameId: GameId): Promise<number> {
   const allChanges = await db.levelChanges.where('patientId').equals(patientId).toArray();
@@ -80,10 +81,14 @@ export async function recordGameSession(input: RecordSessionInput): Promise<Reco
   };
   await db.sessions.add(session);
 
+  // Every session is evidence about the domain, including games that don't
+  // adapt their own level, so the mastery estimate is updated for all of them.
+  const mastery = await updateDomainMastery(input.patientId, meta.domain, session);
+
   let levelDecision: LevelDecision | null = null;
   if (meta.usesAdaptiveEngine) {
     const history = await getRecentAttemptsAtLevel(input.patientId, input.gameId, input.level);
-    levelDecision = decideNextLevel(input.level, history);
+    levelDecision = decideNextLevel(input.level, history, mastery.pL);
     if (levelDecision.changed) {
       await db.levelChanges.add({
         id: newId(),

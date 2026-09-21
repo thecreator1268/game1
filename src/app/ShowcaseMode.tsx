@@ -4,12 +4,13 @@ import { DomainBalanceChart } from '@/dashboard/DomainBalanceChart';
 import { LevelUpBadge } from '@/components/LevelUpBadge';
 import { SplashScreen } from './SplashScreen';
 
+// Made-up demo numbers for a screen recording, not a real patient's estimates.
 const DEMO_BALANCE = [
-  { domain: 'memory' as const, sessionCount: 6 },
-  { domain: 'attention' as const, sessionCount: 4 },
-  { domain: 'routine' as const, sessionCount: 7 },
-  { domain: 'pattern' as const, sessionCount: 3 },
-  { domain: 'orientation' as const, sessionCount: 5 },
+  { domain: 'memory' as const, sessionCount: 6, masteryPct: 74 },
+  { domain: 'attention' as const, sessionCount: 4, masteryPct: 58 },
+  { domain: 'routine' as const, sessionCount: 7, masteryPct: 81 },
+  { domain: 'pattern' as const, sessionCount: 3, masteryPct: 46 },
+  { domain: 'orientation' as const, sessionCount: 5, masteryPct: 66 },
 ];
 
 const DEMO_SUMMARY =

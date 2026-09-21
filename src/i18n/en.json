@@ -263,7 +263,10 @@
     "deletePatientDataTitle": "Delete {{name}}'s data?",
     "deletePatientDataBody": "This permanently deletes every game session, level, reminder, reminder history, and family member (including photos and voice notes) saved for {{name}}. This cannot be undone.",
     "deletePatientDataConfirm": "Delete Everything",
-    "deletePatientDataDone": "{{name}}'s data has been deleted."
+    "deletePatientDataDone": "{{name}}'s data has been deleted.",
+    "masteryEstimate": "{{pct}}% mastery estimate",
+    "masteryNone": "No attempts yet",
+    "masteryNote": "Mastery estimate: a probability from a Bayesian Knowledge Tracing model, using standard starting values rather than values fitted to this patient. It covers all of the patient's sessions, not just the range selected above, is shared by the games in each area, guides level changes, and is not a clinical score."
   },
   "sharedView": {
     "banner": "You're viewing a read-only snapshot a family member shared. It won't update, and this device isn't signed in as a caregiver.",

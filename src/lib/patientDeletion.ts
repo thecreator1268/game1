@@ -14,11 +14,21 @@ import { db } from '@/db/schema';
 export async function deletePatientData(patientId: string): Promise<void> {
   await db.transaction(
     'rw',
-    [db.patients, db.familyMembers, db.sessions, db.levelChanges, db.reminders, db.reminderLogs, db.caregivers],
+    [
+      db.patients,
+      db.familyMembers,
+      db.sessions,
+      db.levelChanges,
+      db.masteryEstimates,
+      db.reminders,
+      db.reminderLogs,
+      db.caregivers,
+    ],
     async () => {
       await db.familyMembers.where('patientId').equals(patientId).delete();
       await db.sessions.where('patientId').equals(patientId).delete();
       await db.levelChanges.where('patientId').equals(patientId).delete();
+      await db.masteryEstimates.where('patientId').equals(patientId).delete();
       await db.reminders.where('patientId').equals(patientId).delete();
       await db.reminderLogs.where('patientId').equals(patientId).delete();
       await db.caregivers.toCollection().modify((caregiver) => {
