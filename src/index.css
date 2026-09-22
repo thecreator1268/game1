@@ -360,7 +360,7 @@ h3,
     background: color-mix(in srgb, var(--domain-orientation) 18%, var(--color-surface));
   }
 
-  /* Difficulty pip-dots (filled = current level out of 8). An unfilled pip
+  /* Difficulty pip-dots (filled = current level out of 10). An unfilled pip
      is a hollow ink-bordered ring rather than a low-alpha ink fill: alpha-
      blended ink reads fine on the light Memory/Attention cards but is
      nearly invisible on the darker Routine/Pattern/Orientation ones (found

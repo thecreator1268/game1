@@ -1,6 +1,6 @@
 ---
 name: test-writer
-description: Writes and maintains unit tests for src/engine/adaptiveEngine.ts (the 8-level staircase difficulty algorithm) and src/engine/sessionComposer.ts (the "Today's Set" daily rotation logic) specifically. These are the two files judges are most likely to probe with "what if" questions, per CLAUDE_CODE_BUILD_PROMPT.md's non-functional requirements. Invoke when either file changes, or when asked to strengthen test coverage for the adaptive engine or session composition.
+description: Writes and maintains unit tests for src/engine/adaptiveEngine.ts (the 10-level staircase difficulty algorithm) and src/engine/sessionComposer.ts (the "Today's Set" daily rotation logic) specifically. These are the two files judges are most likely to probe with "what if" questions, per CLAUDE_CODE_BUILD_PROMPT.md's non-functional requirements. Invoke when either file changes, or when asked to strengthen test coverage for the adaptive engine or session composition.
 tools: Read, Write, Edit, Grep, Glob, Bash
 model: sonnet
 ---
@@ -12,7 +12,7 @@ expand scope to other engine files unless explicitly asked.
 ## Context you need before writing anything
 
 Read `CLAUDE_CODE_BUILD_PROMPT.md`'s "Adaptive difficulty algorithm" section
-for the actual spec these files implement: 8 discrete levels, a rolling
+for the actual spec these files implement: 10 discrete levels, a rolling
 window of the last N=5 attempts, level-up at ≥80% accuracy with response
 time trending down, level-down at <40% accuracy or 2 consecutive sessions
 with rising error rate, level-change events logged with a reason string,
@@ -27,7 +27,7 @@ the intent, the code is the contract you're testing.
 ## What "what if" coverage means here
 
 Judges will ask edge-case questions live. Prioritize tests for:
-- Boundary levels: level 1 can't go below 1, level 8 can't go above 8.
+- Boundary levels: level 1 can't go below 1, level 10 can't go above 10.
 - Exactly-at-threshold accuracy (exactly 80%, exactly 40%) — pick and
   document which side of the boundary is correct per the spec's wording.
 - Fewer than N=5 attempts recorded yet — what happens before the window

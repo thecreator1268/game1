@@ -67,7 +67,7 @@ extend them if you add new theme-dependent colors.
   painting in DOM order, so insufficient clearance makes the mascot paint
   over the tag's text on any two-line game name.
 - Difficulty shown as pip-dots (`.pip` / `.pip-on`, filled = current level
-  out of 8), not a number.
+  out of 10), not a number.
 - A black pill "Play ▶" button (`.pill-ink`) anchored at the card's bottom
   edge. On the Routine/teal card specifically, invert to light-bg/dark-text
   (teal is dark enough that dark-ink text/pips on it fail contrast) — see
