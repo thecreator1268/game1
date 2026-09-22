@@ -36,6 +36,23 @@ export const BROWN_2023 = {
   usedFor: 'target process for post-hackathon participatory field validation',
 } as const;
 
+export const CDSCO_MDSW_GUIDANCE_2026 = {
+  short: 'CDSCO Guidance Document on Medical Device Software, 2026',
+  citation:
+    'Central Drugs Standard Control Organisation (CDSCO), Medical Devices Division. Guidance Document on ' +
+    'Medical Device Software under the Medical Devices Rules, 2017. Doc No. CDSCO/MD/GD/MDSW/01/2026, ' +
+    'issued 21 July 2026.',
+  url: 'https://cdsco.gov.in/opencms/export/sites/CDSCO_WEB/Pdf-documents/Guidance-document-on-Medical-Device-Software-under-MDR-2017.pdf',
+  // Verified against 3 independent secondary summaries (a law-firm client alert
+  // and 2 industry compliance sites) that agree on the document number and the
+  // 21 July 2026 date and both quote the same "must not refer to any disease,
+  // disorder or pathological condition" exclusion language; the PDF itself
+  // could not be parsed as text to check word-for-word. The doc number is
+  // CDSCO/MD/GD/MDSW/01/2026 (no ".1" suffix) — correct this if a primary copy
+  // of the PDF shows otherwise.
+  usedFor: 'the "General Wellness Software" regulatory boundary named in README Known limitations',
+} as const;
+
 export const CORBETT_ANDERSON_1995 = {
   short: 'Corbett & Anderson 1995',
   citation:

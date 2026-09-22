@@ -293,7 +293,10 @@
     "introTitle": "Introduction",
     "introBody": "The 3-screen welcome the patient sees on first launch. Show it again to go through it together.",
     "introReplay": "Show the intro again",
-    "introQueued": "The intro will play the next time {{name}} opens the app."
+    "introQueued": "The intro will play the next time {{name}} opens the app.",
+    "asymmetryFlag": {
+      "body": "{{domain}} engagement has been notably lower than {{name}}'s other areas for {{weeks}} weeks. Patterns like this can be worth mentioning at their next doctor's visit."
+    }
   },
   "sharedView": {
     "banner": "You're viewing a read-only snapshot a family member shared. It won't update, and this device isn't signed in as a caregiver.",

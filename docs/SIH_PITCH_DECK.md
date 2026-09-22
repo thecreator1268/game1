@@ -66,9 +66,10 @@ their loved one is improving or declining.*
    pattern recognition, and orientation — each explicitly mapped to a real MoCA/ADAS-Cog
    clinical assessment domain, not generic puzzles. Includes a Clock Drawing Test
    analogue (Ghadi Dekho), one of the most recognized dementia-screening tasks worldwide.
-2. **Explainable adaptive difficulty engine** — 10 levels per game, adjusts to the
-   patient's real-time performance on-device; every level change is logged with a
-   plain-language reason, auditable by a caregiver, not a black box.
+2. **Explainable adaptive difficulty engine** — 10 levels per game, driven by a
+   Bayesian Knowledge Tracing mastery estimate updated on-device after every session;
+   every level change is logged with a plain-language reason, auditable by a caregiver,
+   not a black box.
 3. **On-device cognitive analytics** — real statistical learning (linear-regression
    trend detection + anomaly flagging) surfaces whether each cognitive domain is
    genuinely improving, stable, or declining over time, computed from that patient's

@@ -277,7 +277,10 @@
     "introTitle": "परिचय",
     "introBody": "पहली बार ऐप खोलने पर मरीज़ को दिखने वाली 3 छोटी स्क्रीन। साथ बैठकर दोबारा देखने के लिए इसे फिर दिखाएँ।",
     "introReplay": "परिचय फिर से दिखाएँ",
-    "introQueued": "{{name}} के अगली बार ऐप खोलने पर परिचय दिखेगा।"
+    "introQueued": "{{name}} के अगली बार ऐप खोलने पर परिचय दिखेगा।",
+    "asymmetryFlag": {
+      "body": "{{domain}} engagement has been notably lower than {{name}}'s other areas for {{weeks}} weeks. Patterns like this can be worth mentioning at their next doctor's visit."
+    }
   },
   "sharedView": {
     "banner": "आप एक परिवार के सदस्य द्वारा साझा की गई रीड-ओनली झलक देख रहे हैं। यह अपडेट नहीं होगी, और यह डिवाइस देखभालकर्ता के रूप में साइन-इन नहीं है।",

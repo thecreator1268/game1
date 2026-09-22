@@ -227,7 +227,10 @@
     "reminderAlertsEnable": "Pynshong ïa ki jingpynhiar",
     "reminderAlertsOn": "Ki jingpynhiar la shong ha kane ka device",
     "reminderAlertsDenied": "Ka jingiaid ka la ïalade. Pynshong ïa ki notification jong kane ka site ha ka browser ne ka device settings jong phi ban pynshong kane.",
-    "reminderAlertsUnsupported": "Ym don sndep ha kane ka browser."
+    "reminderAlertsUnsupported": "Ym don sndep ha kane ka browser.",
+    "asymmetryFlag": {
+      "body": "{{domain}} engagement has been notably lower than {{name}}'s other areas for {{weeks}} weeks. Patterns like this can be worth mentioning at their next doctor's visit."
+    }
   },
   "sharedView": {
     "banner": "Phi long ban lih ïa ka jingïalam kaba read-only ka la share da kawei ka ïing. Ka ym pynithuh dawa, bad kane ka device ym la sign-in kum u nongïalam.",

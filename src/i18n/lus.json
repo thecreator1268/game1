@@ -227,7 +227,10 @@
     "reminderAlertsEnable": "Vaubelh Hawng Rawh",
     "reminderAlertsOn": "Hi device-ah hian vaubelh a hawn tawh",
     "reminderAlertsDenied": "Phalna hi din a ni. Hei hi hawng nan i browser emaw device settings-ah hian hi site atan notification hawng rawh.",
-    "reminderAlertsUnsupported": "Hi browser hian a support lo."
+    "reminderAlertsUnsupported": "Hi browser hian a support lo.",
+    "asymmetryFlag": {
+      "body": "{{domain}} engagement has been notably lower than {{name}}'s other areas for {{weeks}} weeks. Patterns like this can be worth mentioning at their next doctor's visit."
+    }
   },
   "sharedView": {
     "banner": "Chhungkaw mi pakhat sharenna read-only snapshot i en mek. A update tawh lo, he device hi caregiver angin sign-in a ni lo.",

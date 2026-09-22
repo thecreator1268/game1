@@ -7,7 +7,7 @@ import { getDomainBalance } from '@/dashboard/dashboardData';
 import { deletePatientData } from '@/lib/patientDeletion';
 import { DEFAULT_BKT_PARAMS, replayMastery, updateMasteryFromAccuracy } from './bkt';
 import { recordGameSession } from './gameSessionService';
-import { getDomainMastery, updateDomainMastery } from './masteryService';
+import { getAsymmetricDomainFlag, getDomainMastery, updateDomainMastery } from './masteryService';
 
 vi.mock('@/sync/queue', () => ({ syncPendingData: vi.fn() }));
 
@@ -27,6 +27,26 @@ function session(patientId: string, domain: Domain, accuracy: number): GameSessi
     errorTypes: ['none'],
     startedAt: clock,
     endedAt: clock + 30_000,
+    synced: false,
+  };
+}
+
+// For the asymmetric-domain flag: sessions at an explicit point in the past,
+// rather than the `session()` helper's "a few minutes ago" clock.
+function sessionAt(patientId: string, domain: Domain, accuracy: number, daysAgo: number): GameSession {
+  const startedAt = Date.now() - daysAgo * 24 * 60 * 60 * 1000;
+  return {
+    id: `s-${startedAt}-${domain}-${Math.random()}`,
+    patientId,
+    gameId: 'smriti-cards',
+    domain,
+    level: 1,
+    score: 0,
+    accuracy,
+    avgResponseMs: 2000,
+    errorTypes: ['none'],
+    startedAt,
+    endedAt: startedAt + 30_000,
     synced: false,
   };
 }
@@ -212,5 +232,78 @@ describe('caregiver-facing numbers and data deletion', () => {
 
     expect(await db.masteryEstimates.get(['p1', 'memory'])).toBeUndefined();
     expect(await db.masteryEstimates.get(['p2', 'memory'])).toBeDefined();
+  });
+});
+
+describe('getAsymmetricDomainFlag', () => {
+  // Four solid domains, spread over 5 weeks so "sustained" checks find data at
+  // every checkpoint, high and steady accuracy.
+  async function addSolidDomains(patientId: string, domains: Domain[]) {
+    const rows: GameSession[] = [];
+    for (const domain of domains) {
+      for (const daysAgo of [35, 28, 21, 14, 7, 1]) {
+        rows.push(sessionAt(patientId, domain, 0.95, daysAgo));
+      }
+    }
+    await db.sessions.bulkAdd(rows);
+  }
+
+  it('does not fire on a single low session, even though the gap alone would clear 25 points', async () => {
+    await addSolidDomains('p1', ['memory', 'attention', 'routine', 'orientation']);
+    // pattern has exactly one session, very recent: a bad day, not a pattern.
+    await db.sessions.add(sessionAt('p1', 'pattern', 0.1, 1));
+
+    expect(await getAsymmetricDomainFlag('p1')).toBeNull();
+  });
+
+  it('fires when the same domain lags by 25+ points both now and 2 weeks ago', async () => {
+    await addSolidDomains('p1', ['memory', 'attention', 'routine', 'orientation']);
+    // pattern has its own history spanning the same 5 weeks, consistently weak.
+    for (const daysAgo of [35, 28, 21, 14, 7, 1]) {
+      await db.sessions.add(sessionAt('p1', 'pattern', 0.2, daysAgo));
+    }
+
+    const flag = await getAsymmetricDomainFlag('p1');
+    expect(flag).not.toBeNull();
+    expect(flag!.domain).toBe('pattern');
+    expect(flag!.gapPct).toBeGreaterThanOrEqual(25);
+    expect(flag!.weeks).toBeGreaterThanOrEqual(2);
+  });
+
+  it('does not fire when the gap is real today but was not there 2 weeks ago (a recent dip, not sustained)', async () => {
+    await addSolidDomains('p1', ['memory', 'attention', 'routine', 'orientation']);
+    // pattern matched the others until 10 days ago, then dropped off sharply.
+    for (const daysAgo of [35, 28, 21]) await db.sessions.add(sessionAt('p1', 'pattern', 0.95, daysAgo));
+    for (const daysAgo of [10, 7, 1]) await db.sessions.add(sessionAt('p1', 'pattern', 0.1, daysAgo));
+
+    expect(await getAsymmetricDomainFlag('p1')).toBeNull();
+  });
+
+  it('requires every domain to have data before comparing (the existing "not enough data yet" gate)', async () => {
+    // Only 3 of the other 4 domains have any sessions; orientation has none.
+    await addSolidDomains('p1', ['memory', 'attention', 'routine']);
+    for (const daysAgo of [35, 28, 21, 14, 7, 1]) {
+      await db.sessions.add(sessionAt('p1', 'pattern', 0.2, daysAgo));
+    }
+
+    expect(await getAsymmetricDomainFlag('p1')).toBeNull();
+  });
+
+  it('flags at most one domain: the most asymmetric of several lagging ones', async () => {
+    await addSolidDomains('p1', ['memory', 'attention']);
+    for (const daysAgo of [35, 28, 21, 14, 7, 1]) {
+      await db.sessions.add(sessionAt('p1', 'routine', 0.5, daysAgo)); // lags a little
+      await db.sessions.add(sessionAt('p1', 'pattern', 0.05, daysAgo)); // lags a lot
+      await db.sessions.add(sessionAt('p1', 'orientation', 0.95, daysAgo));
+    }
+
+    const flag = await getAsymmetricDomainFlag('p1');
+    expect(flag).not.toBeNull();
+    expect(flag!.domain).toBe('pattern');
+  });
+
+  it('is null when no domain lags by 25+ points', async () => {
+    await addSolidDomains('p1', ['memory', 'attention', 'routine', 'orientation', 'pattern']);
+    expect(await getAsymmetricDomainFlag('p1')).toBeNull();
   });
 });

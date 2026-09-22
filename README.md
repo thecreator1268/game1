@@ -403,6 +403,17 @@ settings need somewhere to live).
 
 ## Known limitations (naming our own gaps)
 
+- **Regulatory boundary: general wellness, not SaMD** (adjacent to the non-diagnostic
+  disclaimer at the top of this README). SmritiSetu is designed to stay within CDSCO's
+  "General Wellness Software" exclusion (Guidance Document on Medical Device Software,
+  MDR-2017, July 2026 — Doc No. CDSCO/MD/GD/MDSW/01/2026, issued 21 July 2026): it
+  supports and reports on general engagement and activity patterns only, and deliberately
+  makes no reference to any disease, disorder, or pathological condition, and performs no
+  screening, staging, or severity assessment of dementia or any other condition. Any
+  feature that would estimate condition severity would fall outside this exclusion and
+  require CDSCO registration as Software as a Medical Device (SaMD) — a regulatory
+  pathway out of scope for this project. This boundary is a deliberate design constraint,
+  not an oversight. (Full citation: `src/lib/evidence.ts`'s `CDSCO_MDSW_GUIDANCE_2026`.)
 - **Placeholder art, not commissioned regional artwork.** Smriti Cards' culturally-themed
   pairs are line icons from the shared SVG sprite (`IconSprite.tsx` — the app uses no
   emoji); Aakar Milan uses geometric glyphs; Chaya Khoj derives "shadows" by

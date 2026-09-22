@@ -227,7 +227,10 @@
     "reminderAlertsEnable": "सतर्कता सुरु गर्नुहोस्",
     "reminderAlertsOn": "यस यन्त्रमा सतर्कता सुरु छ",
     "reminderAlertsDenied": "अनुमति रोकियो। यसलाई सुरु गर्न आफ्नो ब्राउजर वा यन्त्र सेटिङमा यो साइटको लागि सूचना सक्षम गर्नुहोस्।",
-    "reminderAlertsUnsupported": "यो ब्राउजरमा समर्थित छैन।"
+    "reminderAlertsUnsupported": "यो ब्राउजरमा समर्थित छैन।",
+    "asymmetryFlag": {
+      "body": "{{domain}} engagement has been notably lower than {{name}}'s other areas for {{weeks}} weeks. Patterns like this can be worth mentioning at their next doctor's visit."
+    }
   },
   "sharedView": {
     "banner": "तपाईं परिवारको सदस्यले साझा गरेको रिड-ओनली झलक हेर्दै हुनुहुन्छ। यो अपडेट हुँदैन, र यो यन्त्र हेरचाहकर्ताको रूपमा साइन-इन छैन।",

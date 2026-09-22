@@ -1,7 +1,8 @@
 import { db } from '@/db/schema';
 import type { Domain, GameSession, LevelChange, Reminder, ReminderLog } from '@/db/types';
 import { DOMAINS } from '@/games/gameList';
-import { getDomainMastery } from '@/engine/masteryService';
+import { getDomainMastery, getAsymmetricDomainFlag as engineGetAsymmetricDomainFlag } from '@/engine/masteryService';
+import type { AsymmetricDomainFlag } from '@/engine/masteryService';
 import {
   computeDomainTrend,
   detectAnomalies,
@@ -115,6 +116,17 @@ export async function getDomainBalance(patientId: string, days: number): Promise
       masteryPct: pL === null || pL === undefined ? null : Math.round(pL * 100),
     };
   });
+}
+
+export type { AsymmetricDomainFlag };
+
+/**
+ * A calm wellness observation for the Domain Balance card, not a new score:
+ * see engine/masteryService.ts's getAsymmetricDomainFlag for the gate and the
+ * "sustained, not one session" check.
+ */
+export async function getAsymmetricDomainFlag(patientId: string): Promise<AsymmetricDomainFlag | null> {
+  return engineGetAsymmetricDomainFlag(patientId);
 }
 
 export interface DomainInsight {

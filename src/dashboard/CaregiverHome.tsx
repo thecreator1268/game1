@@ -4,6 +4,8 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { Card } from '@/components/Card';
 import { Button } from '@/components/Button';
 import { Icon } from '@/components/IconSprite';
+import { IconButton } from '@/components/IconButton';
+import { CloseIcon } from '@/components/icons';
 import { db } from '@/db/schema';
 import { useCaregiverPatient } from '@/hooks/useCaregiverPatient';
 import { useCountUp } from '@/hooks/useCountUp';
@@ -15,6 +17,7 @@ import {
   getAdherence,
   getCognitiveInsights,
   getDomainAveragesForRange,
+  getAsymmetricDomainFlag,
   getDomainBalance,
   getDomainTrends,
 } from './dashboardData';
@@ -80,6 +83,17 @@ export default function CaregiverHome() {
     () => (patient ? getCognitiveInsights(patient.id) : undefined),
     [patient?.id],
   );
+  const asymmetryFlag = useLiveQuery(
+    () => (patient ? getAsymmetricDomainFlag(patient.id) : undefined),
+    [patient?.id],
+  );
+  // Dismiss is per dashboard visit, not persisted — reappearing after a
+  // reload is intentional (it's a live re-check of real data, not a one-time
+  // tip), and re-flagging a domain this same dashboard session would be
+  // noisy. Keyed by domain+weeks so it resurfaces if the picture changes
+  // (a different domain, or more weeks of the same one).
+  const [dismissedAsymmetryKey, setDismissedAsymmetryKey] = useState<string | null>(null);
+  const asymmetryKey = asymmetryFlag ? `${asymmetryFlag.domain}:${asymmetryFlag.weeks}` : null;
   const streakDisplay = useCountUp(adherence?.streak);
   // The one domain with the least practice this range — a lightweight,
   // real-data suggestion rather than the mockup's hardcoded copy. When 2+
@@ -270,6 +284,33 @@ export default function CaregiverHome() {
         <p className="text-body text-text-muted">{t('dashboard.domainBalanceBody', { name: patient.name })}</p>
         {balance && <DomainBalanceChart data={balance} />}
       </Card>
+
+      {asymmetryFlag && asymmetryKey !== dismissedAsymmetryKey && (
+        // A calm observation about existing data, not a new score or an
+        // alert: same tinted-card language as the suggestion card below,
+        // dismissible because it's a passive note, not an action to take.
+        <div
+          className="tint-orientation flex items-start gap-3 rounded-card border-[3px] border-text p-4 print:hidden"
+        >
+          <span className="icon-tile shrink-0" aria-hidden>
+            <Icon name="trend" size={30} />
+          </span>
+          <p className="flex-1 text-body">
+            {t('dashboard.asymmetryFlag.body', {
+              domain: t(`domains.${asymmetryFlag.domain}`),
+              name: patient.name,
+              weeks: asymmetryFlag.weeks,
+            })}
+          </p>
+          <IconButton
+            label={t('common.close')}
+            onClick={() => setDismissedAsymmetryKey(asymmetryKey)}
+            className="h-10 w-10 shrink-0 bg-transparent shadow-none hover:bg-black/5"
+          >
+            <CloseIcon />
+          </IconButton>
+        </div>
+      )}
 
       {leastPlayed && (
         <div

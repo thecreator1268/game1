@@ -227,7 +227,10 @@
     "reminderAlertsEnable": "চেংবা লাউথোকপা হাপচিনবিয়ু",
     "reminderAlertsOn": "দেভাইছ অসিদা চেংবা লাউথোকপা হাংলি",
     "reminderAlertsDenied": "য়াথংনবা অদু থিংখ্রে। মসি হাপচিনবা নহাক্কী browser নত্রগা device settings-তা site অসিগীদমক notification হাপচিনবিয়ু।",
-    "reminderAlertsUnsupported": "browser অসিদা support তৌদে।"
+    "reminderAlertsUnsupported": "browser অসিদা support তৌদে।",
+    "asymmetryFlag": {
+      "body": "{{domain}} engagement has been notably lower than {{name}}'s other areas for {{weeks}} weeks. Patterns like this can be worth mentioning at their next doctor's visit."
+    }
   },
   "sharedView": {
     "banner": "নহাক ইমুং মনুং অমনা share তৌবা read-only snapshot অমা য়েংরি। মসি update তৌদে, অমসুং device অসি caregiver অমা ওইনা sign-in তৌদ্রে।",

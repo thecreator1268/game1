@@ -227,7 +227,10 @@
     "reminderAlertsEnable": "Sotorko sarai",
     "reminderAlertsOn": "Bo device-o sotorko sarai dongdo",
     "reminderAlertsDenied": "Anumoti bondho thangbai. Bo sarainani khan bini browser tokhro device settings-o bo site-ni khan notification sarai.",
-    "reminderAlertsUnsupported": "Bo browser-o support kaubo."
+    "reminderAlertsUnsupported": "Bo browser-o support kaubo.",
+    "asymmetryFlag": {
+      "body": "{{domain}} engagement has been notably lower than {{name}}'s other areas for {{weeks}} weeks. Patterns like this can be worth mentioning at their next doctor's visit."
+    }
   },
   "sharedView": {
     "banner": "Nwng songnwi bwrwini ekjon-ni share kora read-only snapshot naikhwi thakena. Ye update hwyo, aro bo device-a caregiver hisebe sign-in kaubo.",
