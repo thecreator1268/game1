@@ -385,14 +385,21 @@ screen (`RoleSelect.tsx`) — not a third big button next to "I want to play" /
 "I am a caregiver", so it doesn't add a confusing extra choice to the one screen a
 patient with cognitive impairment sees on every app launch.
 
-**The panel is off in production builds.** The `/admin` routes and that link are
-only registered when `ADMIN_ENABLED` is true (`src/lib/featureFlags.ts`): always in
-the dev server, and in a production build only if it was built with
+**The panel is off in production builds by default.** The `/admin` routes and that
+link are only registered when `ADMIN_ENABLED` is true (`src/lib/featureFlags.ts`):
+always in the dev server, and in a production build only if it was built with
 `VITE_ENABLE_ADMIN=true`. The reason is the "Forgot PIN" flow, which (like the
 caregiver one) lets anyone on the device set a new PIN with no proof of identity —
 acceptable for the caregiver gate, not for a panel that can reset every caregiver
 PIN and wipe all data. In a build without the flag, `/admin` falls through to the
-catch-all and redirects home, so the public demo never exposes it.
+catch-all and redirects home.
+
+**This repo's own public demo is an accepted exception.** `.github/workflows/deploy.yml`
+sets `VITE_ENABLE_ADMIN=true`, at the site owner's explicit request, so the deployed
+demo URL does expose `/admin` — anyone with the link can reach it and reset a PIN
+unverified. That's a known, chosen trade-off for demoing the panel itself, not an
+oversight; don't copy this setting into a build that will hold real patient data
+without first giving `ForgotPinReset` a real identity check.
 
 ## Data model (Dexie, `src/db/schema.ts` / `src/db/types.ts`)
 
