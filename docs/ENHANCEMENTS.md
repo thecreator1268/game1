@@ -55,6 +55,44 @@ from based on remaining time, not a required checklist)
   or per-level estimates, once real, anonymised session data exists across a
   deployed patient base.
 
+## Evaluated and declined
+
+- **A public Indian holidays/festivals API, to enrich Aaj Ka Din with real
+  regional dates when online.** Investigated (Sept 2026) and declined for
+  now — not because the idea is bad, but because every option surveyed has
+  a real problem for this specific app's architecture:
+  - **Calendarific / AbstractAPI** (the two mainstream options, with proper
+    state/region-level India coverage) both require an API key on their
+    free tier. This app has **no backend** (the `/sync` server is a mock;
+    see README) to hold that key confidentially — a client-side PWA can
+    only ship a key inside its own public JS bundle, where anyone can read
+    it, scrape it, and exhaust the free quota for every user of the
+    deployed app. Fixing that properly means standing up a real serverless
+    proxy just to hide one key, which is a genuine backend the project
+    doesn't otherwise need.
+  - **The one no-auth-key option found** (a community FastAPI project on
+    GitHub, `pyapril15/indian-festivals-api`) avoids the key problem but
+    trades it for a worse one: an unvetted, single-maintainer hobby API
+    with no uptime guarantee and no way to verify the accuracy of the
+    religious/regional festival dates it returns. Getting a festival date
+    wrong in a multi-religious, multi-region NER context is a real
+    correctness/sensitivity risk, not a cosmetic bug, and there's no way to
+    audit that source's data pipeline.
+  - **Benefit is genuinely modest.** Aaj Ka Din's existing 3 categories
+    (day of week, time of day, season) already exercise real-world
+    orientation every single day; a holiday/festival question would only
+    add value on the small number of calendar days that are actually a
+    named festival, and would sit idle (or need graceful "no festival
+    today" handling) the rest of the year.
+  - This matches the brief given for this evaluation almost exactly: skip
+    when an optional online enhancement adds meaningful complexity
+    (API-key security, an offline-cache/expiry layer, regional filtering
+    across NER states, a fallback UX for "unreachable") for a modest,
+    seasonal benefit. Revisit only if this project ever grows a real
+    backend for other reasons (see the `/sync` roadmap item above) — at
+    that point, proxying Calendarific through it removes the key-exposure
+    problem and this becomes a small, genuinely low-risk addition.
+
 For anything you build from the Quick wins or Medium lift sections, follow
 the same rules as the rest of this project: offline-first, elderly-safe
 motion/accessibility rules, and the claymorphic design tokens already
