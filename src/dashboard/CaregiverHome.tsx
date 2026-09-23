@@ -220,7 +220,7 @@ export default function CaregiverHome() {
               readOnly
               value={familyShareLink}
               onFocus={(e) => e.target.select()}
-              className="tap-target min-w-0 flex-1 rounded-card border-2 border-border bg-surface px-4 text-sm"
+              className="input-elderly min-w-0 flex-1 text-sm"
             />
             <Button
               variant="secondary"

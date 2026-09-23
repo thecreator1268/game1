@@ -98,7 +98,7 @@ export default function Onboarding() {
                   <button
                     key={lang.code}
                     onClick={() => chooseLanguage(lang.code as SupportedLanguage)}
-                    className="tap-target rounded-card border-2 border-border bg-surface p-4 text-action font-semibold shadow-card transition-transform hover:border-primary hover:bg-surface-alt active:scale-[0.97]"
+                    className="tap-press tap-target rounded-card border-2 border-border bg-surface p-4 text-action font-semibold shadow-card hover:border-primary hover:bg-surface-alt"
                   >
                     {lang.label}
                   </button>
@@ -136,7 +136,7 @@ export default function Onboarding() {
               value={patientName}
               onChange={(e) => setPatientName(e.target.value)}
               placeholder={t('onboarding.setupPatientNamePlaceholder')}
-              className="tap-target mt-6 w-full rounded-card border-2 border-border bg-surface px-4 text-action"
+              className="input-elderly mt-6 w-full text-action"
             />
             <Button
               className="mt-6 w-full"
@@ -159,7 +159,7 @@ export default function Onboarding() {
               value={pin}
               onChange={(e) => setPin(e.target.value.replace(/\D/g, ''))}
               placeholder="••••"
-              className="tap-target mt-6 w-full rounded-card border-2 border-border bg-surface px-4 text-center text-action tracking-[0.5em]"
+              className="input-elderly mt-6 w-full text-center text-action tracking-[0.5em]"
             />
             <p className="mt-4 text-body text-text-muted">{t('onboarding.setupCaregiverPinConfirm')}</p>
             <input
@@ -170,7 +170,7 @@ export default function Onboarding() {
               value={confirmPin}
               onChange={(e) => setConfirmPin(e.target.value.replace(/\D/g, ''))}
               placeholder="••••"
-              className="tap-target mt-2 w-full rounded-card border-2 border-border bg-surface px-4 text-center text-action tracking-[0.5em]"
+              className="input-elderly mt-2 w-full text-center text-action tracking-[0.5em]"
             />
             {pinError && <p className="mt-2 text-body text-danger">{pinError}</p>}
             <Button

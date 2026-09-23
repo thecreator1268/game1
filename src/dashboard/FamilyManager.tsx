@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type CSSProperties } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLiveQuery } from 'dexie-react-hooks';
+import { AnimatePresence } from 'motion/react';
+import { AnimatedInlineMessage } from '@/components/AnimatedInlineMessage';
 import { Card } from '@/components/Card';
 import { Button } from '@/components/Button';
 import { ConfirmDangerModal } from '@/components/ConfirmDangerModal';
@@ -9,12 +11,16 @@ import { db } from '@/db/schema';
 import type { FamilyMember } from '@/db/types';
 import { useCaregiverPatient } from '@/hooks/useCaregiverPatient';
 import { useAudioRecorder } from '@/hooks/useAudioRecorder';
+import { createEntranceFlag } from '@/hooks/useEntranceOnce';
 import { readImageFileAsCompressedDataUrl } from '@/lib/file';
 import { addFamilyMember, deleteFamilyMember } from '@/family/familyService';
+
+const useFamilyGridEntrance = createEntranceFlag();
 
 export default function FamilyManager() {
   const { t } = useTranslation();
   const patient = useCaregiverPatient();
+  const animateEntrance = useFamilyGridEntrance();
   const members = useLiveQuery(
     () => (patient ? db.familyMembers.where('patientId').equals(patient.id).toArray() : []),
     [patient?.id],
@@ -146,9 +152,7 @@ export default function FamilyManager() {
                 placeholder={t('familyManager.name')}
                 aria-invalid={nameInvalid}
                 aria-describedby={nameInvalid ? 'name-error' : undefined}
-                className={`tap-target rounded-card border-2 bg-surface px-4 text-body ${
-                  nameInvalid ? 'border-danger' : 'border-border'
-                }`}
+                className={`input-elderly ${nameInvalid ? 'border-danger' : ''}`}
               />
               {nameInvalid && (
                 <p id="name-error" className="text-sm font-semibold text-danger">
@@ -163,9 +167,7 @@ export default function FamilyManager() {
                 placeholder={t('familyManager.relation')}
                 aria-invalid={relationInvalid}
                 aria-describedby={relationInvalid ? 'relation-error' : undefined}
-                className={`tap-target rounded-card border-2 bg-surface px-4 text-body ${
-                  relationInvalid ? 'border-danger' : 'border-border'
-                }`}
+                className={`input-elderly ${relationInvalid ? 'border-danger' : ''}`}
               />
               {relationInvalid && (
                 <p id="relation-error" className="text-sm font-semibold text-danger">
@@ -190,20 +192,25 @@ export default function FamilyManager() {
               <p className="text-sm text-text-muted">Microphone recording isn't available on this device/browser.</p>
             )}
             <Button onClick={() => void handleAdd()}>{t('common.add')}</Button>
-            {justAdded && (
-              <p role="status" className="flex items-center gap-1.5 text-body font-semibold text-success">
-                <Icon name="check" size={18} />
-                {t('familyManager.memberAdded', { name: justAdded })}
-              </p>
-            )}
+            <AnimatedInlineMessage
+              presenceKey={justAdded}
+              className="flex items-center gap-1.5 text-body font-semibold text-success"
+            >
+              <Icon name="check" size={18} />
+              {t('familyManager.memberAdded', { name: justAdded })}
+            </AnimatedInlineMessage>
           </div>
         </div>
       </Card>
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
         {members && members.length > 0 ? (
-          members.map((m) => (
-            <Card key={m.id} className="flex flex-col items-center gap-2 text-center">
+          members.map((m, i) => (
+            <Card
+              key={m.id}
+              style={animateEntrance ? ({ '--stagger-index': i } as CSSProperties) : undefined}
+              className={`flex flex-col items-center gap-2 text-center ${animateEntrance ? 'stagger-tile' : ''}`}
+            >
               <img src={m.photoUrl} alt="" className="h-20 w-20 rounded-full object-cover" />
               <p className="text-body font-semibold">{m.name}</p>
               <p className="text-sm text-text-muted">{m.relation}</p>
@@ -221,18 +228,20 @@ export default function FamilyManager() {
         )}
       </div>
 
-      {removeTarget && (
-        <ConfirmDangerModal
-          title={t('familyManager.removeMember', { name: removeTarget.name })}
-          body={t('familyManager.removeMemberBody', {
-            name: removeTarget.name,
-            voice: removeTarget.voiceNoteUrl ? t('familyManager.removeMemberVoice') : '',
-          })}
-          confirmLabel={t('familyManager.removeMemberConfirm')}
-          onConfirm={() => void handleConfirmRemove()}
-          onClose={() => setRemoveTarget(null)}
-        />
-      )}
+      <AnimatePresence>
+        {removeTarget && (
+          <ConfirmDangerModal
+            title={t('familyManager.removeMember', { name: removeTarget.name })}
+            body={t('familyManager.removeMemberBody', {
+              name: removeTarget.name,
+              voice: removeTarget.voiceNoteUrl ? t('familyManager.removeMemberVoice') : '',
+            })}
+            confirmLabel={t('familyManager.removeMemberConfirm')}
+            onConfirm={() => void handleConfirmRemove()}
+            onClose={() => setRemoveTarget(null)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }

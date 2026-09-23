@@ -1,9 +1,13 @@
+import type { CSSProperties } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'motion/react';
 import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
+import { createEntranceFlag } from '@/hooks/useEntranceOnce';
 import type { DomainBalanceEntry } from './dashboardData';
 import { DOMAIN_COLOR, DOMAIN_ICON } from './domainColors';
+
+const useMasteryListEntrance = createEntranceFlag();
 
 interface BarShapeProps {
   x?: number;
@@ -83,6 +87,7 @@ export function DomainBalanceChart({ data }: { data: DomainBalanceEntry[] }) {
   const { t } = useTranslation();
   const chartData = data.map((d) => ({ ...d, label: t(`domains.${d.domain}`) }));
   const showMastery = data.some((d) => d.masteryPct !== undefined);
+  const animateEntrance = useMasteryListEntrance();
 
   return (
     <>
@@ -112,8 +117,12 @@ export function DomainBalanceChart({ data }: { data: DomainBalanceEntry[] }) {
       // "74% mastery estimate" never collides at phone widths.
       <div className="mt-3">
         <ul className="grid grid-cols-2 gap-x-4 gap-y-2 sm:grid-cols-5">
-          {chartData.map((entry) => (
-            <li key={entry.domain} className="flex items-start gap-2 text-sm text-text-muted">
+          {chartData.map((entry, i) => (
+            <li
+              key={entry.domain}
+              style={animateEntrance ? ({ '--stagger-index': i } as CSSProperties) : undefined}
+              className={`flex items-start gap-2 text-sm text-text-muted ${animateEntrance ? 'stagger-tile' : ''}`}
+            >
               <span
                 aria-hidden
                 className="mt-1 h-3 w-3 shrink-0 rounded-[3px] border-2 border-text"

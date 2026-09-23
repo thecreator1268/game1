@@ -3,12 +3,28 @@ import 'fake-indexeddb/auto';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import '@/i18n';
 import { db } from '@/db/schema';
 import { generatePinSalt, hashPin } from '@/lib/pin';
 import { useAuthStore } from '@/store/authStore';
 import CaregiverLogin from './CaregiverLogin';
+
+// PinPad now renders an AnimatedInlineMessage (2026 motion pass), which reads
+// prefers-reduced-motion; jsdom has no real matchMedia, and the value doesn't
+// matter for these PIN-reset tests, only the presence of a callable — see
+// RouteTransition.test.tsx for the same stub.
+beforeEach(() => {
+  vi.stubGlobal(
+    'matchMedia',
+    vi.fn().mockImplementation((query: string) => ({
+      matches: false,
+      media: query,
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+    })),
+  );
+});
 
 describe('CaregiverLogin forgot-PIN reset', () => {
   beforeEach(async () => {

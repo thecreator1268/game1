@@ -1,9 +1,25 @@
 // @vitest-environment jsdom
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import '@/i18n';
 import { Modal } from './Modal';
+
+beforeEach(() => {
+  // Modal now checks prefers-reduced-motion (2026 motion pass); jsdom has no
+  // real matchMedia, and the value doesn't matter for these tests (focus
+  // trap / Escape / Tab-wrap logic, not the animation itself) — see
+  // RouteTransition.test.tsx for the same stub.
+  vi.stubGlobal(
+    'matchMedia',
+    vi.fn().mockImplementation((query: string) => ({
+      matches: false,
+      media: query,
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+    })),
+  );
+});
 
 describe('Modal', () => {
   it('moves focus into the dialog on open', async () => {

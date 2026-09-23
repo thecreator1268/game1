@@ -85,7 +85,7 @@ export function ConfirmDangerModal({
               onChange={(e) => setTyped(e.target.value)}
               autoComplete="off"
               autoCapitalize="characters"
-              className="tap-target rounded-card border-2 border-border bg-surface px-4 text-body font-semibold tracking-widest"
+              className="input-elderly font-semibold tracking-widest"
               aria-label={t('common.typeToConfirm', { word: typeToConfirm })}
             />
           </label>

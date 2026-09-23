@@ -1,4 +1,5 @@
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { MOTION_SLOW_MS } from '@/lib/motionTokens';
 import type { AdherenceDay } from './dashboardData';
 
 const SEQUENTIAL_BLUE = '#256abf';
@@ -36,7 +37,7 @@ export function AdherenceChart({ data }: { data: AdherenceDay[] }) {
             dataKey="pct"
             fill={SEQUENTIAL_BLUE}
             radius={[4, 4, 0, 0]}
-            animationDuration={700}
+            animationDuration={MOTION_SLOW_MS}
             animationEasing="ease-out"
           />
         </BarChart>

@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type CSSProperties } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { IconButton } from '@/components/IconButton';
 import { OfflineBadge } from '@/components/OfflineBadge';
 import { HomeIcon } from '@/components/icons';
 import { useActivePatient } from '@/hooks/useActivePatient';
+import { createEntranceFlag } from '@/hooks/useEntranceOnce';
 import { getCurrentLevel } from '@/engine/gameSessionService';
 import { MAX_LEVEL, MIN_LEVEL } from '@/engine/adaptiveEngine';
 import { getGameMeta } from '@/games/gameList';
@@ -12,6 +13,7 @@ import { GAME_COMPONENTS } from '@/games/registry';
 import type { GameId } from '@/db/types';
 
 const LEVELS = Array.from({ length: MAX_LEVEL - MIN_LEVEL + 1 }, (_, i) => MIN_LEVEL + i);
+const useLevelGridEntrance = createEntranceFlag();
 
 // A patient (or a caregiver exploring with them) can freely pick any of the
 // 10 levels — nothing is locked. The adaptive engine still automatically
@@ -25,6 +27,7 @@ export default function LevelSelect() {
   const patient = useActivePatient();
   const [recommended, setRecommended] = useState<number | null>(null);
   const isValidGameId = Boolean(gameId && gameId in GAME_COMPONENTS);
+  const animateEntrance = useLevelGridEntrance();
 
   useEffect(() => {
     if (!patient?.id || !gameId || !isValidGameId) return;
@@ -70,13 +73,16 @@ export default function LevelSelect() {
         <p className="mt-1 text-body text-text-muted">{t('levelSelect.body')}</p>
 
         <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-5">
-          {LEVELS.map((lvl) => {
+          {LEVELS.map((lvl, i) => {
             const isRecommended = recommended === lvl;
             return (
               <button
                 key={lvl}
                 onClick={() => navigate(`/patient/game/${gameId}?level=${lvl}`)}
-                className={`tap-target flex flex-col items-center justify-center gap-1 rounded-card border-2 p-4 text-center shadow-card transition-colors active:scale-[0.97] ${
+                style={animateEntrance ? ({ '--stagger-index': i } as CSSProperties) : undefined}
+                className={`tap-press tap-target flex flex-col items-center justify-center gap-1 rounded-card border-2 p-4 text-center shadow-card ${
+                  animateEntrance ? 'stagger-tile' : ''
+                } ${
                   isRecommended
                     ? 'border-primary bg-primary text-primary-text'
                     : 'border-border bg-surface hover:bg-surface-alt'

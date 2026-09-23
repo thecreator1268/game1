@@ -1,6 +1,7 @@
 import { type ReactNode, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { AnimatePresence } from 'motion/react';
 import type { GameId } from '@/db/types';
 import { getGameMeta } from '@/games/gameList';
 import { stopSpeaking } from '@/lib/speech';
@@ -79,7 +80,9 @@ export function GameShell({ gameId, level, score, children }: GameShellProps) {
 
       <main className="px-4 pb-10 sm:px-6">{children}</main>
 
-      {showAbout && <AboutGameModal gameId={gameId} onClose={() => setShowAbout(false)} />}
+      <AnimatePresence>
+        {showAbout && <AboutGameModal gameId={gameId} onClose={() => setShowAbout(false)} />}
+      </AnimatePresence>
       <BreakPromptWatcher />
     </div>
   );

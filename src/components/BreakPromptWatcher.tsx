@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { AnimatePresence } from 'motion/react';
 import { shouldShowBreakPrompt, useFatigueStore } from '@/store/fatigueStore';
 import { Modal } from './Modal';
 import { Button } from './Button';
@@ -26,31 +27,33 @@ export function BreakPromptWatcher() {
     return () => window.clearInterval(interval);
   }, []);
 
-  if (!visible) return null;
-
   return (
-    <Modal title={t('common.takeBreakTitle')} onClose={() => setVisible(false)}>
-      <p className="text-body text-text-muted mb-6">{t('common.takeBreakBody')}</p>
-      <div className="flex flex-col gap-3 sm:flex-row">
-        <Button
-          variant="secondary"
-          onClick={() => {
-            resetTracking();
-            setVisible(false);
-            navigate('/patient');
-          }}
-        >
-          {t('common.takeBreakStop')}
-        </Button>
-        <Button
-          onClick={() => {
-            dismissBreak();
-            setVisible(false);
-          }}
-        >
-          {t('common.takeBreakContinue')}
-        </Button>
-      </div>
-    </Modal>
+    <AnimatePresence>
+      {visible && (
+        <Modal title={t('common.takeBreakTitle')} onClose={() => setVisible(false)}>
+          <p className="text-body text-text-muted mb-6">{t('common.takeBreakBody')}</p>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <Button
+              variant="secondary"
+              onClick={() => {
+                resetTracking();
+                setVisible(false);
+                navigate('/patient');
+              }}
+            >
+              {t('common.takeBreakStop')}
+            </Button>
+            <Button
+              onClick={() => {
+                dismissBreak();
+                setVisible(false);
+              }}
+            >
+              {t('common.takeBreakContinue')}
+            </Button>
+          </div>
+        </Modal>
+      )}
+    </AnimatePresence>
   );
 }

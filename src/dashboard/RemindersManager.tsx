@@ -1,19 +1,23 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLiveQuery } from 'dexie-react-hooks';
+import { AnimatedInlineMessage } from '@/components/AnimatedInlineMessage';
 import { Card } from '@/components/Card';
 import { Button } from '@/components/Button';
 import { Icon } from '@/components/IconSprite';
 import { db } from '@/db/schema';
 import type { ReminderCategory } from '@/db/types';
 import { useCaregiverPatient } from '@/hooks/useCaregiverPatient';
+import { createEntranceFlag } from '@/hooks/useEntranceOnce';
 import { addReminder, deleteReminder } from '@/reminders/reminderService';
 
 const CATEGORIES: ReminderCategory[] = ['medicine', 'hydration', 'activity', 'appointment'];
+const useReminderListEntrance = createEntranceFlag();
 
 export default function RemindersManager() {
   const { t } = useTranslation();
   const patient = useCaregiverPatient();
+  const animateEntrance = useReminderListEntrance();
   const reminders = useLiveQuery(
     () => (patient ? db.reminders.where('patientId').equals(patient.id).toArray() : []),
     [patient?.id],
@@ -125,7 +129,7 @@ export default function RemindersManager() {
               <button
                 key={c}
                 onClick={() => setCategory(c)}
-                className={`rounded-full px-4 py-2 text-sm font-semibold ${
+                className={`tap-press tap-target rounded-full px-4 py-2 text-sm font-semibold ${
                   category === c ? 'bg-primary text-primary-text' : 'bg-surface-alt text-text'
                 }`}
               >
@@ -140,9 +144,7 @@ export default function RemindersManager() {
               placeholder={t('reminders.label')}
               aria-invalid={labelInvalid}
               aria-describedby={labelInvalid ? 'label-error' : undefined}
-              className={`tap-target rounded-card border-2 bg-surface px-4 text-body ${
-                labelInvalid ? 'border-danger' : 'border-border'
-              }`}
+              className={`input-elderly ${labelInvalid ? 'border-danger' : ''}`}
             />
             {labelInvalid && (
               <p id="label-error" className="flex items-center gap-1.5 text-sm font-semibold text-danger">
@@ -190,9 +192,7 @@ export default function RemindersManager() {
               onChange={(e) => setSchedule(e.target.value)}
               aria-invalid={scheduleInvalid}
               aria-describedby={scheduleInvalid ? 'schedule-error' : undefined}
-              className={`tap-target rounded-card border-2 bg-surface px-4 text-body ${
-                scheduleInvalid ? 'border-danger' : 'border-border'
-              }`}
+              className={`input-elderly ${scheduleInvalid ? 'border-danger' : ''}`}
             />
             {scheduleInvalid && (
               <p id="schedule-error" className="flex items-center gap-1.5 text-sm font-semibold text-danger">
@@ -205,22 +205,27 @@ export default function RemindersManager() {
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             placeholder={t('reminders.notes')}
-            className="tap-target rounded-card border-2 border-border bg-surface px-4 text-body"
+            className="input-elderly"
           />
           <Button onClick={() => void handleAdd()}>{t('common.add')}</Button>
-          {justAdded && (
-            <p role="status" className="flex items-center gap-1.5 text-body font-semibold text-success">
-              <Icon name="check" size={18} />
-              {t('reminders.reminderAdded')}
-            </p>
-          )}
+          <AnimatedInlineMessage
+            presenceKey={justAdded}
+            className="flex items-center gap-1.5 text-body font-semibold text-success"
+          >
+            <Icon name="check" size={18} />
+            {t('reminders.reminderAdded')}
+          </AnimatedInlineMessage>
         </div>
       </Card>
 
       <div className="flex flex-col gap-3">
         {reminders && reminders.length > 0 ? (
-          reminders.map((r) => (
-            <Card key={r.id} className="flex items-center justify-between gap-4">
+          reminders.map((r, i) => (
+            <Card
+              key={r.id}
+              style={animateEntrance ? ({ '--stagger-index': i } as CSSProperties) : undefined}
+              className={`flex items-center justify-between gap-4 ${animateEntrance ? 'stagger-tile' : ''}`}
+            >
               <div>
                 <p className="text-body font-semibold">
                   {t(`reminders.${r.category}`)} — {r.label}
@@ -228,7 +233,10 @@ export default function RemindersManager() {
                 <p className="text-sm text-text-muted">{r.schedule}</p>
                 {r.notes && <p className="text-sm text-text-muted">{r.notes}</p>}
               </div>
-              <button onClick={() => void deleteReminder(r.id)} className="text-sm font-semibold text-danger">
+              <button
+                onClick={() => void deleteReminder(r.id)}
+                className="tap-press tap-target text-sm font-semibold text-danger"
+              >
                 {t('common.delete')}
               </button>
             </Card>

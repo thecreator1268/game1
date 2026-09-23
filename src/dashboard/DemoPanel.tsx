@@ -34,7 +34,7 @@ export function DemoPanel() {
           role="switch"
           aria-checked={simulateOffline}
           onClick={() => setSimulateOffline(!simulateOffline)}
-          className={`tap-target rounded-full px-6 font-semibold transition-colors ${
+          className={`tap-press tap-target rounded-full px-6 font-semibold ${
             simulateOffline ? 'bg-accent text-accent-text' : 'bg-surface-alt text-text border-2 border-border'
           }`}
         >

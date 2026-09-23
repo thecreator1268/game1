@@ -76,7 +76,7 @@ export function ForgotPinReset({ onReset, onOpenChange }: ForgotPinResetProps) {
           setPin(e.target.value.replace(/\D/g, ''));
         }}
         placeholder="••••"
-        className="tap-target mt-3 w-full rounded-card border-2 border-border bg-surface px-4 text-center text-action tracking-[0.5em]"
+        className="input-elderly mt-3 w-full text-center text-action tracking-[0.5em]"
       />
       <input
         type="password"
@@ -89,7 +89,7 @@ export function ForgotPinReset({ onReset, onOpenChange }: ForgotPinResetProps) {
           setConfirmPin(e.target.value.replace(/\D/g, ''));
         }}
         placeholder="••••"
-        className="tap-target mt-2 w-full rounded-card border-2 border-border bg-surface px-4 text-center text-action tracking-[0.5em]"
+        className="input-elderly mt-2 w-full text-center text-action tracking-[0.5em]"
       />
       {error && <p className="mt-2 text-sm text-danger">{error}</p>}
       <div className="mt-3 flex gap-2">

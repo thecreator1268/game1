@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   CartesianGrid,
@@ -11,24 +12,34 @@ import {
 } from 'recharts';
 import { Icon } from '@/components/IconSprite';
 import type { Domain } from '@/db/types';
+import { createEntranceFlag } from '@/hooks/useEntranceOnce';
+import { MOTION_SLOW_MS } from '@/lib/motionTokens';
 import { DOMAINS } from '@/games/gameList';
 import type { DomainTrendPoint } from './dashboardData';
 import { DOMAIN_COLOR, DOMAIN_ICON } from './domainColors';
+
+const useLegendEntrance = createEntranceFlag();
 
 // Recharts' built-in Legend only offers a generic swatch/dash per series —
 // this app's rule is that a domain's identity is never color-alone (see
 // index.css's theme comment on the coral/teal CVD pair), so this legend
 // needs the same per-domain icon the Domain Balance chart's bar avatars use
-// just below it, not Recharts' default.
+// just below it, not Recharts' default. Staggered fade-up on first mount,
+// same `.stagger-tile` pattern as every other card/list entrance in the app.
 function DomainLegend({ payload }: { payload?: { value: string; color?: string }[] }) {
   const { t } = useTranslation();
+  const animateEntrance = useLegendEntrance();
   if (!payload) return null;
   return (
     <ul className="mt-2 flex flex-wrap justify-center gap-x-5 gap-y-2">
-      {payload.map((entry) => {
+      {payload.map((entry, i) => {
         const domain = entry.value as Domain;
         return (
-          <li key={domain} className="flex items-center gap-1.5 text-sm text-text-muted">
+          <li
+            key={domain}
+            style={animateEntrance ? ({ '--stagger-index': i } as CSSProperties) : undefined}
+            className={`flex items-center gap-1.5 text-sm text-text-muted ${animateEntrance ? 'stagger-tile' : ''}`}
+          >
             <Icon name={DOMAIN_ICON[domain]} size={16} style={{ color: entry.color }} />
             {t(`domains.${domain}`)}
           </li>
@@ -74,7 +85,7 @@ export function DomainTrendsChart({ data }: { data: DomainTrendPoint[] }) {
               dot={false}
               activeDot={{ r: 5 }}
               connectNulls
-              animationDuration={700}
+              animationDuration={MOTION_SLOW_MS}
               animationEasing="ease-out"
             />
           ))}

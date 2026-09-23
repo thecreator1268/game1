@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { AnimatedInlineMessage } from './AnimatedInlineMessage';
 import { Icon } from './IconSprite';
 
 const KEYPAD = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', '⌫'];
@@ -85,16 +86,18 @@ export function PinPad({ length = 4, wrongMessage, lockedMessage, onSubmit, hide
         {Array.from({ length }).map((_, i) => (
           <span
             key={i}
-            className={`h-4 w-4 rounded-full border-2 border-primary ${i < pin.length ? 'bg-primary' : 'bg-transparent'}`}
+            className={`h-4 w-4 rounded-full border-2 border-primary transition-colors duration-[var(--motion-fast)] ${i < pin.length ? 'bg-primary' : 'bg-transparent'}`}
           />
         ))}
       </div>
 
-      {locked ? (
-        <p className="mb-4 text-body text-danger">{lockedMessage(secondsLeft)}</p>
-      ) : (
-        error && <p className="mb-4 text-body text-danger">{wrongMessage}</p>
-      )}
+      {/* "locked"/"wrong" as the presence key, not the message text itself:
+          lockedMessage(secondsLeft) changes every second while counting
+          down, and keying on that would replay the fade+rise on every tick
+          instead of once when the state is first entered. */}
+      <AnimatedInlineMessage presenceKey={locked ? 'locked' : error ? 'wrong' : null} className="mb-4 text-body text-danger">
+        {locked ? lockedMessage(secondsLeft) : wrongMessage}
+      </AnimatedInlineMessage>
 
       <div className="grid grid-cols-3 gap-3">
         {KEYPAD.map((key, idx) =>

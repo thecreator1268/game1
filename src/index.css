@@ -142,6 +142,29 @@
 }
 
 /*
+  Shared motion timing tokens (2026 exhaustive motion pass) — theme- and
+  color-mode-independent, so they live outside the blocks above. Three
+  buckets, used everywhere instead of each component hand-picking its own
+  number: fast for press/hover feedback (perceived as instant but not
+  jarring), medium for state transitions (toggle/tab/focus swaps, modal
+  entrance), slow for data reveals (chart bars/lines, stat count-ups). Motion
+  (JS) components import the numeric equivalents from src/lib/motionTokens.ts
+  instead of reading these — CSS custom properties aren't readable by Motion's
+  transition config — so if you change a value here, change it there too.
+*/
+:root {
+  --motion-fast: 120ms;
+  --motion-medium: 240ms;
+  --motion-slow: 650ms;
+  /* A calm, no-overshoot ease for anything Patient Mode can see (buttons,
+     toggles, inputs, tabs). Tier-2 spring overshoot stays hand-specified at
+     its 3 call sites (domain bars, level-up badge, splash) — it's an
+     intentionally different, more elaborate feel reserved for those
+     caregiver/celebration-only spots, not a shared token to standardize. */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/*
   Dark mode (independent [data-color-mode] toggle, caregiver Settings >
   Display Mode). The "ink pill" pattern inverts rather than staying literal
   black-on-dark: --color-accent becomes the light tone so primary-action
@@ -280,12 +303,20 @@ h3,
 
   /* Card tap: 120ms scale to 0.96, spring back on release — the one press
      effect every tappable surface in the app shares now that there's no
-     shadow left to invert on :active. */
+     shadow left to invert on :active. Widened from `transition-transform` to
+     the generic `transition` (2026 motion pass): every element using this
+     class is also tappable/hoverable UI whose background/border/opacity can
+     change (hover, active variant swap, disabled), and narrowing to one
+     property meant those changes were instant while the press-scale wasn't —
+     one shared token (--motion-fast) now smooths both instead of each
+     component needing its own extra transition-* utility. */
   .tap-press {
-    @apply transition-transform duration-[120ms] ease-out active:scale-[0.96];
+    @apply transition duration-[var(--motion-fast)] ease-out active:scale-[0.96];
   }
 
   .btn-elderly {
+    /* tap-press now carries the generic `transition` (see its comment), so
+       hover/color swaps on every button variant are smoothed for free. */
     @apply tap-press tap-target inline-flex items-center justify-center gap-3 rounded-full px-6 py-4 text-action font-semibold;
   }
   .btn-primary {
@@ -302,6 +333,20 @@ h3,
     @apply shadow-card rounded-card border-[3px] border-text bg-surface p-6;
   }
 
+  /* Shared text-input treatment (2026 motion pass) — every text/password/
+     date-time field in the app used to hand-repeat this same className
+     string with zero focus feedback beyond the browser default. Callers add
+     `border-danger` alongside this to signal a validation error; Tailwind's
+     utilities layer loads after this components-layer class, so that
+     override always wins over the default border-border here without
+     needing `!important`. */
+  .input-elderly {
+    @apply tap-target rounded-card border-2 border-border bg-surface px-4 text-body transition-colors duration-[var(--motion-medium)];
+  }
+  .input-elderly:focus-visible {
+    border-color: var(--color-primary);
+  }
+
   /* White rounded pill/row family — identity pill, streak, sync badge,
      reminder rows, in-game option buttons all resolve to this one flat
      surface + hard offset shadow + ink border, never a solid color fill. */
@@ -311,7 +356,7 @@ h3,
   /* Solid ink (light in dark mode) pill for primary taps — Play, Mark,
      nav-bar buttons. */
   .pill-ink {
-    @apply tap-press shadow-card-sm inline-flex items-center justify-center gap-1.5 rounded-full bg-accent px-4 py-2.5 text-sm font-semibold text-accent-text;
+    @apply tap-press shadow-card-sm inline-flex items-center justify-center gap-1.5 rounded-full bg-accent px-4 py-2.5 text-sm font-semibold text-accent-text hover:opacity-90;
   }
 
   /* The speech-bubble name tag overlapping a game card's top edge — the
@@ -371,6 +416,9 @@ h3,
   .pip {
     @apply h-1.5 w-3.5 rounded-full border border-text;
     background: transparent;
+    transition:
+      background-color var(--motion-medium) var(--ease-standard),
+      border-color var(--motion-medium) var(--ease-standard);
   }
   .pip-on {
     background: var(--color-text);
@@ -647,20 +695,6 @@ h3,
   }
 }
 
-@keyframes ssBannerIn {
-  0% {
-    transform: scale(0.85) translateY(10px);
-    opacity: 0;
-  }
-  65% {
-    transform: scale(1.03) translateY(0);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
 @keyframes ssBurst {
   0% {
     transform: translate(-50%, -50%) translate(0, 0) scale(1);
@@ -903,24 +937,8 @@ h3,
   animation: skeleton-shimmer 1.6s ease-in-out infinite;
 }
 
-/* Caregiver domain-balance bars growing in, staggered per bar. */
-@keyframes bar-grow-in {
-  from {
-    transform: scaleY(0);
-  }
-  to {
-    transform: scaleY(1);
-  }
-}
-.bar-grow-in {
-  transform-origin: bottom;
-  animation: bar-grow-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
-  animation-delay: calc(var(--bar-index, 0) * 60ms);
-}
-
 @media (prefers-reduced-motion: reduce) {
   .stagger-tile,
-  .bar-grow-in,
   .skeleton,
   .splash-badge,
   .sync-pulse,

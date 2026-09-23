@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { AnimatePresence } from 'motion/react';
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { ConfirmDangerModal } from '@/components/ConfirmDangerModal';
@@ -83,7 +84,7 @@ export default function SettingsPanel() {
             <button
               key={lang.code}
               onClick={() => void db.patients.update(patient.id, { preferredLanguage: lang.code as SupportedLanguage })}
-              className={`tap-target rounded-card border-2 px-4 font-semibold ${
+              className={`tap-press tap-target rounded-card border-2 px-4 font-semibold ${
                 patient.preferredLanguage === lang.code
                   ? 'border-primary bg-primary text-primary-text'
                   : 'border-border bg-surface'
@@ -102,7 +103,7 @@ export default function SettingsPanel() {
             <button
               key={scale}
               onClick={() => void db.patients.update(patient.id, { textScale: scale })}
-              className={`tap-target flex-1 rounded-card border-2 font-semibold ${
+              className={`tap-press tap-target flex-1 rounded-card border-2 font-semibold ${
                 patient.textScale === scale ? 'border-primary bg-primary text-primary-text' : 'border-border bg-surface'
               }`}
             >
@@ -119,7 +120,7 @@ export default function SettingsPanel() {
             <button
               key={theme}
               onClick={() => void db.patients.update(patient.id, { highContrastPalette: theme })}
-              className={`tap-target flex-1 rounded-card border-2 font-semibold ${
+              className={`tap-press tap-target flex-1 rounded-card border-2 font-semibold ${
                 patient.highContrastPalette === theme
                   ? 'border-primary bg-primary text-primary-text'
                   : 'border-border bg-surface'
@@ -141,7 +142,7 @@ export default function SettingsPanel() {
             <button
               key={mode}
               onClick={() => void db.patients.update(patient.id, { colorMode: mode })}
-              className={`tap-target flex-1 rounded-card border-2 font-semibold ${
+              className={`tap-press tap-target flex-1 rounded-card border-2 font-semibold ${
                 (patient.colorMode ?? 'light') === mode
                   ? 'border-primary bg-primary text-primary-text'
                   : 'border-border bg-surface'
@@ -208,16 +209,18 @@ export default function SettingsPanel() {
         </div>
       </Card>
 
-      {deleteOpen && (
-        <ConfirmDangerModal
-          title={t('dashboard.deletePatientDataTitle', { name: patient.name })}
-          body={t('dashboard.deletePatientDataBody', { name: patient.name })}
-          confirmLabel={t('dashboard.deletePatientDataConfirm')}
-          typeToConfirm="DELETE"
-          onConfirm={() => void handleDeletePatientData()}
-          onClose={() => setDeleteOpen(false)}
-        />
-      )}
+      <AnimatePresence>
+        {deleteOpen && (
+          <ConfirmDangerModal
+            title={t('dashboard.deletePatientDataTitle', { name: patient.name })}
+            body={t('dashboard.deletePatientDataBody', { name: patient.name })}
+            confirmLabel={t('dashboard.deletePatientDataConfirm')}
+            typeToConfirm="DELETE"
+            onConfirm={() => void handleDeletePatientData()}
+            onClose={() => setDeleteOpen(false)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }

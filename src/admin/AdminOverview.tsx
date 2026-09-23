@@ -195,7 +195,7 @@ export default function AdminOverview() {
                 value={newPatientName}
                 onChange={(e) => setNewPatientName(e.target.value)}
                 placeholder={t('onboarding.setupPatientNamePlaceholder')}
-                className="tap-target rounded-card border-2 border-border bg-surface px-3"
+                className="input-elderly px-3"
               />
             </div>
             <div className="flex flex-col gap-1">
@@ -203,7 +203,7 @@ export default function AdminOverview() {
               <select
                 value={newPatientLang}
                 onChange={(e) => setNewPatientLang(e.target.value as SupportedLanguage)}
-                className="tap-target rounded-card border-2 border-border bg-surface px-3"
+                className="input-elderly px-3"
               >
                 {SUPPORTED_LANGUAGES.map((lang) => (
                   <option key={lang.code} value={lang.code}>
@@ -319,7 +319,7 @@ export default function AdminOverview() {
               value={confirmText}
               onChange={(e) => setConfirmText(e.target.value)}
               placeholder={RESET_CONFIRM_WORD}
-              className="tap-target rounded-card border-2 border-border bg-surface px-3"
+              className="input-elderly px-3"
             />
             <Button
               variant="accent"
