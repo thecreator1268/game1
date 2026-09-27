@@ -64,6 +64,8 @@
     "setupPatientNamePlaceholder": "নাম লিখক",
     "setupCaregiverPin": "পৰিচৰ্যাকাৰীৰ বাবে 4 অংকৰ পিন সাজক",
     "setupCaregiverPinConfirm": "পিনটো পুনৰ দিয়ক",
+    "setupAdminPinTitle": "এডমিন পিন ছেট কৰক",
+    "setupAdminPinBody": "এইটো কেৰগিভাৰ পিনতকৈ পৃথক। ই এডমিন পেনেল সুৰক্ষিত কৰে, যিয়ে এই ডিভাইচত পিন ৰিছেট আৰু ডেটা মচিব পাৰে।",
     "setupComplete": "সকলো সাজু!",
     "setupCompleteBody": "স্মৃতিসেতু এতিয়া ব্যৱহাৰৰ বাবে সাজু, ইণ্টাৰনেট নথকাতো।",
     "getStarted": "আৰম্ভ কৰক"
@@ -92,7 +94,12 @@
     "enterPin": "আপোনাৰ এডমিন পিন দিয়ক",
     "wrongPin": "এই পিনটো মিলা নাই। আকৌ চেষ্টা কৰক।",
     "panelTitle": "এডমিন পেনেল",
-    "entryLink": "এডমিন পেনেল"
+    "entryLink": "এডমিন পেনেল",
+    "setupTitle": "এডমিন এক্সেছ ছেট আপ কৰক",
+    "setupVerifyBody": "এই ডিভাইচত এতিয়ালৈকে কোনো এডমিন পিন নাই। অব্যাহত ৰাখিবলৈ কেৰগিভাৰ পিনটো দিয়ক।",
+    "setupChooseBody": "এডমিন পেনেলৰ বাবে ৪-সংখ্যাৰ এটা পিন বাছনি কৰক, যিটো কেৰগিভাৰ পিনতকৈ পৃথক।",
+    "setupChooseSameAsCaregiver": "এডমিন পিনটো কেৰগিভাৰ পিনতকৈ পৃথক হ'ব লাগিব।",
+    "setupConfirmBody": "নিশ্চিত কৰিবলৈ নতুন এডমিন পিনটো পুনৰ দিয়ক।"
   },
   "adminPanel": {
     "totalPatients": "মুঠ ৰোগী",
@@ -128,6 +135,7 @@
     "streak": "{{count}} দিন ধাৰাবাহিক!",
     "todaysSet": "আজিৰ খেল",
     "todaysSetBody": "আজিৰ বাবে বাছি লোৱা তিনিটা খেল",
+    "completedToday": "আজি সম্পূৰ্ণ",
     "moreGames": "সকলো খেল",
     "playAgain": "পুনৰ খেলক",
     "streakLabel": "{{count}} দিন ধাৰাবাহিক",

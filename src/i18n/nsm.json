@@ -69,6 +69,8 @@
     "setupPatientNamePlaceholder": "Naam likhibi",
     "setupCaregiverPin": "Dekha-bhal koridi thaka manu laga 4 number PIN bonabi",
     "setupCaregiverPinConfirm": "PIN aru ekbar dibi",
+    "setupAdminPinTitle": "Admin PIN set koribo",
+    "setupAdminPinBody": "Ei-tu caregiver PIN-tu pora alada. Ei-e Admin Panel-tu rakhya kore, jun ei device-t PIN reset koribo pare aru data mucibo pare.",
     "setupComplete": "Sob taiyar ase!",
     "setupCompleteBody": "SmritiSetu etiya use koribole taiyar ase, internet nathakile bhi.",
     "getStarted": "Shuru koribi"
@@ -97,7 +99,12 @@
     "enterPin": "Apuni laga admin PIN dibi",
     "wrongPin": "Ei PIN thik nohoi. Aru ekbar cheshta koribi.",
     "panelTitle": "Admin Panel",
-    "entryLink": "Admin Panel"
+    "entryLink": "Admin Panel",
+    "setupTitle": "Admin access set koribo",
+    "setupVerifyBody": "Ei device-t etiya tak admin PIN nai. Age dibole caregiver PIN dibi.",
+    "setupChooseBody": "Admin Panel-r nimite 4 number-r PIN basi lobi, caregiver PIN-tu pora alada.",
+    "setupChooseSameAsCaregiver": "Admin PIN caregiver PIN-tu pora alada hobo lage.",
+    "setupConfirmBody": "Confirm koribole notun admin PIN aru ekbar dibi."
   },
   "adminPanel": {
     "totalPatients": "Sob rogi",
@@ -133,6 +140,7 @@
     "streak": "{{count}} din lagatar!",
     "todaysSet": "Aji laga khela khan",
     "todaysSetBody": "Aji laga bacha tin ta khela",
+    "completedToday": "Aji hoi jaise",
     "moreGames": "Sob khela",
     "playAgain": "Aru khela koribi",
     "streakLabel": "{{count}} din lagatar",

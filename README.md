@@ -362,10 +362,16 @@ shared tablet, or a clinic/NGO deployment):
 
 - The caregiver who completes first-time onboarding on a device is automatically
   the admin for that install (`role: 'admin'` on their `Caregiver` record) — there's
-  no separate signup step. Auth is a separate in-memory session
-  (`store/adminAuthStore.ts`) from the caregiver dashboard's, gated by its own PIN
-  entry (`/admin/login`), reusing the same `PinPad` component (with the same
-  5-attempt lockout) as caregiver login.
+  no separate signup step, but Onboarding.tsx does add one extra step: choosing an
+  admin PIN distinct from the caregiver PIN, stored as its own salted hash
+  (`adminPinHash`/`adminPinSalt` on the same `Caregiver` record). Auth is a separate
+  in-memory session (`store/adminAuthStore.ts`) from the caregiver dashboard's,
+  checked against that separate credential (`/admin/login`), reusing the same
+  `PinPad` component (with the same 5-attempt lockout) as caregiver login. A device
+  onboarded before this field existed has no admin PIN yet; `AdminLogin.tsx` detects
+  that and runs a one-time setup instead of the normal PIN prompt — enter the
+  caregiver PIN to prove it's you, then choose a new admin PIN (rejected inline if
+  it matches the caregiver PIN).
 - **Patients:** every patient record on the device, with a session count and a
   one-tap "Set Active" switch — this is what turns the "single active patient"
   limitation into a real multi-patient switcher. "Add Patient" creates another
@@ -464,11 +470,45 @@ settings need somewhere to live).
   or trained model is claimed anywhere. The separate cognitive-analytics layer
   (`trendAnalysis.ts`) is genuine statistical learning (linear regression + anomaly
   detection) — the two are complementary, not the same thing wearing different names.
+- **Fixed since the last pass (2026-09-27):**
+  - *Today's Set now survives a reload.* It used to be purely derived from each
+    game's last-played timestamp with nothing pinning it to a day, so playing any
+    featured game (which updates that timestamp) reshuffled the remaining two on the
+    very next render. The chosen 3 `gameId`s are now pinned to the local calendar day
+    on the `Patient` record (`todaysSet: { date, gameIds }`, `useTodaysSet.ts`) and
+    only recomputed once that date isn't today. The domain tie-break in
+    `sessionComposer.ts` was also hardened into an explicit comparator instead of a
+    subtraction that produces `NaN` when both sides are `NEVER_PLAYED` — worth
+    tightening, though empirical testing (and `sessionComposer.test.ts`'s existing
+    cases) confirms this was never actually a source of visible nondeterminism: the
+    spec treats a `NaN` comparator result as `0`, and `Array.prototype.sort` is
+    stable, so ties already resolved to `ALL_DOMAINS`'s declared order every run.
+  - *Today's Set cards now show a "completed today" mark.* A small teal check badge
+    (`wasPlayedToday()` in `gameSessionService.ts`) appears on a featured card once a
+    session for that game exists today; tapping it still replays the game as before.
+  - *Admin and caregiver PINs are no longer the same credential.* The caregiver
+    auto-promoted to admin during onboarding previously had one PIN gating both
+    roles, so anyone with the caregiver PIN could also reach the Admin Panel's
+    full-data-wipe and PIN-reset tools. The admin role now has its own salted hash
+    (see the Admin Panel section above for the onboarding step and the migration
+    path for already-onboarded devices).
+  - *The adaptive engine was played through the real UI end to end for the first
+    time* (five real Smriti Cards rounds via Playwright, forcing a real BKT mastery
+    crossing and a real response-time downward trend) — and it surfaced one real bug
+    in the process, now fixed: `useTodaysSet.ts`'s persistence write happened inside
+    the `useLiveQuery` querier function, which is fine under `fake-indexeddb` (what
+    the unit tests run against) but throws `ReadOnlyError: Readwrite transaction in
+    liveQuery context` under real browser IndexedDB, crashing `PatientHome` on every
+    visit. The write now happens from a plain `useEffect` after the querier returns a
+    freshly-computed set, never from inside the querier itself. With that fixed, the
+    level actually updates in Dexie, the `LevelChange` row is written with a correct
+    human-readable reason (confirmed verbatim: `"leveled up: domain mastery estimate
+    1.00 (at least 0.80) and this game's own last 5 sessions averaged 100% (at least
+    80%); avg 15.0s"`), and it appears correctly in the caregiver dashboard's Adaptive
+    Engine Log. This is exactly the kind of gap a unit-tests-only check can hide —
+    `fake-indexeddb` doesn't enforce the same read/write-transaction rules as a real
+    browser, so all 178 tests kept passing through the whole bug's lifetime.
 - **Open items to close in a final pre-submission pass:**
-  - *Not yet played through the real UI.* The BKT path is covered by tests on a real
-    Dexie (fake-indexeddb) and by a browser check that the v1→v2 database upgrade keeps
-    existing sessions, but a game has not been played to completion in the browser to see
-    a level change and its log line end to end. Do this at least once before the demo.
   - *Aaj Ka Din feeds Ghadi Dekho's estimate.* Aaj Ka Din is not adaptive, yet its
     results update the Orientation estimate that Ghadi Dekho is judged by (the same
     shared-estimate cause as above; level-ups are guarded, level-downs are not).

@@ -79,6 +79,8 @@
     "setupPatientNamePlaceholder": "Enter name",
     "setupCaregiverPin": "Create a 4-digit PIN for caregiver login",
     "setupCaregiverPinConfirm": "Enter the PIN again",
+    "setupAdminPinTitle": "Set an admin PIN",
+    "setupAdminPinBody": "This is separate from the caregiver PIN. It protects the Admin Panel, which can reset PINs and erase data on this device.",
     "setupComplete": "All set!",
     "setupCompleteBody": "SmritiSetu is ready to use, even without internet.",
     "getStarted": "Get Started"
@@ -107,7 +109,12 @@
     "enterPin": "Enter your admin PIN",
     "wrongPin": "That PIN doesn't match. Try again.",
     "panelTitle": "Admin Panel",
-    "entryLink": "Admin Panel"
+    "entryLink": "Admin Panel",
+    "setupTitle": "Set up admin access",
+    "setupVerifyBody": "This device doesn't have an admin PIN yet. Enter the caregiver PIN to continue.",
+    "setupChooseBody": "Choose a 4-digit PIN for the Admin Panel, different from the caregiver PIN.",
+    "setupChooseSameAsCaregiver": "The admin PIN must be different from the caregiver PIN.",
+    "setupConfirmBody": "Enter the new admin PIN again to confirm."
   },
   "adminPanel": {
     "totalPatients": "Total Patients",
@@ -146,6 +153,7 @@
     "streak": "{{count}}-day streak!",
     "todaysSet": "Today's Set",
     "todaysSetBody": "Three games picked just for today",
+    "completedToday": "Completed today",
     "moreGames": "All Games",
     "moreGamesBody": "Pick anything you like. Nothing is timed.",
     "playAgain": "Play Again",

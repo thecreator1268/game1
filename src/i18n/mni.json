@@ -69,6 +69,8 @@
     "setupPatientNamePlaceholder": "মিং ইবিয়ু",
     "setupCaregiverPin": "য়েংশিন্নবা মচুগী 4 নম্বর PIN শেম্বিয়ু",
     "setupCaregiverPinConfirm": "PIN অদু আমুক পীবিয়ু",
+    "setupAdminPinTitle": "এডমিন পিন সেট তৌবা",
+    "setupAdminPinBody": "মসি কেয়ারগিভার পিনদগী তোঙানবনি। মসিনা এডমিন পেনেলবু ৰক্ষা তৌই, মদুনা দেভাইছ অসিদা পিন রিসেট তৌবা অমসুং তথ্য মাংহনবা য়াই।",
     "setupComplete": "পুম্নমক থৌগৎলে!",
     "setupCompleteBody": "স্মৃতিসেতু হৌজিক শীজিন্নবা থৌগৎলে, ইন্তরনেত লৈতবসু।",
     "getStarted": "হৌবিয়ু"
@@ -97,7 +99,12 @@
     "enterPin": "নহাক্কী এদমিন PIN চংশিনবিয়ু",
     "wrongPin": "PIN অসি চুম্লে। আমুক হন্না হৌবিয়ু।",
     "panelTitle": "এদমিন পেনেল",
-    "entryLink": "এদমিন পেনেল"
+    "entryLink": "এদমিন পেনেল",
+    "setupTitle": "এডমিন এক্সেস সেট তৌবা",
+    "setupVerifyBody": "মসিগী দেভাইছ অসিদা এডমিন পিন লৈত্রে। চৎনবা কেয়ারগিভার পিন য়েংবিয়ু।",
+    "setupChooseBody": "এডমিন পেনেলগীদমক নম্বর মরী ৪ পিন খন্দোক্লো, কেয়ারগিভার পিনদগী তোঙানবা ওইনা।",
+    "setupChooseSameAsCaregiver": "এডমিন পিন কেয়ারগিভার পিনদগী তোঙানবা ওইগদবনি।",
+    "setupConfirmBody": "চেকশিন্নবা এডমিন পিন অনৌবা অমুক হন্না চাংশিল্লো।"
   },
   "adminPanel": {
     "totalPatients": "লাইরবা পুম্নমক",
@@ -133,6 +140,7 @@
     "streak": "নুমিত {{count}} লাংলুরি!",
     "todaysSet": "ঙসিগী শানবা",
     "todaysSetBody": "ঙসিগীদমক খল্লবা শানবা অহুম",
+    "completedToday": "ঙসি লোইখ্রে",
     "moreGames": "শানবা পুম্নমক",
     "playAgain": "আমুক শানবিয়ু",
     "streakLabel": "নুমিৎ {{count}} চানবা",

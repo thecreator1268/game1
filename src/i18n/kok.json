@@ -69,6 +69,8 @@
     "setupPatientNamePlaceholder": "Mung riya",
     "setupCaregiverPin": "Songnwi bwlwini login-ni khan 4 ankiya PIN sajai",
     "setupCaregiverPinConfirm": "PIN sale riya",
+    "setupAdminPinTitle": "Admin PIN thangbai",
+    "setupAdminPinBody": "Bo caregiver PIN dgi alada. Bo Admin Panel rakha, bo device-o PIN reset bar data mucha thangnai.",
     "setupComplete": "Pumthang taiyar!",
     "setupCompleteBody": "SmritiSetu chondi khelani khan taiyar, internet dongbo bo thangbo.",
     "getStarted": "Sarai lo"
@@ -97,7 +99,12 @@
     "enterPin": "Bini admin PIN riya",
     "wrongPin": "Bo PIN khalam kaubo. Sale sale lo.",
     "panelTitle": "Admin Panel",
-    "entryLink": "Admin Panel"
+    "entryLink": "Admin Panel",
+    "setupTitle": "Admin access setup thangbai",
+    "setupVerifyBody": "Bo device-o admin PIN dongbo. Age laga caregiver PIN o-bai.",
+    "setupChooseBody": "Admin Panel-ni bagoi number 4 PIN selo, caregiver PIN dgi alada.",
+    "setupChooseSameAsCaregiver": "Admin PIN caregiver PIN dgi alada thangnai gothang.",
+    "setupConfirmBody": "Confirm thangnai bathai admin PIN thaham o-bai."
   },
   "adminPanel": {
     "totalPatients": "Khela hamjani pumthang",
@@ -133,6 +140,7 @@
     "streak": "Din {{count}} continuous!",
     "todaysSet": "Chondini khela",
     "todaysSetBody": "Chondini khan khonaikha khela tham",
+    "completedToday": "Chondini thangbai",
     "moreGames": "Khela pumthang",
     "playAgain": "Sale khela",
     "streakLabel": "{{count}} sal khela sale sale",

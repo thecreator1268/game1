@@ -69,6 +69,8 @@
     "setupPatientNamePlaceholder": "Sar kyrteng",
     "setupCaregiverPin": "Thoh kawei ka PIN ba 4 ïa u nongïalam",
     "setupCaregiverPinConfirm": "Sar ïa ka PIN haduh",
+    "setupAdminPinTitle": "Buh ïa ka admin PIN",
+    "setupAdminPinBody": "Kane ka lain namar ka caregiver PIN. Ka rung ïa ka Admin Panel, kaba lah ban reset ïa ka PIN bad pynmarwei ïa ka data ha kane ka device.",
     "setupComplete": "Ban long jrong sa!",
     "setupCompleteBody": "Ka SmritiSetu ka la pyndep sa ban leit dulïióh, na ka internet ne cha.",
     "getStarted": "Ïai"
@@ -97,7 +99,12 @@
     "enterPin": "Sar ïa ka PIN admin",
     "wrongPin": "Kane ka PIN um khlaiñ. Buit shuwa.",
     "panelTitle": "Admin Panel",
-    "entryLink": "Admin Panel"
+    "entryLink": "Admin Panel",
+    "setupTitle": "Buh ïa ka admin access",
+    "setupVerifyBody": "Ka device kani ym pat don ka admin PIN. Pyllait ïa ka caregiver PIN ban leit shaphang.",
+    "setupChooseBody": "Thew ïa ka PIN 4 tylli ha ka Admin Panel, ba lain namar ka caregiver PIN.",
+    "setupChooseSameAsCaregiver": "Ka admin PIN kynta ba lain namar ka caregiver PIN.",
+    "setupConfirmBody": "Pyllait shuh ïa ka admin PIN thymmai ban confirm."
   },
   "adminPanel": {
     "totalPatients": "Jingïap ki Nongïatiit",
@@ -133,6 +140,7 @@
     "streak": "Sngi {{count}} bad bad!",
     "todaysSet": "Ki dulïióh mynta",
     "todaysSetBody": "Lai ki dulïióh ba la pdiang ïa mynta",
+    "completedToday": "Long jrong mynta",
     "moreGames": "Baroh ki Dulïióh",
     "playAgain": "Leit dulïióh haduh",
     "streakLabel": "{{count}} sngi na jajan",

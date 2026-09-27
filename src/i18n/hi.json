@@ -71,6 +71,8 @@
     "setupPatientNamePlaceholder": "नाम लिखें",
     "setupCaregiverPin": "देखभालकर्ता के लिए 4 अंकों का पिन बनाएं",
     "setupCaregiverPinConfirm": "पिन फिर से डालें",
+    "setupAdminPinTitle": "एडमिन पिन सेट करें",
+    "setupAdminPinBody": "यह केयरगिवर पिन से अलग है। यह एडमिन पैनल की सुरक्षा करता है, जो इस डिवाइस पर पिन रीसेट कर सकता है और डेटा मिटा सकता है।",
     "setupComplete": "सब तैयार है!",
     "setupCompleteBody": "स्मृतिसेतु अब उपयोग के लिए तैयार है, इंटरनेट के बिना भी।",
     "getStarted": "शुरू करें"
@@ -99,7 +101,12 @@
     "enterPin": "अपना एडमिन पिन डालें",
     "wrongPin": "यह पिन सही नहीं है। फिर कोशिश करें।",
     "panelTitle": "एडमिन पैनल",
-    "entryLink": "एडमिन पैनल"
+    "entryLink": "एडमिन पैनल",
+    "setupTitle": "एडमिन एक्सेस सेट करें",
+    "setupVerifyBody": "इस डिवाइस पर अभी तक कोई एडमिन पिन नहीं है। जारी रखने के लिए केयरगिवर पिन डालें।",
+    "setupChooseBody": "एडमिन पैनल के लिए 4 अंकों का पिन चुनें, जो केयरगिवर पिन से अलग हो।",
+    "setupChooseSameAsCaregiver": "एडमिन पिन केयरगिवर पिन से अलग होना चाहिए।",
+    "setupConfirmBody": "पुष्टि के लिए नया एडमिन पिन फिर से डालें।"
   },
   "adminPanel": {
     "totalPatients": "कुल मरीज़",
@@ -135,6 +142,7 @@
     "streak": "{{count}} दिन लगातार!",
     "todaysSet": "आज के खेल",
     "todaysSetBody": "आज के लिए चुने गए तीन खेल",
+    "completedToday": "आज पूर्ण",
     "moreGames": "सभी खेल",
     "playAgain": "फिर से खेलें",
     "streakLabel": "{{count}} दिन लगातार",

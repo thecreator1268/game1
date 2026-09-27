@@ -69,6 +69,8 @@
     "setupPatientNamePlaceholder": "Hming ziak rawh",
     "setupCaregiverPin": "Enkawltu tan number 4 PIN siam rawh",
     "setupCaregiverPinConfirm": "PIN chu ziak leh rawh",
+    "setupAdminPinTitle": "Admin PIN siam",
+    "setupAdminPinBody": "Hei hi caregiver PIN aiin a dang. Admin Panel a huam a, hei device-ah PIN reset leh data chhut theih a ni.",
     "setupComplete": "A zo tawh!",
     "setupCompleteBody": "SmritiSetu hman ngai a la tawh, internet awm lo pawhin.",
     "getStarted": "Ṭan rawh"
@@ -97,7 +99,12 @@
     "enterPin": "I admin PIN kai rawh",
     "wrongPin": "He PIN hi a dik lo. Beisei leh rawh.",
     "panelTitle": "Admin Panel",
-    "entryLink": "Admin Panel"
+    "entryLink": "Admin Panel",
+    "setupTitle": "Admin dinhmun siamin",
+    "setupVerifyBody": "Hei device hian admin PIN a nei lo lai a ni. Zir zel tur chuan caregiver PIN chu ziah rawh.",
+    "setupChooseBody": "Admin Panel tan number 4 PIN thlan la, caregiver PIN aiin danglam tur.",
+    "setupChooseSameAsCaregiver": "Admin PIN hi caregiver PIN aiin a dang tur a ni.",
+    "setupConfirmBody": "Admin PIN thar chu ziah leh rawh, a chiang tihna tur in."
   },
   "adminPanel": {
     "totalPatients": "Damlo Zapui",
@@ -133,6 +140,7 @@
     "streak": "Ni {{count}} zel!",
     "todaysSet": "Vawiin Inven Te",
     "todaysSetBody": "Vawiin tan inven pathum thlan",
+    "completedToday": "Vawiin zo tawh",
     "moreGames": "Inven Zawng",
     "playAgain": "Inven Leh",
     "streakLabel": "Ni {{count}} zel",
