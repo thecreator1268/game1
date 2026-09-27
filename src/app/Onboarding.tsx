@@ -11,7 +11,7 @@ import { newId } from '@/lib/id';
 import { generatePinSalt, hashPin } from '@/lib/pin';
 import { usePatientStore } from '@/store/patientStore';
 
-type Step = 'language' | 'consent' | 'patientName' | 'pin' | 'done';
+type Step = 'language' | 'consent' | 'patientName' | 'pin' | 'adminPin' | 'done';
 
 const PIN_LENGTH = 4;
 
@@ -27,6 +27,9 @@ export default function Onboarding() {
   const [pin, setPin] = useState('');
   const [confirmPin, setConfirmPin] = useState('');
   const [pinError, setPinError] = useState('');
+  const [adminPin, setAdminPin] = useState('');
+  const [confirmAdminPin, setConfirmAdminPin] = useState('');
+  const [adminPinError, setAdminPinError] = useState('');
 
   function chooseLanguage(code: SupportedLanguage) {
     setLanguage(code);
@@ -39,15 +42,30 @@ export default function Onboarding() {
     setStep('patientName');
   }
 
-  async function finishSetup() {
+  function proceedToAdminPin() {
     if (pin.length !== PIN_LENGTH || pin !== confirmPin) {
       setPinError(t('caregiverAuth.wrongPin'));
+      return;
+    }
+    setPinError('');
+    setStep('adminPin');
+  }
+
+  async function finishSetup() {
+    if (adminPin.length !== PIN_LENGTH || adminPin !== confirmAdminPin) {
+      setAdminPinError(t('caregiverAuth.wrongPin'));
+      return;
+    }
+    if (adminPin === pin) {
+      setAdminPinError(t('adminAuth.setupChooseSameAsCaregiver'));
       return;
     }
     const patientId = newId();
     const caregiverId = newId();
     const pinSalt = generatePinSalt();
     const pinHash = await hashPin(pin, pinSalt);
+    const adminPinSalt = generatePinSalt();
+    const adminPinHash = await hashPin(adminPin, adminPinSalt);
 
     await db.patients.add({
       id: patientId,
@@ -67,11 +85,15 @@ export default function Onboarding() {
       relation: 'Family',
       pinHash,
       pinSalt,
+      adminPinHash,
+      adminPinSalt,
       patientIds: [patientId],
       // The caregiver who completes first-time setup on a device owns the
       // Admin Panel for that install (see AdminLogin.tsx) — there is no
       // separate admin-signup step, since it would just be one more thing
-      // to configure before the app is usable.
+      // to configure before the app is usable. It does get its own PIN
+      // (adminPin above), distinct from the caregiver PIN, set moments
+      // earlier in this same flow.
       role: 'admin',
       createdAt: Date.now(),
     });
@@ -176,6 +198,42 @@ export default function Onboarding() {
             <Button
               className="mt-6 w-full"
               disabled={pin.length !== PIN_LENGTH || confirmPin.length !== PIN_LENGTH}
+              onClick={proceedToAdminPin}
+            >
+              {t('common.next')}
+            </Button>
+          </Card>
+        )}
+
+        {step === 'adminPin' && (
+          <Card>
+            <h1 className="text-heading-lg font-bold">{t('onboarding.setupAdminPinTitle')}</h1>
+            <p className="mt-2 text-body text-text-muted">{t('onboarding.setupAdminPinBody')}</p>
+            <input
+              type="password"
+              inputMode="numeric"
+              autoComplete="one-time-code"
+              maxLength={PIN_LENGTH}
+              value={adminPin}
+              onChange={(e) => setAdminPin(e.target.value.replace(/\D/g, ''))}
+              placeholder="••••"
+              className="input-elderly mt-6 w-full text-center text-action tracking-[0.5em]"
+            />
+            <p className="mt-4 text-body text-text-muted">{t('onboarding.setupCaregiverPinConfirm')}</p>
+            <input
+              type="password"
+              inputMode="numeric"
+              autoComplete="one-time-code"
+              maxLength={PIN_LENGTH}
+              value={confirmAdminPin}
+              onChange={(e) => setConfirmAdminPin(e.target.value.replace(/\D/g, ''))}
+              placeholder="••••"
+              className="input-elderly mt-2 w-full text-center text-action tracking-[0.5em]"
+            />
+            {adminPinError && <p className="mt-2 text-body text-danger">{adminPinError}</p>}
+            <Button
+              className="mt-6 w-full"
+              disabled={adminPin.length !== PIN_LENGTH || confirmAdminPin.length !== PIN_LENGTH}
               onClick={() => void finishSetup()}
             >
               {t('common.done')}

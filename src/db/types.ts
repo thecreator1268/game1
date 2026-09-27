@@ -132,6 +132,16 @@ export interface Caregiver {
   pinSalt: string;
   patientIds: string[];
   role: CaregiverRole;
+  // Separate credential from pinHash/pinSalt above, gating /admin
+  // specifically. Without this, an admin-role caregiver's row had only one
+  // PIN, so the caregiver PIN also opened the Admin Panel (full data wipe,
+  // PIN resets) — anyone who knew one knew both. Optional: onboarding sets
+  // it for every new install (see Onboarding.tsx); a caregiver record from
+  // before this field existed has neither until AdminLogin.tsx's one-time
+  // setup flow runs (proves identity with the caregiver PIN, then requires
+  // a *different* PIN before /admin becomes reachable).
+  adminPinHash?: string;
+  adminPinSalt?: string;
   // When this caregiver dismissed (or used) the first-login "Getting started"
   // checklist on the dashboard. Absent = still to show.
   checklistSeenAt?: number;

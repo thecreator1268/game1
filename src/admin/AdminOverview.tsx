@@ -101,9 +101,13 @@ export default function AdminOverview() {
       const payload = {
         exportedAt: new Date().toISOString(),
         patients: allPatients,
-        // Caregiver PIN hashes are salted SHA-256 but are still left out of
-        // the export — a backup file is not the place for auth material.
-        caregivers: allCaregivers.map(({ pinHash: _pinHash, pinSalt: _pinSalt, ...rest }) => rest),
+        // Caregiver and admin PIN hashes are salted SHA-256 but are still
+        // left out of the export — a backup file is not the place for auth
+        // material.
+        caregivers: allCaregivers.map(
+          ({ pinHash: _pinHash, pinSalt: _pinSalt, adminPinHash: _adminPinHash, adminPinSalt: _adminPinSalt, ...rest }) =>
+            rest,
+        ),
         sessions: allSessions,
         levelChanges: allLevelChanges,
         masteryEstimates: allMastery,
