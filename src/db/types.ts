@@ -45,6 +45,12 @@ export interface Patient {
   // enables it from Settings (see reminders/notificationService.ts).
   reminderAlertsEnabled: boolean;
   createdAt: number;
+  // Today's featured 3-game set, pinned to the local calendar day it was
+  // chosen (see useTodaysSet.ts) so it doesn't reshuffle mid-day as new
+  // sessions change composeTodaysSet's staleness ranking. Recomputed once
+  // `date` is no longer today. Optional so existing patients need no Dexie
+  // migration — they simply get a set pinned on their next visit.
+  todaysSet?: { date: string; gameIds: GameId[] };
 }
 
 export interface FamilyMember {

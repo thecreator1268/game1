@@ -22,6 +22,17 @@ export interface PlayHistoryEntry {
   lastPlayedAt: number | null;
 }
 
+// Plain subtraction (a - b) breaks when both sides are NEVER_PLAYED
+// (-Infinity - -Infinity = NaN) — harmless in practice (the spec treats a
+// NaN comparator result as 0, and Array.prototype.sort is stable, so ties
+// already resolve to ALL_DOMAINS's declared order every run), but a NaN
+// comparator is fragile to rely on. Compares explicitly instead so ties are
+// deterministic by construction, not by a spec nuance.
+function compareStaleness(a: number, b: number): number {
+  if (a === b) return 0;
+  return a < b ? -1 : 1;
+}
+
 export function composeTodaysSet(
   playHistory: PlayHistoryEntry[],
   games: GameMeta[] = GAME_LIST,
@@ -51,7 +62,7 @@ export function composeTodaysSet(
 
   const selectedDomains = new Set(
     [...domainFreshness]
-      .sort((a, b) => a.mostRecentInDomain - b.mostRecentInDomain)
+      .sort((a, b) => compareStaleness(a.mostRecentInDomain, b.mostRecentInDomain))
       .slice(0, TODAYS_SET_SIZE)
       .map((d) => d.domain),
   );
@@ -59,8 +70,8 @@ export function composeTodaysSet(
   return ALL_DOMAINS.filter((d) => selectedDomains.has(d))
     .map((domain) => {
       const domainGames = gamesByDomain.get(domain) ?? [];
-      const leastRecentlyPlayed = [...domainGames].sort(
-        (a, b) => lastPlayed(a.id) - lastPlayed(b.id),
+      const leastRecentlyPlayed = [...domainGames].sort((a, b) =>
+        compareStaleness(lastPlayed(a.id), lastPlayed(b.id)),
       )[0];
       return leastRecentlyPlayed?.id;
     })

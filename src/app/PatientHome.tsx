@@ -13,7 +13,7 @@ import { Reveal } from '@/components/Reveal';
 import { GAME_LIST, getGameMeta, type GameMeta } from '@/games/gameList';
 import { DOMAIN_CARD_CLASS } from '@/dashboard/domainColors';
 import { MAX_LEVEL } from '@/engine/adaptiveEngine';
-import { getCurrentLevel } from '@/engine/gameSessionService';
+import { getCurrentLevel, wasPlayedToday } from '@/engine/gameSessionService';
 import { db } from '@/db/schema';
 import { PatientIntro } from './PatientIntro';
 import { useTodaysSet } from './useTodaysSet';
@@ -47,6 +47,15 @@ function GameCard({
     [patientId, gameId],
     null,
   );
+  // Only Today's Set cards (hero) show a "done today" mark — the full game
+  // library below isn't part of the daily featured rotation, so a
+  // completion badge there wouldn't mean anything. Tapping the card again
+  // still replays the game; this is a status mark, not a lock.
+  const playedToday = useLiveQuery(
+    () => (hero ? wasPlayedToday(patientId, gameId) : Promise.resolve(false)),
+    [patientId, gameId, hero],
+    false,
+  );
   // Routine domain's card fills with the darkest hue in the set — its own
   // ink text/pips would disappear, so it flips to the page's light ink
   // color instead, exactly like the design reference's teal card.
@@ -65,8 +74,28 @@ function GameCard({
       }`}
     >
       {/* In flow (not absolute) so a long, wrapping name pushes the card
-          taller instead of colliding with the mascot below it. */}
-      <span className="speech-tag -mx-1 -mt-1 mb-auto self-stretch">{name}</span>
+          taller instead of colliding with the mascot below it — the
+          completed badge sits in the same flex row rather than being
+          absolutely positioned, for the same reason. */}
+      <div className="-mx-1 -mt-1 mb-auto flex items-start justify-between gap-2">
+        <span className="speech-tag self-stretch">{name}</span>
+        {hero && playedToday && (
+          // Light surface + ink icon, same "sits on top of any domain color"
+          // pattern as the speech-tag beside it — --color-success is
+          // identical to --domain-routine (both #00917a), so a success-filled
+          // badge would nearly disappear on that one card. Sized and labeled
+          // (not just a small icon) so it reads as obvious at a glance, not
+          // something a patient has to squint at to notice.
+          <span
+            className="shadow-card-sm flex shrink-0 items-center gap-1.5 rounded-full border-[2px] border-text bg-surface py-2 pl-2.5 pr-3 text-text"
+            role="img"
+            aria-label={t('patientHome.completedToday')}
+          >
+            <Icon name="check" size={22} />
+            <span className="text-sm font-bold uppercase tracking-wide">{t('common.done')}</span>
+          </span>
+        )}
+      </div>
       <BlobMascot gameId={gameId} hero={hero} />
       {/* Always dark ink, full opacity, even on the teal Routine card — per
           the design spec's explicit rule ("dark ink on light/pastel

@@ -86,4 +86,39 @@ describe('composeTodaysSet', () => {
     const laterDomains = later.map((id) => GAME_LIST.find((g) => g.id === id)?.domain);
     expect(laterDomains).toContain('orientation');
   });
+
+  it('resolves a tie for the 3rd selected domain the same way on every call', () => {
+    // Routine and Pattern are tied for staleness right at the cutoff between
+    // selected (3rd) and excluded (4th) — Memory/Attention are staler still,
+    // Orientation is fresher and excluded outright.
+    const history: PlayHistoryEntry[] = [
+      { gameId: 'smriti-cards', lastPlayedAt: 100 }, // memory
+      { gameId: 'awaaz-pehchan', lastPlayedAt: 200 }, // attention
+      { gameId: 'dinacharya-sequence', lastPlayedAt: 500 }, // routine
+      { gameId: 'aakar-milan', lastPlayedAt: 500 }, // pattern — tied with routine
+      { gameId: 'aaj-ka-din', lastPlayedAt: 900 }, // orientation
+    ];
+
+    const results = Array.from({ length: 20 }, () => composeTodaysSet(history));
+    const domainSets = results.map((r) =>
+      r.map((id) => GAME_LIST.find((g) => g.id === id)?.domain).sort().join(','),
+    );
+
+    // Every run must agree, and must break the routine/pattern tie in favor
+    // of routine, since it's declared first in ALL_DOMAINS.
+    expect(new Set(domainSets).size).toBe(1);
+    const domains = results[0].map((id) => GAME_LIST.find((g) => g.id === id)?.domain);
+    expect(domains).toContain('memory');
+    expect(domains).toContain('attention');
+    expect(domains).toContain('routine');
+    expect(domains).not.toContain('pattern');
+    expect(domains).not.toContain('orientation');
+  });
+
+  it('resolves an all-domains-never-played tie the same way on every call', () => {
+    const results = Array.from({ length: 20 }, () => composeTodaysSet([]));
+    const serialized = results.map((r) => r.join(','));
+    expect(new Set(serialized).size).toBe(1);
+    expect(results[0]).toEqual(['smriti-cards', 'dhyan-dhaam', 'dinacharya-sequence']);
+  });
 });

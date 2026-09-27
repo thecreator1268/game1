@@ -6,6 +6,13 @@ import { getGameMeta } from '@/games/gameList';
 import { decideNextLevel, WINDOW_SIZE, type AttemptResult, type LevelDecision } from './adaptiveEngine';
 import { updateDomainMastery } from './masteryService';
 
+// Local calendar day (not UTC) — matches useTodaysSet.ts's day-pinning key.
+export async function wasPlayedToday(patientId: string, gameId: GameId): Promise<boolean> {
+  const today = new Date().toDateString();
+  const sessions = await db.sessions.where('patientId').equals(patientId).toArray();
+  return sessions.some((s) => s.gameId === gameId && new Date(s.startedAt).toDateString() === today);
+}
+
 export async function getCurrentLevel(patientId: string, gameId: GameId): Promise<number> {
   const allChanges = await db.levelChanges.where('patientId').equals(patientId).toArray();
   const gameChanges = allChanges
