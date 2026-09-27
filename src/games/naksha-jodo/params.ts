@@ -1,15 +1,24 @@
-// L1=4 · L2=6 · L3=8 · L4=10 · L5=12 · L6=15 · L7=18 · L8=21 · L9=24 · L10=28 (pieces in the assembly)
+// L1=4 · L2=6 · L3=8 · L4=12 · L5=16 · L6=20 · L7=24 · L8=28 · L9=32 · L10=36
+// (pieces in the assembly). Columns are capped at 4: the assembly slots are
+// tap-targets (64px minimum, non-negotiable), and the drop-zone grid's
+// column count is baked into the puzzle's actual layout (buildMosaic()
+// generates the picture from this exact rows×cols shape, so it can't be
+// re-flowed to fewer columns at render time the way a plain content grid
+// could — the fix has to be in the level table itself). More pieces at
+// higher levels now means more rows, never more columns, so the assembly
+// grid always fits a phone-width viewport (confirmed via a real mobile
+// Playwright check — the old table's L10 (4x7) overflowed by ~90px).
 const GRID_BY_LEVEL: Record<number, { rows: number; cols: number }> = {
   1: { rows: 2, cols: 2 },
   2: { rows: 2, cols: 3 },
   3: { rows: 2, cols: 4 },
-  4: { rows: 2, cols: 5 },
-  5: { rows: 3, cols: 4 },
-  6: { rows: 3, cols: 5 },
-  7: { rows: 3, cols: 6 },
-  8: { rows: 3, cols: 7 },
-  9: { rows: 4, cols: 6 },
-  10: { rows: 4, cols: 7 },
+  4: { rows: 3, cols: 4 },
+  5: { rows: 4, cols: 4 },
+  6: { rows: 5, cols: 4 },
+  7: { rows: 6, cols: 4 },
+  8: { rows: 7, cols: 4 },
+  9: { rows: 8, cols: 4 },
+  10: { rows: 9, cols: 4 },
 };
 
 export function gridForLevel(level: number) {

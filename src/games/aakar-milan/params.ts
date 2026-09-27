@@ -12,10 +12,6 @@ const LEVELS: Record<number, { size: number; options: number }> = {
   10: { size: 5, options: 6 },
 };
 
-export function paramsForLevel(level: number) {
-  return LEVELS[level] ?? LEVELS[1];
-}
-
 // Plain geometric glyphs, not pictographic emoji — these render as flat,
 // consistent shapes in any font/OS, unlike emoji, so they don't need the
 // IconSprite treatment. One glyph (a black star, U+2605) sat inside the
@@ -25,3 +21,12 @@ export function paramsForLevel(level: number) {
 // block.
 export const SHAPES = ['▲', '●', '■', '◆', '⬢', '⬟'];
 export const TRIALS_PER_SESSION = 5;
+
+// LEVELS' top options count (6) exactly equals SHAPES.length today — this
+// clamp is defensive, not a live bug fix, so a future level tweak or a
+// shape removed from the pool can't silently exceed it the way Smriti
+// Cards' unclamped level table did.
+export function paramsForLevel(level: number) {
+  const { size, options } = LEVELS[level] ?? LEVELS[1];
+  return { size, options: Math.min(options, SHAPES.length) };
+}

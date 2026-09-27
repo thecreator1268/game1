@@ -16,8 +16,10 @@ export function paramsForLevel(level: number) {
   return LEVELS[level] ?? LEVELS[1];
 }
 
-export function gridColumnsForSize(gridSize: number): number {
-  if (gridSize <= 8) return 4;
-  if (gridSize <= 12) return 4;
-  return 5;
+// Capped at 4 columns regardless of grid size — see dhyan-dhaam/params.ts's
+// gridColumnsForSize comment for why (64px tap-target minimum + phone-width
+// viewports don't fit a 5th fixed-min-width column; confirmed via a real
+// mobile Playwright check). Item position carries no gameplay meaning here.
+export function gridColumnsForSize(_gridSize: number): number {
+  return 4;
 }

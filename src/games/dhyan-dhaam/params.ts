@@ -24,9 +24,12 @@ export const PATTERN_COLORS = [
   { id: 'amber', hex: '#b45309' },
 ];
 
-export function gridColumnsForSize(gridSize: number): number {
-  if (gridSize <= 12) return 4;
-  if (gridSize <= 20) return 5;
-  if (gridSize <= 28) return 6;
-  return 7;
+// Capped at 4 columns regardless of grid size: each tile is a tap-target
+// (64px minimum, non-negotiable), and at a phone-width viewport a 5th+
+// fixed-min-width column no longer fits — the grid overflowed horizontally
+// instead of shrinking (confirmed via a real mobile Playwright check). Tile
+// position carries no meaning here (it's a tap-any-matching-tile scan, not
+// a spatial-pattern task), so more tiles just means more rows.
+export function gridColumnsForSize(_gridSize: number): number {
+  return 4;
 }

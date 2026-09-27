@@ -165,7 +165,7 @@ export default function NakshaJodoGame() {
             <button
               key={piece.key}
               onClick={() => setSelectedKey(piece.key === selectedKey ? null : piece.key)}
-              className={`h-12 w-12 rounded-md border-4 transition-transform ${
+              className={`tap-target rounded-md border-4 transition-transform ${
                 selectedKey === piece.key ? 'border-accent scale-110' : 'border-transparent'
               }`}
               style={{ backgroundColor: piece.color }}
